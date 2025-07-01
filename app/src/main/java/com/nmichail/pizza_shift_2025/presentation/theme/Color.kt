@@ -1,4 +1,4 @@
-package com.nmichail.pizza_shift_2025.ui.theme
+package com.nmichail.pizza_shift_2025.presentation.theme
 
 import androidx.compose.ui.graphics.Color
 
