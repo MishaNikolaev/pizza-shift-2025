@@ -9,6 +9,9 @@ import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.material3.OutlinedTextFieldDefaults
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.ui.graphics.Color
 
 private val DarkColorScheme = darkColorScheme(
     primary = Purple80,
@@ -35,7 +38,6 @@ private val LightColorScheme = lightColorScheme(
 @Composable
 fun Pizzashift2025Theme(
     darkTheme: Boolean = isSystemInDarkTheme(),
-    // Dynamic color is available on Android 12+
     dynamicColor: Boolean = true,
     content: @Composable () -> Unit
 ) {
@@ -55,3 +57,21 @@ fun Pizzashift2025Theme(
         content = content
     )
 }
+
+val PizzaTextFieldColors
+    @Composable get() = OutlinedTextFieldDefaults.colors(
+    focusedBorderColor = OrangePizza,
+    unfocusedBorderColor = OrangePizza.copy(alpha = 0.7f),
+    disabledBorderColor = Color.Gray,
+    focusedLabelColor = OrangePizza,
+    unfocusedLabelColor = OrangePizza.copy(alpha = 0.7f),
+    cursorColor = OrangePizza
+)
+
+val PizzaButtonColors
+    @Composable get() = ButtonDefaults.buttonColors(
+    containerColor = OrangePizza,
+    contentColor = Color.White,
+    disabledContainerColor = OrangePizza.copy(alpha = 0.5f),
+    disabledContentColor = Color.White.copy(alpha = 0.5f)
+)

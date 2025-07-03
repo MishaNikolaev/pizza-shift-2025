@@ -1,4 +1,4 @@
-package com.nmichail.pizza_shift_2025.presentation.screens.auth
+package com.nmichail.pizza_shift_2025.presentation.screens.auth.presentation
 
 sealed class AuthScreenState {
     object EnterPhone : AuthScreenState()

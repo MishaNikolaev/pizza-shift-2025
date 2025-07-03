@@ -1,12 +1,10 @@
 package com.nmichail.pizza_shift_2025.domain.repository
 
-import com.nmichail.pizza_shift_2025.domain.models.AuthResult
-import com.nmichail.pizza_shift_2025.domain.models.OtpResult
-
+import com.nmichail.pizza_shift_2025.presentation.util.Result
 
 interface AuthRepository {
 
-    suspend fun getOtp(phone: String): OtpResult
+    suspend fun getOtp(phone: String): Result<Unit>
 
-    suspend fun getSignIn(phone: String, code: String): AuthResult
+    suspend fun getSignIn(phone: String, code: String): Result<Unit>
 } 

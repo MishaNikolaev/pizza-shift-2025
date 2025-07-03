@@ -6,8 +6,8 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.nmichail.pizza_shift_2025.presentation.screens.auth.AuthScreen
-import com.nmichail.pizza_shift_2025.presentation.screens.catalog.CatalogScreen
+import com.nmichail.pizza_shift_2025.presentation.screens.auth.ui.AuthScreen
+import com.nmichail.pizza_shift_2025.presentation.screens.catalog.ui.CatalogScreen
 
 sealed class Screen(val route: String) {
     object Auth : Screen("auth")

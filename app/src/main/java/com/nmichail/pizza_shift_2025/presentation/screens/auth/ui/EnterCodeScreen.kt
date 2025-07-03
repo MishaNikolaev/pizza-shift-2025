@@ -1,4 +1,4 @@
-package com.nmichail.pizza_shift_2025.presentation.screens.auth.components
+package com.nmichail.pizza_shift_2025.presentation.screens.auth.ui
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -9,7 +9,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonColors
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
@@ -26,15 +25,17 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.nmichail.pizza_shift_2025.presentation.screens.auth.AuthScreenState
-import com.nmichail.pizza_shift_2025.presentation.screens.auth.AuthViewModel
+import com.nmichail.pizza_shift_2025.presentation.screens.auth.presentation.AuthScreenState
+import com.nmichail.pizza_shift_2025.presentation.screens.auth.presentation.AuthViewModel
+import com.nmichail.pizza_shift_2025.presentation.screens.auth.presentation.AuthUiState
 import com.nmichail.pizza_shift_2025.presentation.theme.OrangePizza
+import com.nmichail.pizza_shift_2025.presentation.theme.PizzaTextFieldColors
+import com.nmichail.pizza_shift_2025.presentation.theme.PizzaButtonColors
 
 
 @Composable
-fun EnterCodeScreen(state: AuthUiState, viewModel: AuthViewModel) {
+fun EnterCodeScreen(state: AuthUiState.EnterCode, viewModel: AuthViewModel) {
     val focusManager = LocalFocusManager.current
-    val screen = state.screenState as? AuthScreenState.EnterCode ?: return
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -61,15 +62,7 @@ fun EnterCodeScreen(state: AuthUiState, viewModel: AuthViewModel) {
             enabled = false,
             singleLine = true,
             modifier = Modifier.fillMaxWidth(),
-            colors = OutlinedTextFieldDefaults.colors(
-                focusedBorderColor = Color.Black,
-                unfocusedBorderColor = Color.Black,
-                disabledBorderColor = Color.Black,
-                focusedLabelColor = Color.Black,
-                unfocusedLabelColor = Color.Black,
-                disabledLabelColor = Color.Black,
-                cursorColor = Color.Black
-            )
+            colors = PizzaTextFieldColors
         )
         Spacer(modifier = Modifier.height(16.dp))
         OutlinedTextField(
@@ -80,15 +73,7 @@ fun EnterCodeScreen(state: AuthUiState, viewModel: AuthViewModel) {
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
             singleLine = true,
             modifier = Modifier.fillMaxWidth(),
-            colors = OutlinedTextFieldDefaults.colors(
-                focusedBorderColor = Color.Black,
-                unfocusedBorderColor = Color.Black,
-                disabledBorderColor = Color.Black,
-                focusedLabelColor = Color.Black,
-                unfocusedLabelColor = Color.Black,
-                disabledLabelColor = Color.Black,
-                cursorColor = Color.Black
-            )
+            colors = PizzaTextFieldColors
         )
         Spacer(modifier = Modifier.height(24.dp))
         Button(
@@ -99,27 +84,22 @@ fun EnterCodeScreen(state: AuthUiState, viewModel: AuthViewModel) {
             modifier = Modifier
                 .fillMaxWidth()
                 .height(56.dp),
-            enabled = !state.isLoading,
-            colors = ButtonDefaults.buttonColors(
-                containerColor = OrangePizza,
-                contentColor = Color.White,
-                disabledContainerColor = OrangePizza.copy(alpha = 0.5f),
-                disabledContentColor = Color.White.copy(alpha = 0.5f)
-            )
+            enabled = true,
+            colors = PizzaButtonColors
         ) {
             Text("Войти", fontSize = 20.sp)
         }
         Spacer(modifier = Modifier.height(12.dp))
-        if (screen.secondsLeft > 0) {
+        if (state.secondsLeft > 0) {
             Text(
-                text = "Запросить код повторно можно через ${screen.secondsLeft} секунд",
+                text = "Запросить код повторно можно через ${state.secondsLeft} секунд",
                 color = Color.Gray,
                 fontSize = 18.sp
             )
         } else {
             TextButton(
                 onClick = viewModel::onResendCodeClicked,
-                enabled = !state.isLoading,
+                enabled = true,
                 colors = ButtonDefaults.textButtonColors(
                     contentColor = Color.Black,
                     disabledContentColor = Color.Black.copy(alpha = 0.5f)
@@ -136,9 +116,9 @@ fun EnterCodeScreen(state: AuthUiState, viewModel: AuthViewModel) {
         if (state.error != null) {
             Spacer(modifier = Modifier.height(12.dp))
             Text(
-                text = if (state.error?.contains("400") == true || state.error?.contains("Bad Request") == true) {
+                text = if (state.error.contains("400") || state.error.contains("Bad Request")) {
                     "Вы ввели неверный код. Попробуйте ещё раз."
-                } else state.error ?: "",
+                } else state.error,
                 color = Color.Red,
                 fontSize = 18.sp
             )
