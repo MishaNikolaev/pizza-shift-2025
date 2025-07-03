@@ -1,4 +1,4 @@
-package com.nmichail.pizza_shift_2025.presentation.screens.auth.components
+package com.nmichail.pizza_shift_2025.presentation.screens.auth.ui
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -24,12 +24,15 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.nmichail.pizza_shift_2025.presentation.screens.auth.AuthViewModel
+import com.nmichail.pizza_shift_2025.presentation.screens.auth.presentation.AuthViewModel
+import com.nmichail.pizza_shift_2025.presentation.screens.auth.presentation.AuthUiState
 import com.nmichail.pizza_shift_2025.presentation.theme.OrangePizza
+import com.nmichail.pizza_shift_2025.presentation.theme.PizzaTextFieldColors
+import com.nmichail.pizza_shift_2025.presentation.theme.PizzaButtonColors
 
 
 @Composable
-fun EnterPhoneScreen(state: AuthUiState, viewModel: AuthViewModel) {
+fun EnterPhoneScreen(state: AuthUiState.EnterPhone, viewModel: AuthViewModel) {
     val focusManager = LocalFocusManager.current
     Column(
         modifier = Modifier
@@ -57,15 +60,7 @@ fun EnterPhoneScreen(state: AuthUiState, viewModel: AuthViewModel) {
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Phone),
             singleLine = true,
             modifier = Modifier.fillMaxWidth(),
-            colors = OutlinedTextFieldDefaults.colors(
-                focusedBorderColor = Color.Black,
-                unfocusedBorderColor = Color.Black,
-                disabledBorderColor = Color.Black,
-                focusedLabelColor = Color.Black,
-                unfocusedLabelColor = Color.Black,
-                disabledLabelColor = Color.Black,
-                cursorColor = Color.Black
-            )
+            colors = PizzaTextFieldColors
         )
         Spacer(modifier = Modifier.height(24.dp))
         Button(
@@ -76,13 +71,8 @@ fun EnterPhoneScreen(state: AuthUiState, viewModel: AuthViewModel) {
             modifier = Modifier
                 .fillMaxWidth()
                 .height(56.dp),
-            enabled = !state.isLoading,
-            colors = ButtonDefaults.buttonColors(
-                containerColor = OrangePizza,
-                contentColor = Color.White,
-                disabledContainerColor = OrangePizza.copy(alpha = 0.5f),
-                disabledContentColor = Color.White.copy(alpha = 0.5f)
-            )
+            enabled = true,
+            colors = PizzaButtonColors
         ) {
             Text("Продолжить", fontSize = 20.sp)
         }
