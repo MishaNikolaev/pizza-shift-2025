@@ -1,6 +1,6 @@
 package com.nmichail.pizza_shift_2025.domain.repository
 
-import com.nmichail.pizza_shift_2025.domain.entities.Result
+import com.nmichail.pizza_shift_2025.presentation.util.Result
 
 interface AuthRepository {
 

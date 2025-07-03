@@ -1,4 +1,4 @@
-package com.nmichail.pizza_shift_2025.domain.entities
+package com.nmichail.pizza_shift_2025.presentation.util
 
 sealed class Result<out T> {
 

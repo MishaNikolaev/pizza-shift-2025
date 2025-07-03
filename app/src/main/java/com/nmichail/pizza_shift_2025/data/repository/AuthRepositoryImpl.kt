@@ -3,7 +3,7 @@ package com.nmichail.pizza_shift_2025.data.repository
 import com.nmichail.pizza_shift_2025.data.dto.OtpRequestDto
 import com.nmichail.pizza_shift_2025.data.dto.SignInRequestDto
 import com.nmichail.pizza_shift_2025.data.remote.AuthApi
-import com.nmichail.pizza_shift_2025.domain.entities.Result
+import com.nmichail.pizza_shift_2025.presentation.util.Result
 import com.nmichail.pizza_shift_2025.domain.repository.AuthRepository
 import com.nmichail.pizza_shift_2025.domain.repository.SessionRepository
 import javax.inject.Inject

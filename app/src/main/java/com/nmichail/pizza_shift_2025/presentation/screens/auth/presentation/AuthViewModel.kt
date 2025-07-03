@@ -1,12 +1,11 @@
 package com.nmichail.pizza_shift_2025.presentation.screens.auth.presentation
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.nmichail.pizza_shift_2025.domain.usecase.GetAuthorizedUseCase
 import com.nmichail.pizza_shift_2025.domain.usecase.SetIsAuthorizedUseCase
 import com.nmichail.pizza_shift_2025.domain.usecase.RequestOtpUseCase
-import com.nmichail.pizza_shift_2025.domain.entities.Result
+import com.nmichail.pizza_shift_2025.presentation.util.Result
 import com.nmichail.pizza_shift_2025.domain.usecase.SignInUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
