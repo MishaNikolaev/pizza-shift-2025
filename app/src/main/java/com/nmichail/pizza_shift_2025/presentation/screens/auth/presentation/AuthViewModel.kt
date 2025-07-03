@@ -21,7 +21,6 @@ class AuthViewModel @Inject constructor(
     private val requestOtpUseCase: RequestOtpUseCase,
     private val signInUseCase: SignInUseCase,
     private val getAuthorizedUseCase: GetAuthorizedUseCase,
-    private val setIsAuthorizedUseCase: SetIsAuthorizedUseCase
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow<AuthUiState>(AuthUiState.EnterPhone())
@@ -60,6 +59,7 @@ class AuthViewModel @Inject constructor(
             when (val result = requestOtpUseCase(phone)) {
                 is Result.Success -> {
                     _uiState.value = AuthUiState.EnterCode(phone = phone, code = "", secondsLeft = 60)
+                    startTimer(60)
                 }
                 is Result.Error -> {
                     _uiState.value = current.copy(error = result.reason)
@@ -98,6 +98,7 @@ class AuthViewModel @Inject constructor(
             when (val result = requestOtpUseCase(phone)) {
                 is Result.Success -> {
                     _uiState.value = current.copy(code = "", secondsLeft = 60)
+                    startTimer(60)
                 }
                 is Result.Error -> {
                     _uiState.value = current.copy(error = result.reason)
