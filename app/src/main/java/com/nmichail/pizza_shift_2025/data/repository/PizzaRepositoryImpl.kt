@@ -1,0 +1,39 @@
+package com.nmichail.pizza_shift_2025.data.repository
+
+import android.util.Log
+import com.nmichail.pizza_shift_2025.data.remote.PizzaApi
+import com.nmichail.pizza_shift_2025.data.dto.PizzaDto
+import com.nmichail.pizza_shift_2025.data.dto.PizzaCatalogDto
+import com.nmichail.pizza_shift_2025.data.dto.SizeDto
+import com.nmichail.pizza_shift_2025.domain.entities.Pizza
+import com.nmichail.pizza_shift_2025.domain.entities.PizzaIngredient
+import com.nmichail.pizza_shift_2025.domain.entities.Topping
+import com.nmichail.pizza_shift_2025.domain.entities.PizzaSize
+import com.nmichail.pizza_shift_2025.domain.entities.PizzaDough
+import com.nmichail.pizza_shift_2025.domain.repository.PizzaRepository
+import javax.inject.Inject
+
+class PizzaRepositoryImpl @Inject constructor(
+    private val api: PizzaApi
+) : PizzaRepository {
+    override suspend fun getCatalog(): List<Pizza> {
+        val dto = api.getCatalog()
+        //dto.catalog.forEach {
+        //    Log.d("PizzaCatalog", "Pizza: ${it.name}, img: ${it.img}")
+        //}
+        if (!dto.success) throw Exception(dto.reason ?: "Unknown error")
+        return dto.catalog.map { it.toDomain() }
+    }
+
+    private fun PizzaDto.toDomain(): Pizza = Pizza(
+        id = id,
+        name = name,
+        description = description,
+        imageUrl = if (img != null) {
+            if (img.startsWith("http")) img else "https://shift-intensive.ru/api/$img"
+        } else {
+            null
+        },
+        price = sizes.minByOrNull { it.price }?.price ?: 0
+    )
+} 

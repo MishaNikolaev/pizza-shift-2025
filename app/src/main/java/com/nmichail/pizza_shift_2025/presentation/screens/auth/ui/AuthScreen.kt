@@ -1,5 +1,6 @@
 package com.nmichail.pizza_shift_2025.presentation.screens.auth.ui
 
+import android.util.Log
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -16,6 +17,7 @@ fun AuthScreen(
 ) {
 
     LaunchedEffect(Unit) {
+       // Log.d("AuthScreen", "Calling checkAuthorization() on start")
         viewModel.checkAuthorization()
     }
 
@@ -23,7 +25,9 @@ fun AuthScreen(
 
     LaunchedEffect(Unit) {
         viewModel.isAuthorized.collect { authorized ->
+           // Log.d("AuthScreen", "isAuthorized.collect: $authorized")
             if (authorized) {
+             //   Log.d("AuthScreen", "onAuthSuccess called, navigating to main")
                 onAuthSuccess()
             }
         }

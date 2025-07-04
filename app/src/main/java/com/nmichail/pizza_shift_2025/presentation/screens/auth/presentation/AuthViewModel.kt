@@ -31,6 +31,9 @@ class AuthViewModel @Inject constructor(
     private val _isAuthorized = MutableStateFlow(false)
     val isAuthorized: StateFlow<Boolean> = _isAuthorized
 
+    private val _isAuthCheckFinished = MutableStateFlow(false)
+    val isAuthCheckFinished = _isAuthCheckFinished.asStateFlow()
+
     private val currentEnterPhone: AuthUiState.EnterPhone?
         get() = _uiState.value as? AuthUiState.EnterPhone
 
@@ -122,6 +125,7 @@ class AuthViewModel @Inject constructor(
         viewModelScope.launch {
             val authorized = getAuthorizedUseCase.invoke()
             _isAuthorized.value = authorized
+            _isAuthCheckFinished.value = true
         }
     }
 } 
