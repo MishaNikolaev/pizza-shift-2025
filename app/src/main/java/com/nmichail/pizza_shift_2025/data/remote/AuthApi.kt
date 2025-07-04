@@ -19,7 +19,4 @@ interface AuthApi {
 
     @GET("users/session")
     suspend fun getSession(@Header("Authorization") authorization: String): SessionResponse
-
-    suspend fun getSessionWithToken(token: String): SessionResponse =
-        getSession("Bearer $token")
 } 
