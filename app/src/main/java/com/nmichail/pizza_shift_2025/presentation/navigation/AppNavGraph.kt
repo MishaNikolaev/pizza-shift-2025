@@ -47,13 +47,11 @@ fun AppNavGraph(
 ) {
     val viewModel: AuthViewModel = hiltViewModel()
     val isAuthorized by viewModel.isAuthorized.collectAsState()
-    val checked = rememberSaveable { mutableStateOf(false) }
     val isAuthCheckFinished by viewModel.isAuthCheckFinished.collectAsState()
     var currentTab by remember { mutableStateOf(BottomBarTab.PIZZA) }
 
     LaunchedEffect(Unit) {
         viewModel.checkAuthorization()
-        checked.value = true
     }
 
     if (!isAuthCheckFinished) {

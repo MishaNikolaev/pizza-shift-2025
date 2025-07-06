@@ -25,8 +25,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
 import com.nmichail.pizza_shift_2025.presentation.screens.catalog.presentation.CatalogUiState
 import com.nmichail.pizza_shift_2025.presentation.screens.catalog.presentation.CatalogViewModel
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
+
 import android.util.Log
 import com.nmichail.pizza_shift_2025.domain.entities.Pizza
 
@@ -45,22 +44,27 @@ fun CatalogScreen(
         }
         is CatalogUiState.Success -> {
             val pizzas = (state as CatalogUiState.Success).pizzas
-            Column(
+            LazyColumn(
                 modifier = Modifier
                     .fillMaxSize()
-                    .background(Color.White)
-                    .verticalScroll(rememberScrollState())
+                    .background(Color.White),
+                contentPadding = PaddingValues(vertical = 32.dp)
             ) {
-                Spacer(modifier = Modifier.height(32.dp))
-                Text(
-                    text = "Пицца",
-                    style = MaterialTheme.typography.headlineMedium.copy(fontSize = 24.sp, fontWeight = FontWeight.Bold),
-                    modifier = Modifier.padding(start = 25.dp, top = 12.dp)
-                )
-                pizzas.forEach { pizza ->
+                item {
+                    Text(
+                        text = "Пицца",
+                        style = MaterialTheme.typography.headlineMedium.copy(fontSize = 24.sp, fontWeight = FontWeight.Bold),
+                        modifier = Modifier.padding(start = 25.dp, top = 12.dp, bottom = 16.dp)
+                    )
+                }
+                
+                items(pizzas) { pizza ->
                     PizzaCard(pizza = pizza, onClick = { onPizzaClick(pizza.id) })
                 }
-                Spacer(modifier = Modifier.height(48.dp))
+                
+                item {
+                    Spacer(modifier = Modifier.height(48.dp))
+                }
             }
         }
     }
