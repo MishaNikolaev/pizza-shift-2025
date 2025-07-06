@@ -1,5 +1,6 @@
 package com.nmichail.pizza_shift_2025.presentation.screens.auth.ui
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -42,6 +43,7 @@ fun EnterCodeScreen(state: AuthUiState.EnterCode, viewModel: AuthViewModel) {
     Column(
         modifier = Modifier
             .fillMaxSize()
+            .background(Color.White)
             .padding(24.dp),
         verticalArrangement = Arrangement.Top,
         horizontalAlignment = Alignment.CenterHorizontally
