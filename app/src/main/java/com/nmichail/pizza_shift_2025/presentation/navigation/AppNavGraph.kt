@@ -21,11 +21,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.ui.Alignment
-
-sealed class Screen(val route: String) {
-    object Auth : Screen("auth")
-    object Main : Screen("main") 
-}
+import com.nmichail.pizza_shift_2025.presentation.screens.catalog_detail.ui.CatalogDetailScreen
 
 @Composable
 fun AppNavGraph(
@@ -66,7 +62,23 @@ fun AppNavGraph(
             )
         }
         composable(Screen.Main.route) {
-            CatalogScreen()
+            CatalogScreen(
+                onPizzaClick = { pizzaId ->
+                    navController.navigate(Screen.PizzaDetail.createRoute(pizzaId))
+                }
+            )
+        }
+        composable(
+            route = Screen.PizzaDetail.route,
+            arguments = listOf(
+                androidx.navigation.navArgument("pizzaId") { type = androidx.navigation.NavType.StringType }
+            )
+        ) { backStackEntry ->
+            val pizzaId = backStackEntry.arguments?.getString("pizzaId") ?: ""
+            CatalogDetailScreen(
+                pizzaId = pizzaId,
+                onBack = { navController.popBackStack() }
+            )
         }
     }
 } 

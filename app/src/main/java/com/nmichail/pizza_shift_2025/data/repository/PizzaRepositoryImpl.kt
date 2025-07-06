@@ -5,11 +5,12 @@ import com.nmichail.pizza_shift_2025.data.remote.PizzaApi
 import com.nmichail.pizza_shift_2025.data.dto.PizzaDto
 import com.nmichail.pizza_shift_2025.data.dto.PizzaCatalogDto
 import com.nmichail.pizza_shift_2025.data.dto.SizeDto
+import com.nmichail.pizza_shift_2025.data.dto.ToppingDto
 import com.nmichail.pizza_shift_2025.domain.entities.Pizza
 import com.nmichail.pizza_shift_2025.domain.entities.PizzaIngredient
-import com.nmichail.pizza_shift_2025.domain.entities.Topping
 import com.nmichail.pizza_shift_2025.domain.entities.PizzaSize
 import com.nmichail.pizza_shift_2025.domain.entities.PizzaDough
+import com.nmichail.pizza_shift_2025.domain.entities.PizzaTopping
 import com.nmichail.pizza_shift_2025.domain.repository.PizzaRepository
 import javax.inject.Inject
 
@@ -25,6 +26,16 @@ class PizzaRepositoryImpl @Inject constructor(
         return dto.catalog.map { it.toDomain() }
     }
 
+    private fun ToppingDto.toDomain(): PizzaTopping = PizzaTopping(
+        type = type,
+        price = price,
+        img = if (img != null) {
+            if (img.startsWith("http")) img else "https://shift-intensive.ru/api/$img"
+        } else {
+            null
+        }
+    )
+
     private fun PizzaDto.toDomain(): Pizza = Pizza(
         id = id,
         name = name,
@@ -34,6 +45,9 @@ class PizzaRepositoryImpl @Inject constructor(
         } else {
             null
         },
-        price = sizes.minByOrNull { it.price }?.price ?: 0
+        price = sizes.minByOrNull { it.price }?.price ?: 0,
+        sizes = sizes.map { it.type },
+        toppings = toppings.map { it.toDomain() },
+        doughs = doughs.map { it.type }
     )
 } 

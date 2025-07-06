@@ -1,9 +1,7 @@
 package com.nmichail.pizza_shift_2025.domain.entities
 
-enum class Topping {
-    PINEAPPLE,
-    MOZZARELLA,
-    PEPPERONI,
-    GREEN_PEPPER,
-    MUSHROOMS
-} 
+data class PizzaTopping(
+    val type: String,
+    val price: Int,
+    val img: String?
+)
