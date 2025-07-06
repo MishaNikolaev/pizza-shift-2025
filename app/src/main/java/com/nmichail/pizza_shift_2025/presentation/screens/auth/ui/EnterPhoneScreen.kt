@@ -7,9 +7,11 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
@@ -26,6 +28,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.nmichail.pizza_shift_2025.presentation.screens.auth.presentation.AuthViewModel
 import com.nmichail.pizza_shift_2025.presentation.screens.auth.presentation.AuthUiState
+import com.nmichail.pizza_shift_2025.presentation.screens.auth.presentation.OtpState
 import com.nmichail.pizza_shift_2025.presentation.theme.OrangePizza
 import com.nmichail.pizza_shift_2025.presentation.theme.PizzaTextFieldColors
 import com.nmichail.pizza_shift_2025.presentation.theme.PizzaButtonColors
@@ -60,7 +63,8 @@ fun EnterPhoneScreen(state: AuthUiState.EnterPhone, viewModel: AuthViewModel) {
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Phone),
             singleLine = true,
             modifier = Modifier.fillMaxWidth(),
-            colors = PizzaTextFieldColors
+            colors = PizzaTextFieldColors,
+            enabled = state.otpState !is OtpState.Loading
         )
         Spacer(modifier = Modifier.height(24.dp))
         Button(
@@ -71,14 +75,30 @@ fun EnterPhoneScreen(state: AuthUiState.EnterPhone, viewModel: AuthViewModel) {
             modifier = Modifier
                 .fillMaxWidth()
                 .height(56.dp),
-            enabled = true,
+            enabled = state.otpState !is OtpState.Loading,
             colors = PizzaButtonColors
         ) {
-            Text("Продолжить", fontSize = 20.sp)
+            if (state.otpState is OtpState.Loading) {
+                CircularProgressIndicator(
+                    modifier = Modifier.size(24.dp),
+                    color = Color.White
+                )
+            } else {
+                Text("Продолжить", fontSize = 20.sp)
+            }
         }
-        if (state.error != null) {
-            Spacer(modifier = Modifier.height(12.dp))
-            Text(text = state.error, color = Color.Red)
+        
+        when (state.otpState) {
+            is OtpState.Error -> {
+                Spacer(modifier = Modifier.height(12.dp))
+                Text(text = state.otpState.message, color = Color.Red)
+            }
+            is OtpState.Loading -> {
+                Spacer(modifier = Modifier.height(12.dp))
+                Text(text = "Отправляем код...", color = OrangePizza)
+            }
+            is OtpState.None -> {
+            }
         }
     }
 }

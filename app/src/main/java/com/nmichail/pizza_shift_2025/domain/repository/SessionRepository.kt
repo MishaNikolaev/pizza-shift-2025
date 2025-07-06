@@ -4,8 +4,8 @@ interface SessionRepository {
 
     suspend fun isAuthorized(): Boolean
 
-    suspend fun setToken(token: String?)
+    fun setToken(token: String?)
 
-    suspend fun getToken(): String?
+    fun getToken(): String?
 
 }
