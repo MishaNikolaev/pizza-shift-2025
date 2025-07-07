@@ -7,6 +7,7 @@ data class Pizza(
     val imageUrl: String?,
     val price: Int,
     val sizes: List<String> = emptyList(),
+    val sizePrices: Map<String, Int> = emptyMap(),
     val toppings: List<PizzaTopping> = emptyList(),
     val doughs: List<String> = emptyList()
 )

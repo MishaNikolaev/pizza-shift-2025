@@ -33,8 +33,13 @@ import com.nmichail.pizza_shift_2025.presentation.screens.profile.ui.ProfileScre
 sealed class Screen(val route: String) {
     object Auth : Screen("auth")
     object Catalog : Screen("catalog")
-    object CatalogDetail : Screen("catalog_detail/{pizzaId}") {
-        fun createRoute(pizzaId: String) = "catalog_detail/$pizzaId"
+    object CatalogDetail : Screen("catalog_detail/{pizzaId}?size={size}&toppings={toppings}&cartItemId={cartItemId}") {
+        fun createRoute(pizzaId: String, size: String? = null, toppings: Set<String>? = null, cartItemId: String? = null): String {
+            val sizePart = size?.let { "&size=$it" } ?: ""
+            val toppingsPart = toppings?.takeIf { it.isNotEmpty() }?.joinToString(",")?.let { "&toppings=$it" } ?: ""
+            val cartItemIdPart = cartItemId?.let { "&cartItemId=$it" } ?: ""
+            return "catalog_detail/$pizzaId?${sizePart.removePrefix("&")}${if (sizePart.isNotEmpty() && toppingsPart.isNotEmpty()) "&" else ""}${toppingsPart.removePrefix("&")}${cartItemIdPart}".removeSuffix("?")
+        }
     }
     object Orders : Screen("orders")
     object Cart : Screen("cart")
@@ -131,8 +136,15 @@ fun AppNavGraph(
             
             composable(Screen.CatalogDetail.route) { backStackEntry ->
                 val pizzaId = backStackEntry.arguments?.getString("pizzaId") ?: ""
+                val size = backStackEntry.arguments?.getString("size")
+                val toppingsString = backStackEntry.arguments?.getString("toppings")
+                val toppings = toppingsString?.split(",")?.filter { it.isNotBlank() }?.toSet() ?: emptySet()
+                val cartItemId = backStackEntry.arguments?.getString("cartItemId")
                 CatalogDetailScreen(
                     pizzaId = pizzaId,
+                    initialSize = size,
+                    initialToppings = toppings,
+                    cartItemId = cartItemId,
                     onBack = {
                         navController.popBackStack()
                     }
@@ -144,7 +156,14 @@ fun AppNavGraph(
             }
             
             composable(Screen.Cart.route) {
-                CartScreen()
+                CartScreen(navController = navController, onNavigateToCatalog = {
+                    currentTab = BottomBarTab.PIZZA
+                    navController.navigate(Screen.Catalog.route) {
+                        popUpTo(Screen.Catalog.route) { inclusive = false }
+                        launchSingleTop = true
+                        restoreState = true
+                    }
+                })
             }
             
             composable(Screen.Profile.route) {

@@ -1,5 +1,6 @@
 package com.nmichail.pizza_shift_2025.presentation.screens.catalog_detail.ui
 
+import androidx.compose.foundation.border
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -24,6 +25,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import com.nmichail.pizza_shift_2025.domain.entities.PizzaTopping
+import com.nmichail.pizza_shift_2025.presentation.theme.OrangePizza
 import com.nmichail.pizza_shift_2025.presentation.util.toReadableTopping
 
 
@@ -44,6 +46,17 @@ fun ToppingCard(
             )
             .clip(RoundedCornerShape(18.dp))
             .background(Color.White)
+            .then(
+                if (selected) {
+                    Modifier.border(
+                        width = 2.dp,
+                        color = OrangePizza,
+                        shape = RoundedCornerShape(18.dp)
+                    )
+                } else {
+                    Modifier
+                }
+            )
             .clickable { onClick() }
     ) {
         Column(

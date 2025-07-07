@@ -8,6 +8,10 @@ data class PizzaDetailUiState(
 
     val selectedSize: String? = null,
 
-    val selectedToppings: Set<String> = emptySet()
+    val selectedToppings: Set<String> = emptySet(),
+    
+    val isAddedToCart: Boolean = false,
+
+    val cartItemId: String? = null
 
 )
