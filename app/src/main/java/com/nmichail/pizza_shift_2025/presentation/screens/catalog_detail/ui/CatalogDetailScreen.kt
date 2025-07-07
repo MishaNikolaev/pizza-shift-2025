@@ -8,6 +8,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -36,6 +37,7 @@ import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.runtime.LaunchedEffect
 import com.nmichail.pizza_shift_2025.domain.entities.PizzaTopping
 import androidx.compose.ui.res.painterResource
+import com.nmichail.pizza_shift_2025.presentation.theme.OrangePizza
 import com.nmichail.pizza_shift_2025.presentation.util.toReadableSize
 import com.nmichail.pizza_shift_2025.presentation.util.toReadableDough
 import com.nmichail.pizza_shift_2025.presentation.util.toReadableTopping
@@ -45,17 +47,21 @@ import com.nmichail.pizza_shift_2025.presentation.util.toReadableSizeName
 @Composable
 fun CatalogDetailScreen(
     pizzaId: String,
+    initialSize: String? = null,
+    initialToppings: Set<String> = emptySet(),
+    cartItemId: String? = null,
     onBack: () -> Unit,
     viewModel: PizzaDetailViewModel = hiltViewModel()
 ) {
     val state by viewModel.uiState.collectAsState()
 
     LaunchedEffect(pizzaId) {
-        viewModel.loadPizza(pizzaId)
+        viewModel.loadPizza(pizzaId, initialSize, initialToppings, cartItemId)
     }
 
     val pizza = state.pizza
     var backPressed by remember { mutableStateOf(false) }
+    val isEdit = state.cartItemId != null
 
     Column(
         modifier = Modifier
@@ -214,7 +220,38 @@ fun CatalogDetailScreen(
                 }
             }
             
-            Spacer(modifier = Modifier.height(16.dp))
+            Spacer(modifier = Modifier.height(32.dp))
+            
+            Button(
+                onClick = { 
+                    if (!state.isAddedToCart) {
+                        viewModel.addToCart(cartItemId = state.cartItemId)
+                    }
+                },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 20.dp)
+                    .height(56.dp),
+                colors = androidx.compose.material3.ButtonDefaults.buttonColors(
+                    containerColor = if (state.isAddedToCart || isEdit) Color.Gray else OrangePizza,
+                    disabledContainerColor = Color.Gray
+                ),
+                enabled = !state.isAddedToCart
+            ) {
+                Text(
+                    text = when {
+                        state.isAddedToCart && isEdit -> "Отредактировано"
+                        isEdit -> "Отредактировать"
+                        state.isAddedToCart -> "Добавлено в корзину"
+                        else -> "Добавить в корзину"
+                    },
+                    color = Color.White,
+                    fontSize = 16.sp,
+                    fontWeight = FontWeight.Bold
+                )
+            }
+            
+            Spacer(modifier = Modifier.height(32.dp))
         }
     }
 }

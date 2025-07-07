@@ -128,7 +128,7 @@ class AuthViewModel @Inject constructor(
 
     fun checkAuthorization() {
         viewModelScope.launch {
-            val authorized = getAuthorizedUseCase.invoke()
+            val authorized = getAuthorizedUseCase()
             _isAuthorized.value = authorized
             _isAuthCheckFinished.value = true
         }

@@ -15,13 +15,11 @@ import com.nmichail.pizza_shift_2025.domain.repository.PizzaRepository
 import javax.inject.Inject
 
 class PizzaRepositoryImpl @Inject constructor(
-    private val api: PizzaApi
+    private val api: PizzaApi,
+    private val imageBaseUrl: String
 ) : PizzaRepository {
     override suspend fun getCatalog(): List<Pizza> {
         val dto = api.getCatalog()
-        //dto.catalog.forEach {
-        //    Log.d("PizzaCatalog", "Pizza: ${it.name}, img: ${it.img}")
-        //}
         if (!dto.success) throw Exception(dto.reason ?: "Unknown error")
         return dto.catalog.map { it.toDomain() }
     }
@@ -30,7 +28,7 @@ class PizzaRepositoryImpl @Inject constructor(
         type = type,
         price = price,
         img = if (img != null) {
-            if (img.startsWith("http")) img else "https://shift-intensive.ru/api/$img"
+            if (img.startsWith("http")) img else "$imageBaseUrl$img"
         } else {
             null
         }
@@ -41,12 +39,13 @@ class PizzaRepositoryImpl @Inject constructor(
         name = name,
         description = description,
         imageUrl = if (img != null) {
-            if (img.startsWith("http")) img else "https://shift-intensive.ru/api/$img"
+            if (img.startsWith("http")) img else "$imageBaseUrl$img"
         } else {
             null
         },
         price = sizes.minByOrNull { it.price }?.price ?: 0,
         sizes = sizes.map { it.type },
+        sizePrices = sizes.associate { it.type to it.price },
         toppings = toppings.map { it.toDomain() },
         doughs = doughs.map { it.type }
     )

@@ -6,11 +6,14 @@ import android.util.Log
 import com.nmichail.pizza_shift_2025.data.remote.AuthApi
 import com.nmichail.pizza_shift_2025.data.remote.PizzaApi
 import com.nmichail.pizza_shift_2025.data.repository.AuthRepositoryImpl
+import com.nmichail.pizza_shift_2025.data.repository.CartRepositoryImpl
 import com.nmichail.pizza_shift_2025.data.repository.PizzaRepositoryImpl
 import com.nmichail.pizza_shift_2025.data.repository.SessionRepositoryImpl
 import com.nmichail.pizza_shift_2025.domain.repository.AuthRepository
+import com.nmichail.pizza_shift_2025.domain.repository.CartRepository
 import com.nmichail.pizza_shift_2025.domain.repository.PizzaRepository
 import com.nmichail.pizza_shift_2025.domain.repository.SessionRepository
+import com.nmichail.pizza_shift_2025.domain.usecase.AddToCartUseCase
 import com.nmichail.pizza_shift_2025.domain.usecase.GetPizzaCatalogUseCase
 import dagger.Module
 import dagger.Provides
@@ -19,6 +22,7 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import javax.inject.Named
 import javax.inject.Singleton
 
 @Module
@@ -45,7 +49,6 @@ object AppModule {
     @Provides
     @Singleton
     fun provideSharedPreferences(@ApplicationContext context: Context): SharedPreferences {
-        //Log.d("AppModule", "provideSharedPreferences: context=$context, name=session_prefs")
         return context.getSharedPreferences("session_prefs", Context.MODE_PRIVATE)
     }
 
@@ -63,11 +66,30 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun providePizzaRepository(api: PizzaApi): PizzaRepository =
-        PizzaRepositoryImpl(api)
+    @Named("ImageBaseUrl")
+    fun provideImageBaseUrl(): String = "https://shift-intensive.ru/api/"
+
+    @Provides
+    @Singleton
+    fun providePizzaRepository(api: PizzaApi, @Named("ImageBaseUrl") imageBaseUrl: String): PizzaRepository =
+        PizzaRepositoryImpl(api, imageBaseUrl)
+
+    @Provides
+    @Singleton
+    fun provideGson(): com.google.gson.Gson = com.google.gson.Gson()
+
+    @Provides
+    @Singleton
+    fun provideCartRepository(prefs: SharedPreferences, gson: com.google.gson.Gson): CartRepository =
+        CartRepositoryImpl(prefs, gson)
 
     @Provides
     @Singleton
     fun provideGetPizzaCatalogUseCase(repository: PizzaRepository): GetPizzaCatalogUseCase =
         GetPizzaCatalogUseCase(repository)
+
+    @Provides
+    @Singleton
+    fun provideAddToCartUseCase(repository: CartRepository): AddToCartUseCase =
+        AddToCartUseCase(repository)
 } 
