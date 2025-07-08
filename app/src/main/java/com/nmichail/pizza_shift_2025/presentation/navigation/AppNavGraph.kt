@@ -22,6 +22,7 @@ import androidx.navigation.compose.rememberNavController
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.nmichail.pizza_shift_2025.presentation.components.BottomBar
 import com.nmichail.pizza_shift_2025.presentation.components.BottomBarTab
+import com.nmichail.pizza_shift_2025.presentation.screens.auth.presentation.AuthUiState
 import com.nmichail.pizza_shift_2025.presentation.screens.auth.ui.AuthScreen
 import com.nmichail.pizza_shift_2025.presentation.screens.auth.presentation.AuthViewModel
 import com.nmichail.pizza_shift_2025.presentation.screens.catalog.ui.CatalogScreen
@@ -29,6 +30,8 @@ import com.nmichail.pizza_shift_2025.presentation.screens.catalog_detail.ui.Cata
 import com.nmichail.pizza_shift_2025.presentation.screens.orders.ui.OrdersScreen
 import com.nmichail.pizza_shift_2025.presentation.screens.cart.ui.CartScreen
 import com.nmichail.pizza_shift_2025.presentation.screens.profile.ui.ProfileScreen
+import com.nmichail.pizza_shift_2025.presentation.screens.payment.ui.PaymentScreen
+import kotlinx.coroutines.Dispatchers
 
 sealed class Screen(val route: String) {
     object Auth : Screen("auth")
@@ -44,6 +47,7 @@ sealed class Screen(val route: String) {
     object Orders : Screen("orders")
     object Cart : Screen("cart")
     object Profile : Screen("profile")
+    object Payment : Screen("payment")
 }
 
 @Composable
@@ -168,6 +172,20 @@ fun AppNavGraph(
             
             composable(Screen.Profile.route) {
                 ProfileScreen()
+            }
+            composable(Screen.Payment.route) {
+                val authUiState by viewModel.uiState.collectAsState()
+                val phoneFromFlow by viewModel.authorizedPhoneFlow.collectAsState()
+                val phone = phoneFromFlow?.takeIf { !it.isNullOrBlank() } ?: when (authUiState) {
+                    is AuthUiState.EnterPhone -> (authUiState as AuthUiState.EnterPhone).phone
+                    is AuthUiState.EnterCode -> (authUiState as AuthUiState.EnterCode).phone
+                    else -> ""
+                }
+                PaymentScreen(
+                    phoneFromAuth = phone,
+                    onBack = { navController.popBackStack() },
+                    onContinue = { /* TODO: переход на шаг 2 */ }
+                )
             }
         }
     }

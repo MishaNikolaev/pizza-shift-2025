@@ -8,10 +8,12 @@ import com.nmichail.pizza_shift_2025.data.remote.PizzaApi
 import com.nmichail.pizza_shift_2025.data.repository.AuthRepositoryImpl
 import com.nmichail.pizza_shift_2025.data.repository.CartRepositoryImpl
 import com.nmichail.pizza_shift_2025.data.repository.PizzaRepositoryImpl
+import com.nmichail.pizza_shift_2025.data.repository.PaymentRepositoryImpl
 import com.nmichail.pizza_shift_2025.data.repository.SessionRepositoryImpl
 import com.nmichail.pizza_shift_2025.domain.repository.AuthRepository
 import com.nmichail.pizza_shift_2025.domain.repository.CartRepository
 import com.nmichail.pizza_shift_2025.domain.repository.PizzaRepository
+import com.nmichail.pizza_shift_2025.domain.repository.PaymentRepository
 import com.nmichail.pizza_shift_2025.domain.repository.SessionRepository
 import com.nmichail.pizza_shift_2025.domain.usecase.AddToCartUseCase
 import com.nmichail.pizza_shift_2025.domain.usecase.GetPizzaCatalogUseCase
@@ -42,9 +44,11 @@ object AppModule {
         retrofit.create(AuthApi::class.java)
 
     @Provides
-    @Singleton
-    fun provideAuthRepository(api: AuthApi, sessionRepository: SessionRepository): AuthRepository =
-        AuthRepositoryImpl(api, sessionRepository)
+    fun provideAuthRepositoryImpl(
+        api: AuthApi,
+        sessionRepository: SessionRepository,
+        @ApplicationContext context: Context
+    ): AuthRepositoryImpl = AuthRepositoryImpl(api, sessionRepository, context)
 
     @Provides
     @Singleton
@@ -76,6 +80,11 @@ object AppModule {
 
     @Provides
     @Singleton
+    fun providePaymentRepository(api: PizzaApi): PaymentRepository =
+        PaymentRepositoryImpl(api)
+
+    @Provides
+    @Singleton
     fun provideGson(): com.google.gson.Gson = com.google.gson.Gson()
 
     @Provides
@@ -92,4 +101,11 @@ object AppModule {
     @Singleton
     fun provideAddToCartUseCase(repository: CartRepository): AddToCartUseCase =
         AddToCartUseCase(repository)
+
+    @Provides
+    @Singleton
+    fun provideAuthRepository(authRepositoryImpl: AuthRepositoryImpl): AuthRepository = authRepositoryImpl
+
+    @Provides
+    fun provideContext(@ApplicationContext context: Context): Context = context
 } 

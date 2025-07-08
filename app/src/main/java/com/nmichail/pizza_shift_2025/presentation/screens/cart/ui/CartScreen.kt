@@ -136,7 +136,7 @@ fun CartScreen(
                     Spacer(modifier = Modifier.height(16.dp))
                     Button(
                         onClick = {
-                            //нужно будет сделать клик оформить заказ
+                            navController.navigate(Screen.Payment.route)
                         },
                         modifier = Modifier
                             .fillMaxWidth()

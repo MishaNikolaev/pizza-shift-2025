@@ -7,10 +7,19 @@ import com.nmichail.pizza_shift_2025.presentation.util.Result
 import com.nmichail.pizza_shift_2025.domain.repository.AuthRepository
 import com.nmichail.pizza_shift_2025.domain.repository.SessionRepository
 import javax.inject.Inject
+import android.content.Context
+import kotlinx.coroutines.flow.first
+import androidx.datastore.preferences.core.edit
+import androidx.datastore.preferences.core.stringPreferencesKey
+import androidx.datastore.preferences.core.MutablePreferences
+import com.nmichail.pizza_shift_2025.dataStore
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 
 class AuthRepositoryImpl @Inject constructor(
     private val api: AuthApi,
-    private val sessionRepository: SessionRepository
+    private val sessionRepository: SessionRepository,
+    private val context: Context
 ) : AuthRepository {
 
     override suspend fun getOtp(phone: String): Result<Unit> = try {
@@ -26,8 +35,36 @@ class AuthRepositoryImpl @Inject constructor(
         if (response.success && response.token != null) {
             sessionRepository.setToken(response.token)
             Result.Success(Unit)
-        } else Result.Error(response.reason ?: "Unknown error")
+        } else {
+            val reason = response.reason ?: "Unknown error"
+            val userMessage = if (reason.contains("400") || reason.contains("Bad Request")) {
+                "Вы ввели неверный код. Попробуйте ещё раз."
+            } else reason
+            Result.Error(userMessage)
+        }
     } catch (e: Exception) {
-        Result.Error(e.message ?: "Unknown error")
+        val message = e.message ?: "Unknown error"
+        val userMessage = if (message.contains("400") || message.contains("Bad Request")) {
+            "Вы ввели неверный код. Попробуйте ещё раз."
+        } else message
+        Result.Error(userMessage)
     }
+
+    companion object {
+        private val PHONE_KEY = stringPreferencesKey("user_phone")
+    }
+
+    suspend fun savePhoneToDataStore(phone: String) {
+        context.dataStore.edit { prefs ->
+            prefs[PHONE_KEY] = phone
+        }
+    }
+
+    suspend fun getPhoneFromDataStore(): String? {
+        val prefs = context.dataStore.data.first()
+        return prefs[PHONE_KEY]
+    }
+
+    val phoneFlow: Flow<String?> = context.dataStore.data
+        .map { it[PHONE_KEY] }
 } 
