@@ -135,7 +135,7 @@ fun AppNavGraph(
             }
             
             composable(Screen.CatalogDetail.route) { backStackEntry ->
-                val pizzaId = backStackEntry.arguments?.getString("pizzaId") ?: ""
+                val pizzaId = requireNotNull(backStackEntry.arguments?.getString("pizzaId")) { "pizzaId is required for CatalogDetailScreen" }
                 val size = backStackEntry.arguments?.getString("size")
                 val toppingsString = backStackEntry.arguments?.getString("toppings")
                 val toppings = toppingsString?.split(",")?.filter { it.isNotBlank() }?.toSet() ?: emptySet()

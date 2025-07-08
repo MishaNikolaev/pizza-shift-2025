@@ -81,7 +81,7 @@ class AuthViewModel @Inject constructor(
         val phone = current.phone.trim()
         val code = current.code.trim()
         if (code.isBlank()) {
-            _uiState.value = current.copy(signInState = SignInState.Error("Введите проверочный код"))
+            _uiState.value = current.copy(signInState = SignInState.Error("Введите проверочный код", "Введите проверочный код"))
             return
         }
         viewModelScope.launch {
@@ -92,7 +92,10 @@ class AuthViewModel @Inject constructor(
                     _isAuthorized.value = true
                 }
                 is Result.Error -> {
-                    _uiState.value = current.copy(signInState = SignInState.Error(result.reason))
+                    val userMessage = if (result.reason.contains("400") || result.reason.contains("Bad Request")) {
+                        "Вы ввели неверный код. Попробуйте ещё раз."
+                    } else result.reason
+                    _uiState.value = current.copy(signInState = SignInState.Error(result.reason, userMessage))
                 }
             }
         }
@@ -109,7 +112,10 @@ class AuthViewModel @Inject constructor(
                     startTimer(60)
                 }
                 is Result.Error -> {
-                    _uiState.value = current.copy(signInState = SignInState.Error(result.reason))
+                    val userMessage = if (result.reason.contains("400") || result.reason.contains("Bad Request")) {
+                        "Вы ввели неверный код. Попробуйте ещё раз."
+                    } else result.reason
+                    _uiState.value = current.copy(signInState = SignInState.Error(result.reason, userMessage))
                 }
             }
         }

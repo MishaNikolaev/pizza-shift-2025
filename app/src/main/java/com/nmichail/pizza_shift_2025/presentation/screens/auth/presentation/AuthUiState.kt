@@ -25,5 +25,5 @@ sealed class OtpState {
 sealed class SignInState {
     object None : SignInState()
     object Loading : SignInState()
-    data class Error(val message: String) : SignInState()
+    data class Error(val message: String, val userMessage: String) : SignInState()
 } 
