@@ -16,7 +16,7 @@ class CartViewModel @Inject constructor(
     private val cartRepository: CartRepository
 ) : ViewModel() {
     
-    private val _uiState = MutableStateFlow(CartUiState())
+    private val _uiState = MutableStateFlow<CartUiState>(CartUiState.Loading)
     val uiState: StateFlow<CartUiState> = _uiState.asStateFlow()
     
     init {
@@ -26,7 +26,7 @@ class CartViewModel @Inject constructor(
     private fun loadCartItems() {
         viewModelScope.launch {
             cartRepository.getCartItems().collect { items ->
-                _uiState.value = CartUiState(
+                _uiState.value = CartUiState.Content(
                     items = items,
                     totalPrice = items.sumOf { it.totalPrice }
                 )
@@ -35,14 +35,10 @@ class CartViewModel @Inject constructor(
     }
     
     fun updateCount(cartItemId: String, count: Int) {
-        viewModelScope.launch {
-            cartRepository.updateCount(cartItemId, count)
-        }
+        cartRepository.updateCount(cartItemId, count)
     }
     
     fun removeItem(cartItemId: String) {
-        viewModelScope.launch {
-            cartRepository.removeFromCart(cartItemId)
-        }
+        cartRepository.removeFromCart(cartItemId)
     }
 } 

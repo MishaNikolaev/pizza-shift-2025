@@ -13,6 +13,12 @@ import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.ui.graphics.Color
 import com.nmichail.pizza_shift_2025.presentation.theme.OrangePizza
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.TextStyle
 
 private val DarkColorScheme = darkColorScheme(
     primary = Purple80,
@@ -56,6 +62,43 @@ fun Pizzashift2025Theme(
         colorScheme = colorScheme,
         typography = Typography,
         content = content
+    )
+}
+
+@Composable
+fun PizzaOutlinedTextField(
+    value: String,
+    onValueChange: (String) -> Unit,
+    modifier: Modifier = Modifier,
+    singleLine: Boolean = true,
+    label: @Composable (() -> Unit)? = null,
+    enabled: Boolean = true,
+    textStyle: TextStyle = TextStyle.Default,
+    placeholder: @Composable (() -> Unit)? = null,
+    keyboardOptions: KeyboardOptions = KeyboardOptions.Default
+) {
+    OutlinedTextField(
+        value = value,
+        onValueChange = onValueChange,
+        modifier = modifier,
+        singleLine = singleLine,
+        enabled = enabled,
+        textStyle = textStyle,
+        label = label,
+        placeholder = placeholder,
+        keyboardOptions = keyboardOptions,
+        colors = OutlinedTextFieldDefaults.colors(
+            focusedBorderColor = Color.Black,
+            unfocusedBorderColor = Color.Black,
+            focusedLabelColor = Color.Gray,
+            unfocusedLabelColor = Color.Gray,
+            cursorColor = Color.Black,
+            focusedTextColor = Color.Black,
+            unfocusedTextColor = Color.Black,
+            focusedContainerColor = Color.White,
+            unfocusedContainerColor = Color.White
+        ),
+        shape = RoundedCornerShape(12.dp)
     )
 }
 

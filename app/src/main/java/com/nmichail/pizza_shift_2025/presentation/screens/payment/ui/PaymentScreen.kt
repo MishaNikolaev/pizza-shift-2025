@@ -15,6 +15,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -38,6 +39,7 @@ import com.nmichail.pizza_shift_2025.presentation.theme.PizzaTextFieldGrayBgColo
 import com.nmichail.pizza_shift_2025.presentation.theme.PizzaTextFieldAllGrayColors
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import com.nmichail.pizza_shift_2025.presentation.theme.PizzaOutlinedTextField
 
 @Composable
 fun PaymentScreen(
@@ -104,24 +106,20 @@ fun PaymentScreen(
         Column(modifier = Modifier.fillMaxWidth()) {
             TextWithStar(text = "Фамилия")
             Spacer(modifier = Modifier.height(8.dp))
-            OutlinedTextField(
+            PizzaOutlinedTextField(
                 value = state.lastname,
                 onValueChange = viewModel::onLastnameChanged,
                 modifier = Modifier.fillMaxWidth(),
-                singleLine = true,
-                colors = PizzaTextFieldAllGrayColors,
-                shape = androidx.compose.foundation.shape.RoundedCornerShape(12.dp)
+                singleLine = true
             )
             Spacer(modifier = Modifier.height(24.dp))
             TextWithStar(text = "Имя")
             Spacer(modifier = Modifier.height(8.dp))
-            OutlinedTextField(
+            PizzaOutlinedTextField(
                 value = state.firstname,
                 onValueChange = viewModel::onFirstnameChanged,
                 modifier = Modifier.fillMaxWidth(),
-                singleLine = true,
-                colors = PizzaTextFieldAllGrayColors,
-                shape = androidx.compose.foundation.shape.RoundedCornerShape(12.dp)
+                singleLine = true
             )
             Spacer(modifier = Modifier.height(24.dp))
             TextWithStar(text = "Номер телефона")
@@ -141,24 +139,20 @@ fun PaymentScreen(
             Spacer(modifier = Modifier.height(24.dp))
             Text(text = "Email", fontSize = 16.sp, color = Color.Black)
             Spacer(modifier = Modifier.height(8.dp))
-            OutlinedTextField(
+            PizzaOutlinedTextField(
                 value = state.email,
                 onValueChange = viewModel::onEmailChanged,
                 modifier = Modifier.fillMaxWidth(),
-                singleLine = true,
-                colors = PizzaTextFieldAllGrayColors,
-                shape = androidx.compose.foundation.shape.RoundedCornerShape(12.dp)
+                singleLine = true
             )
             Spacer(modifier = Modifier.height(24.dp))
             Text(text = "Город", fontSize = 16.sp, color = Color.Black)
             Spacer(modifier = Modifier.height(8.dp))
-            OutlinedTextField(
+            PizzaOutlinedTextField(
                 value = state.city,
                 onValueChange = viewModel::onCityChanged,
                 modifier = Modifier.fillMaxWidth(),
-                singleLine = true,
-                colors = PizzaTextFieldAllGrayColors,
-                shape = androidx.compose.foundation.shape.RoundedCornerShape(12.dp)
+                singleLine = true
             )
         }
         Spacer(modifier = Modifier.height(64.dp))
