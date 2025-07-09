@@ -24,11 +24,14 @@ import com.nmichail.pizza_shift_2025.R
 import com.nmichail.pizza_shift_2025.presentation.theme.OrangePizza
 import com.nmichail.pizza_shift_2025.presentation.theme.PizzaTextFieldColors
 import androidx.compose.ui.text.font.FontWeight
+import androidx.hilt.navigation.compose.hiltViewModel
+import com.nmichail.pizza_shift_2025.presentation.screens.payment.presentation.PaymentViewModel
 
 @Composable
 fun CardPaymentScreen(
     onBack: (() -> Unit)? = null,
-    onPay: (() -> Unit)? = null
+    onPay: (() -> Unit)? = null,
+    viewModel: PaymentViewModel = hiltViewModel()
 ) {
     var cardNumberRaw by remember { mutableStateOf("") }
     val cardNumber = cardNumberRaw.chunked(4).joinToString(" ").take(19)
@@ -39,6 +42,15 @@ fun CardPaymentScreen(
         else -> cardDateRaw.take(2) + "/" + cardDateRaw.drop(2).take(2)
     }
     var cardCvv by remember { mutableStateOf("") }
+    val paySuccess by viewModel.paySuccess.collectAsState()
+    var localError by remember { mutableStateOf<String?>(null) }
+
+    LaunchedEffect(paySuccess) {
+        if (paySuccess) {
+            onPay?.invoke()
+            viewModel.resetPaySuccess()
+        }
+    }
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -104,7 +116,11 @@ fun CardPaymentScreen(
                     value = cardNumber,
                     onValueChange = {
                         val digits = it.filter { ch -> ch.isDigit() }
-                        cardNumberRaw = digits.take(16)
+                        if (it.length < cardNumber.length) {
+                            cardNumberRaw = digits.take(16)
+                        } else {
+                            cardNumberRaw = digits.take(16)
+                        }
                     },
                     modifier = Modifier.fillMaxWidth(),
                     singleLine = true,
@@ -131,7 +147,11 @@ fun CardPaymentScreen(
                             value = cardDate,
                             onValueChange = {
                                 val digits = it.filter { ch -> ch.isDigit() }
-                                cardDateRaw = digits.take(4)
+                                if (it.length < cardDate.length) {
+                                    cardDateRaw = digits.take(4)
+                                } else {
+                                    cardDateRaw = digits.take(4)
+                                }
                             },
                             placeholder = { Text("00/00", color = Color.Gray) },
                             modifier = Modifier.fillMaxWidth(),
@@ -156,7 +176,10 @@ fun CardPaymentScreen(
                         Spacer(modifier = Modifier.height(8.dp))
                         OutlinedTextField(
                             value = cardCvv,
-                            onValueChange = { cardCvv = it },
+                            onValueChange = {
+                                val digits = it.filter { ch -> ch.isDigit() }
+                                cardCvv = digits.take(3)
+                            },
                             modifier = Modifier.fillMaxWidth(),
                             singleLine = true,
                             shape = RoundedCornerShape(12.dp),
@@ -179,7 +202,14 @@ fun CardPaymentScreen(
         }
         Spacer(modifier = Modifier.height(32.dp))
         Button(
-            onClick = { onPay?.invoke() },
+            onClick = {
+                localError = null
+                viewModel.pay(
+                    cardNumber = cardNumberRaw,
+                    cardDate = cardDateRaw,
+                    cardCvv = cardCvv
+                )
+            },
             modifier = Modifier
                 .fillMaxWidth()
                 .height(56.dp),
@@ -187,6 +217,10 @@ fun CardPaymentScreen(
             shape = RoundedCornerShape(16.dp)
         ) {
             Text("Оплатить", fontSize = 20.sp, color = Color.White)
+        }
+        if (localError != null) {
+            Spacer(modifier = Modifier.height(8.dp))
+            Text(localError ?: "", color = Color.Red)
         }
     }
 }

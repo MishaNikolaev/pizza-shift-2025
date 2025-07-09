@@ -35,6 +35,7 @@ import com.nmichail.pizza_shift_2025.presentation.screens.catalog.ui.CatalogScre
 import com.nmichail.pizza_shift_2025.presentation.screens.catalog_detail.ui.CatalogDetailScreen
 import com.nmichail.pizza_shift_2025.presentation.screens.orders.ui.OrdersScreen
 import com.nmichail.pizza_shift_2025.presentation.screens.cart.ui.CartScreen
+import com.nmichail.pizza_shift_2025.presentation.screens.payment.presentation.PaymentViewModel
 import com.nmichail.pizza_shift_2025.presentation.screens.payment.ui.CardPaymentScreen
 import com.nmichail.pizza_shift_2025.presentation.screens.profile.ui.ProfileScreen
 import com.nmichail.pizza_shift_2025.presentation.screens.payment.ui.PaymentScreen
@@ -185,7 +186,7 @@ fun AppNavGraph(
             composable(Screen.Profile.route) {
                 ProfileScreen()
             }
-            composable(Screen.Payment.route) {
+            composable(Screen.Payment.route) { backStackEntry ->
                 val authUiState by viewModel.uiState.collectAsState()
                 val phoneFromFlow by viewModel.authorizedPhoneFlow.collectAsState()
                 val phone = phoneFromFlow?.takeIf { !it.isNullOrBlank() } ?: when (authUiState) {
@@ -193,14 +194,24 @@ fun AppNavGraph(
                     is AuthUiState.EnterCode -> (authUiState as AuthUiState.EnterCode).phone
                     else -> ""
                 }
+                val parentEntry = remember(navController) {
+                    navController.getBackStackEntry(Screen.Payment.route)
+                }
+                val paymentViewModel: PaymentViewModel = hiltViewModel(parentEntry)
                 PaymentScreen(
+                    viewModel = paymentViewModel,
                     phoneFromAuth = phone,
                     onBack = { navController.popBackStack() },
                     onContinue = { navController.navigate(Screen.CardPayment.route) }
                 )
             }
             composable(Screen.CardPayment.route) {
+                val parentEntry = remember(navController) {
+                    navController.getBackStackEntry(Screen.Payment.route)
+                }
+                val paymentViewModel: PaymentViewModel = hiltViewModel(parentEntry)
                 CardPaymentScreen(
+                    viewModel = paymentViewModel,
                     onBack = { navController.popBackStack() },
                     onPay = { navController.navigate(Screen.Successful.route) }
                 )

@@ -3,6 +3,7 @@ package com.nmichail.pizza_shift_2025.di
 import android.content.Context
 import android.content.SharedPreferences
 import android.util.Log
+import com.google.gson.Gson
 import com.nmichail.pizza_shift_2025.data.remote.AuthApi
 import com.nmichail.pizza_shift_2025.data.remote.PizzaApi
 import com.nmichail.pizza_shift_2025.data.repository.AuthRepositoryImpl
@@ -80,16 +81,16 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun providePaymentRepository(api: PizzaApi): PaymentRepository =
-        PaymentRepositoryImpl(api)
+    fun providePaymentRepository(api: PizzaApi, prefs: SharedPreferences, gson:Gson): PaymentRepository =
+        PaymentRepositoryImpl(api, prefs, gson)
 
     @Provides
     @Singleton
-    fun provideGson(): com.google.gson.Gson = com.google.gson.Gson()
+    fun provideGson(): Gson = Gson()
 
     @Provides
     @Singleton
-    fun provideCartRepository(prefs: SharedPreferences, gson: com.google.gson.Gson): CartRepository =
+    fun provideCartRepository(prefs: SharedPreferences, gson: Gson): CartRepository =
         CartRepositoryImpl(prefs, gson)
 
     @Provides

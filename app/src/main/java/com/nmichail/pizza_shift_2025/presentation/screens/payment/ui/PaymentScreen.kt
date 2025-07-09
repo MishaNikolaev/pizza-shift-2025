@@ -39,6 +39,7 @@ import com.nmichail.pizza_shift_2025.presentation.theme.PizzaTextFieldGrayBgColo
 import com.nmichail.pizza_shift_2025.presentation.theme.PizzaTextFieldAllGrayColors
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.runtime.LaunchedEffect
 import com.nmichail.pizza_shift_2025.presentation.theme.PizzaOutlinedTextField
 
 @Composable
@@ -50,6 +51,11 @@ fun PaymentScreen(
 ) {
     val state by viewModel.state.collectAsState()
     val scrollState = rememberScrollState()
+    LaunchedEffect(phoneFromAuth, state.phone) {
+        if (phoneFromAuth.isNotBlank() && state.phone.isBlank()) {
+            viewModel.onPhoneChanged(phoneFromAuth)
+        }
+    }
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -151,6 +157,42 @@ fun PaymentScreen(
             PizzaOutlinedTextField(
                 value = state.city,
                 onValueChange = viewModel::onCityChanged,
+                modifier = Modifier.fillMaxWidth(),
+                singleLine = true
+            )
+            Spacer(modifier = Modifier.height(24.dp))
+            TextWithStar(text = "Улица")
+            Spacer(modifier = Modifier.height(8.dp))
+            PizzaOutlinedTextField(
+                value = state.street,
+                onValueChange = viewModel::onStreetChanged,
+                modifier = Modifier.fillMaxWidth(),
+                singleLine = true
+            )
+            Spacer(modifier = Modifier.height(24.dp))
+            TextWithStar(text = "Дом")
+            Spacer(modifier = Modifier.height(8.dp))
+            PizzaOutlinedTextField(
+                value = state.house,
+                onValueChange = viewModel::onHouseChanged,
+                modifier = Modifier.fillMaxWidth(),
+                singleLine = true
+            )
+            Spacer(modifier = Modifier.height(24.dp))
+            TextWithStar(text = "Квартира")
+            Spacer(modifier = Modifier.height(8.dp))
+            PizzaOutlinedTextField(
+                value = state.apartment,
+                onValueChange = viewModel::onApartmentChanged,
+                modifier = Modifier.fillMaxWidth(),
+                singleLine = true
+            )
+            Spacer(modifier = Modifier.height(24.dp))
+            Text(text = "Комментарий к заказу", fontSize = 16.sp, color = Color.Black)
+            Spacer(modifier = Modifier.height(8.dp))
+            PizzaOutlinedTextField(
+                value = state.comment,
+                onValueChange = viewModel::onCommentChanged,
                 modifier = Modifier.fillMaxWidth(),
                 singleLine = true
             )

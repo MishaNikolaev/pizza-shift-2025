@@ -8,4 +8,5 @@ interface CartRepository {
     fun addToCart(cartItem: CartItem, replace: Boolean = false)
     fun removeFromCart(cartItemId: String)
     fun updateCount(cartItemId: String, count: Int)
+    fun clearCart()
 }

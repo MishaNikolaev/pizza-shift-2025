@@ -13,6 +13,9 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -22,13 +25,20 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.nmichail.pizza_shift_2025.presentation.theme.OrangePizza
 import com.nmichail.pizza_shift_2025.R
+import androidx.hilt.navigation.compose.hiltViewModel
+import com.nmichail.pizza_shift_2025.presentation.screens.payment.presentation.PaymentViewModel
+import com.nmichail.pizza_shift_2025.presentation.util.toReadableSizeName
+import com.nmichail.pizza_shift_2025.presentation.util.toReadableTopping
 
 @Composable
 fun SuccessfulScreen(
     onClose: () -> Unit = {},
     onOrderDetails: () -> Unit = {},
-    onMain: () -> Unit = {}
+    onMain: () -> Unit = {},
+    viewModel: PaymentViewModel = hiltViewModel()
 ) {
+    val lastOrder by viewModel.lastOrder.collectAsState()
+    LaunchedEffect(Unit) { viewModel.loadLastOrder() }
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -82,7 +92,17 @@ fun SuccessfulScreen(
             )
             Spacer(modifier = Modifier.height(4.dp))
             Text(
-                text = "Пепперони, средняя 30 см,\nтрадиционное тесто + моцарелла, халапеньо\nСырная, большая 35 см, тонкое тесто",
+                text = lastOrder?.pizzas?.joinToString("\n") { pizza ->
+                    val name = pizza.name ?: "Пицца"
+                    val size = pizza.sizes.firstOrNull()?.type?.toReadableSizeName() ?: ""
+                    val toppings = pizza.toppings.map { it.type.toReadableTopping() }
+                    val toppingsText = when {
+                        toppings.isEmpty() -> ""
+                        toppings.size == 1 -> "+${toppings[0]}"
+                        else -> "+${toppings[0]}, " + toppings.drop(1).joinToString(", ")
+                    }
+                    listOf(name, size, toppingsText).filter { it.isNotBlank() }.joinToString(", ")
+                } ?: "-",
                 fontSize = 17.sp,
                 color = Color.Black,
                 modifier = Modifier.align(Alignment.Start).padding(bottom = 12.dp)
@@ -97,7 +117,9 @@ fun SuccessfulScreen(
             )
             Spacer(modifier = Modifier.height(4.dp))
             Text(
-                text = "Россия, г. Новосибирск, ул. Кирова, д. 86",
+                text = lastOrder?.receiverAddress?.let {
+                    listOfNotNull(it.street, it.house, it.apartment).joinToString(", ")
+                } ?: "-",
                 fontSize = 17.sp,
                 color = Color.Black,
                 modifier = Modifier.align(Alignment.Start).padding(bottom = 12.dp)
@@ -111,7 +133,7 @@ fun SuccessfulScreen(
             )
             Spacer(modifier = Modifier.height(4.dp))
             Text(
-                text = "1240 р",
+                text = lastOrder?.totalPrice?.let { "$it р" } ?: "-",
                 fontSize = 17.sp,
                 color = Color.Black,
                 modifier = Modifier.align(Alignment.Start).padding(bottom = 12.dp)

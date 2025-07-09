@@ -5,5 +5,9 @@ data class PaymentUiState(
     val firstname: String = "",
     val phone: String = "",
     val email: String = "",
-    val city: String = ""
+    val city: String = "",
+    val street: String = "",
+    val house: String = "",
+    val apartment: String = "",
+    val comment: String = ""
 )

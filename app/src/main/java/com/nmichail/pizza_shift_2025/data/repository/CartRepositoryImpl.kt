@@ -65,6 +65,11 @@ class CartRepositoryImpl @Inject constructor(
         }
     }
     
+    override fun clearCart() {
+        _cartItems.value = emptyList()
+        saveCartItems(emptyList())
+    }
+    
     private fun loadCartItems(): List<CartItem> {
         val json = prefs.getString(KEY_CART_ITEMS, "[]")
         val type = object : TypeToken<List<CartItem>>() {}.type
