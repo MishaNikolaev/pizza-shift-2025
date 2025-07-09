@@ -17,10 +17,24 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.zIndex
 import com.nmichail.pizza_shift_2025.R
+import com.nmichail.pizza_shift_2025.presentation.theme.OrangeAlmostPizza
 
 enum class BottomBarTab {
     PIZZA, ORDERS, CART, PROFILE
 }
+
+data class BottomBarItemData(
+    val tab: BottomBarTab,
+    val iconRes: Int,
+    val label: String
+)
+
+val bottomBarItems = listOf(
+    BottomBarItemData(BottomBarTab.PIZZA, R.drawable.catalog, "Пицца"),
+    BottomBarItemData(BottomBarTab.ORDERS, R.drawable.zakazat, "Заказы"),
+    BottomBarItemData(BottomBarTab.CART, R.drawable.mysorka, "Корзина"),
+    BottomBarItemData(BottomBarTab.PROFILE, R.drawable.person, "Профиль")
+)
 
 @Composable
 fun BottomBar(
@@ -40,37 +54,15 @@ fun BottomBar(
                 .padding(horizontal = 24.dp, vertical = 8.dp),
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
-            BottomBarItem(
-                tab = BottomBarTab.PIZZA,
-                iconRes = R.drawable.catalog,
-                label = "Пицца",
-                isSelected = currentTab == BottomBarTab.PIZZA,
-                onClick = { onTabSelected(BottomBarTab.PIZZA) }
-            )
-
-            BottomBarItem(
-                tab = BottomBarTab.ORDERS,
-                iconRes = R.drawable.zakazat,
-                label = "Заказы",
-                isSelected = currentTab == BottomBarTab.ORDERS,
-                onClick = { onTabSelected(BottomBarTab.ORDERS) }
-            )
-
-            BottomBarItem(
-                tab = BottomBarTab.CART,
-                iconRes = R.drawable.mysorka,
-                label = "Корзина",
-                isSelected = currentTab == BottomBarTab.CART,
-                onClick = { onTabSelected(BottomBarTab.CART) }
-            )
-
-            BottomBarItem(
-                tab = BottomBarTab.PROFILE,
-                iconRes = R.drawable.person,
-                label = "Профиль",
-                isSelected = currentTab == BottomBarTab.PROFILE,
-                onClick = { onTabSelected(BottomBarTab.PROFILE) }
-            )
+            bottomBarItems.forEach { item ->
+                BottomBarItem(
+                    tab = item.tab,
+                    iconRes = item.iconRes,
+                    label = item.label,
+                    isSelected = currentTab == item.tab,
+                    onClick = { onTabSelected(item.tab) }
+                )
+            }
         }
     }
 }
@@ -92,7 +84,7 @@ fun BottomBarItem(
         Icon(
             painter = painterResource(iconRes),
             contentDescription = label,
-            tint = if (isSelected) Color(0xFFFF6B35) else Color.Gray,
+            tint = if (isSelected) OrangeAlmostPizza else Color.Gray,
             modifier = Modifier.size(24.dp)
         )
         Spacer(modifier = Modifier.height(4.dp))
@@ -100,7 +92,7 @@ fun BottomBarItem(
             text = label,
             fontSize = 12.sp,
             fontWeight = if (isSelected) FontWeight.Bold else FontWeight.Normal,
-            color = if (isSelected) Color(0xFFFF6B35) else Color.Gray
+            color = if (isSelected) OrangeAlmostPizza else Color.Gray
         )
     }
 } 

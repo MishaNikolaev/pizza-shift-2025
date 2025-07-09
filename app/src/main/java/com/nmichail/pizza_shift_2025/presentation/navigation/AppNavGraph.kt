@@ -5,6 +5,8 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.Text
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -12,7 +14,10 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.currentRecomposeScope
+import androidx.compose.runtime.currentComposer
+import androidx.compose.runtime.currentCompositeKeyHash
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
@@ -20,15 +25,22 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.compose.currentBackStackEntryAsState
 import com.nmichail.pizza_shift_2025.presentation.components.BottomBar
 import com.nmichail.pizza_shift_2025.presentation.components.BottomBarTab
+import com.nmichail.pizza_shift_2025.presentation.screens.auth.presentation.AuthUiState
 import com.nmichail.pizza_shift_2025.presentation.screens.auth.ui.AuthScreen
 import com.nmichail.pizza_shift_2025.presentation.screens.auth.presentation.AuthViewModel
 import com.nmichail.pizza_shift_2025.presentation.screens.catalog.ui.CatalogScreen
 import com.nmichail.pizza_shift_2025.presentation.screens.catalog_detail.ui.CatalogDetailScreen
 import com.nmichail.pizza_shift_2025.presentation.screens.orders.ui.OrdersScreen
 import com.nmichail.pizza_shift_2025.presentation.screens.cart.ui.CartScreen
+import com.nmichail.pizza_shift_2025.presentation.screens.payment.presentation.PaymentViewModel
+import com.nmichail.pizza_shift_2025.presentation.screens.payment.ui.CardPaymentScreen
 import com.nmichail.pizza_shift_2025.presentation.screens.profile.ui.ProfileScreen
+import com.nmichail.pizza_shift_2025.presentation.screens.payment.ui.PaymentScreen
+import com.nmichail.pizza_shift_2025.presentation.screens.payment.ui.SuccessfulScreen
+import kotlinx.coroutines.Dispatchers
 
 sealed class Screen(val route: String) {
     object Auth : Screen("auth")
@@ -44,6 +56,9 @@ sealed class Screen(val route: String) {
     object Orders : Screen("orders")
     object Cart : Screen("cart")
     object Profile : Screen("profile")
+    object Payment : Screen("payment")
+    object CardPayment : Screen("card_payment")
+    object Successful : Screen("successful")
 }
 
 @Composable
@@ -70,7 +85,9 @@ fun AppNavGraph(
 
     Scaffold(
         bottomBar = {
-            if (isAuthorized) {
+            val navBackStackEntry by navController.currentBackStackEntryAsState()
+            val currentRoute = navBackStackEntry?.destination?.route
+            if (isAuthorized && currentRoute != Screen.Payment.route && currentRoute != Screen.CardPayment.route) {
                 BottomBar(
                     currentTab = currentTab,
                     onTabSelected = { tab ->
@@ -135,7 +152,7 @@ fun AppNavGraph(
             }
             
             composable(Screen.CatalogDetail.route) { backStackEntry ->
-                val pizzaId = backStackEntry.arguments?.getString("pizzaId") ?: ""
+                val pizzaId = requireNotNull(backStackEntry.arguments?.getString("pizzaId")) { "pizzaId is required for CatalogDetailScreen" }
                 val size = backStackEntry.arguments?.getString("size")
                 val toppingsString = backStackEntry.arguments?.getString("toppings")
                 val toppings = toppingsString?.split(",")?.filter { it.isNotBlank() }?.toSet() ?: emptySet()
@@ -168,6 +185,64 @@ fun AppNavGraph(
             
             composable(Screen.Profile.route) {
                 ProfileScreen()
+            }
+            composable(Screen.Payment.route) { backStackEntry ->
+                val authUiState by viewModel.uiState.collectAsState()
+                val phoneFromFlow by viewModel.authorizedPhoneFlow.collectAsState()
+                val phone = phoneFromFlow?.takeIf { !it.isNullOrBlank() } ?: when (authUiState) {
+                    is AuthUiState.EnterPhone -> (authUiState as AuthUiState.EnterPhone).phone
+                    is AuthUiState.EnterCode -> (authUiState as AuthUiState.EnterCode).phone
+                    else -> ""
+                }
+                val parentEntry = remember(navController) {
+                    navController.getBackStackEntry(Screen.Payment.route)
+                }
+                val paymentViewModel: PaymentViewModel = hiltViewModel(parentEntry)
+                PaymentScreen(
+                    viewModel = paymentViewModel,
+                    phoneFromAuth = phone,
+                    onBack = { navController.popBackStack() },
+                    onContinue = { navController.navigate(Screen.CardPayment.route) }
+                )
+            }
+            composable(Screen.CardPayment.route) {
+                val parentEntry = remember(navController) {
+                    navController.getBackStackEntry(Screen.Payment.route)
+                }
+                val paymentViewModel: PaymentViewModel = hiltViewModel(parentEntry)
+                CardPaymentScreen(
+                    viewModel = paymentViewModel,
+                    onBack = { navController.popBackStack() },
+                    onPay = { navController.navigate(Screen.Successful.route) }
+                )
+            }
+            composable(Screen.Successful.route) {
+                SuccessfulScreen(
+                    onClose = {
+                        currentTab = BottomBarTab.PIZZA
+                        navController.navigate(Screen.Catalog.route) {
+                            popUpTo(Screen.Catalog.route) { inclusive = false }
+                            launchSingleTop = true
+                            restoreState = true
+                        }
+                    },
+                    onOrderDetails = {
+                        currentTab = BottomBarTab.ORDERS
+                        navController.navigate(Screen.Orders.route) {
+                            popUpTo(Screen.Catalog.route) { inclusive = false }
+                            launchSingleTop = true
+                            restoreState = true
+                        }
+                    },
+                    onMain = {
+                        currentTab = BottomBarTab.PIZZA
+                        navController.navigate(Screen.Catalog.route) {
+                            popUpTo(Screen.Catalog.route) { inclusive = false }
+                            launchSingleTop = true
+                            restoreState = true
+                        }
+                    }
+                )
             }
         }
     }

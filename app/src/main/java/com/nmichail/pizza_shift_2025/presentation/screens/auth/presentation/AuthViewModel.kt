@@ -14,12 +14,18 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+import androidx.lifecycle.SavedStateHandle
+import com.nmichail.pizza_shift_2025.data.repository.AuthRepositoryImpl
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.stateIn
 
 @HiltViewModel
 class AuthViewModel @Inject constructor(
     private val requestOtpUseCase: RequestOtpUseCase,
     private val signInUseCase: SignInUseCase,
     private val getAuthorizedUseCase: GetAuthorizedUseCase,
+    private val savedStateHandle: SavedStateHandle,
+    private val authRepositoryImpl: AuthRepositoryImpl
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow<AuthUiState>(AuthUiState.EnterPhone())
@@ -32,6 +38,12 @@ class AuthViewModel @Inject constructor(
 
     private val _isAuthCheckFinished = MutableStateFlow(false)
     val isAuthCheckFinished = _isAuthCheckFinished.asStateFlow()
+
+    val authorizedPhoneFlow = authRepositoryImpl.phoneFlow.stateIn(viewModelScope, SharingStarted.Lazily, null)
+
+    companion object {
+        private const val KEY_LAST_AUTH_PHONE = "last_authorized_phone"
+    }
 
     private val currentEnterPhone: AuthUiState.EnterPhone?
         get() = _uiState.value as? AuthUiState.EnterPhone
@@ -81,18 +93,20 @@ class AuthViewModel @Inject constructor(
         val phone = current.phone.trim()
         val code = current.code.trim()
         if (code.isBlank()) {
-            _uiState.value = current.copy(signInState = SignInState.Error("Введите проверочный код"))
+            _uiState.value = current.copy(signInState = SignInState.Error("Введите проверочный код", "Введите проверочный код"))
             return
         }
         viewModelScope.launch {
             _uiState.value = current.copy(signInState = SignInState.Loading)
             when (val result = signInUseCase(phone, code)) {
                 is Result.Success -> {
-                    _uiState.value = AuthUiState.EnterPhone()
+                    savedStateHandle.set(KEY_LAST_AUTH_PHONE, phone)
+                    authRepositoryImpl.savePhoneToDataStore(phone)
+                    _uiState.value = AuthUiState.EnterPhone(phone = phone)
                     _isAuthorized.value = true
                 }
                 is Result.Error -> {
-                    _uiState.value = current.copy(signInState = SignInState.Error(result.reason))
+                    _uiState.value = current.copy(signInState = SignInState.Error(result.reason, result.reason))
                 }
             }
         }
@@ -109,7 +123,7 @@ class AuthViewModel @Inject constructor(
                     startTimer(60)
                 }
                 is Result.Error -> {
-                    _uiState.value = current.copy(signInState = SignInState.Error(result.reason))
+                    _uiState.value = current.copy(signInState = SignInState.Error(result.reason, result.reason))
                 }
             }
         }
@@ -132,5 +146,10 @@ class AuthViewModel @Inject constructor(
             _isAuthorized.value = authorized
             _isAuthCheckFinished.value = true
         }
+    }
+
+    suspend fun getAuthorizedPhone(): String? {
+        val fromDS = authRepositoryImpl.getPhoneFromDataStore()
+        return fromDS
     }
 } 

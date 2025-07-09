@@ -131,9 +131,7 @@ fun EnterCodeScreen(state: AuthUiState.EnterCode, viewModel: AuthViewModel) {
             is SignInState.Error -> {
                 Spacer(modifier = Modifier.height(12.dp))
                 Text(
-                    text = if (state.signInState.message.contains("400") || state.signInState.message.contains("Bad Request")) {
-                        "Вы ввели неверный код. Попробуйте ещё раз."
-                    } else state.signInState.message,
+                    text = state.signInState.userMessage,
                     color = Color.Red,
                     fontSize = 18.sp
                 )

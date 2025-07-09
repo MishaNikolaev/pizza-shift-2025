@@ -12,6 +12,13 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.ui.graphics.Color
+import com.nmichail.pizza_shift_2025.presentation.theme.OrangePizza
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.TextStyle
 
 private val DarkColorScheme = darkColorScheme(
     primary = Purple80,
@@ -58,6 +65,43 @@ fun Pizzashift2025Theme(
     )
 }
 
+@Composable
+fun PizzaOutlinedTextField(
+    value: String,
+    onValueChange: (String) -> Unit,
+    modifier: Modifier = Modifier,
+    singleLine: Boolean = true,
+    label: @Composable (() -> Unit)? = null,
+    enabled: Boolean = true,
+    textStyle: TextStyle = TextStyle.Default,
+    placeholder: @Composable (() -> Unit)? = null,
+    keyboardOptions: KeyboardOptions = KeyboardOptions.Default
+) {
+    OutlinedTextField(
+        value = value,
+        onValueChange = onValueChange,
+        modifier = modifier,
+        singleLine = singleLine,
+        enabled = enabled,
+        textStyle = textStyle,
+        label = label,
+        placeholder = placeholder,
+        keyboardOptions = keyboardOptions,
+        colors = OutlinedTextFieldDefaults.colors(
+            focusedBorderColor = Color.Black,
+            unfocusedBorderColor = Color.Black,
+            focusedLabelColor = Color.Gray,
+            unfocusedLabelColor = Color.Gray,
+            cursorColor = Color.Black,
+            focusedTextColor = Color.Black,
+            unfocusedTextColor = Color.Black,
+            focusedContainerColor = Color.White,
+            unfocusedContainerColor = Color.White
+        ),
+        shape = RoundedCornerShape(12.dp)
+    )
+}
+
 val PizzaTextFieldColors
     @Composable get() = OutlinedTextFieldDefaults.colors(
     focusedBorderColor = OrangePizza,
@@ -75,3 +119,41 @@ val PizzaButtonColors
     disabledContainerColor = OrangePizza.copy(alpha = 0.5f),
     disabledContentColor = Color.White.copy(alpha = 0.5f)
 )
+
+val PizzaTextFieldGrayCursorColors
+    @Composable get() = OutlinedTextFieldDefaults.colors(
+    focusedBorderColor = OrangePizza,
+    unfocusedBorderColor = OrangePizza.copy(alpha = 0.7f),
+    disabledBorderColor = Color.Gray,
+    focusedLabelColor = OrangePizza,
+    unfocusedLabelColor = OrangePizza.copy(alpha = 0.7f),
+    cursorColor = Color.Gray
+)
+
+val PizzaTextFieldGrayBgColors
+    @Composable get() = OutlinedTextFieldDefaults.colors(
+    focusedBorderColor = OrangePizza,
+    unfocusedBorderColor = OrangePizza.copy(alpha = 0.7f),
+    disabledBorderColor = Color.Gray,
+    focusedLabelColor = OrangePizza,
+    unfocusedLabelColor = OrangePizza.copy(alpha = 0.7f),
+    cursorColor = Color.Gray,
+    disabledTextColor = Color.Gray,
+    disabledContainerColor = Color(0xFFF5F5F5), 
+    unfocusedContainerColor = Color(0xFFF5F5F5),
+    focusedContainerColor = Color(0xFFF5F5F5)
+)
+
+val PizzaTextFieldAllGrayColors
+    @Composable get() = OutlinedTextFieldDefaults.colors(
+        focusedBorderColor = Color.Gray,
+        unfocusedBorderColor = Color.Gray.copy(alpha = 0.7f),
+        disabledBorderColor = Color.Gray,
+        focusedLabelColor = Color.Gray,
+        unfocusedLabelColor = Color.Gray.copy(alpha = 0.7f),
+        cursorColor = Color.Gray,
+        disabledTextColor = Color.Gray,
+        disabledContainerColor = Color(0xFFF5F5F5),
+        unfocusedContainerColor = Color(0xFFF5F5F5),
+        focusedContainerColor = Color(0xFFF5F5F5)
+    )

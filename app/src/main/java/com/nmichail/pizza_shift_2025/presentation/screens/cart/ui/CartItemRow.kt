@@ -57,53 +57,87 @@ fun CartItemRow(
                 .clip(CircleShape)
                 .background(Color(0xFFF3F3F6))
         )
-        Spacer(modifier = Modifier.width(12.dp))
-        Column(modifier = Modifier.weight(1f)) {
-            Text(
-                text = cartItem.pizza.name,
-                fontSize = 16.sp,
-                fontWeight = FontWeight.Bold,
-                maxLines = 1,
-                overflow = TextOverflow.Ellipsis,
-                modifier = Modifier.padding(bottom = 4.dp)
-            )
-            Text(
-                text = translateDisplayName(cartItem.displayName),
-                fontSize = 13.sp,
-                color = Color.Gray,
-                maxLines = 2,
-                overflow = TextOverflow.Ellipsis
-            )
-            Row(
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                MinusPlusSelectorCart(
-                    count = cartItem.count,
-                    onIncrease = onIncrease,
-                    onDecrease = onDecrease,
-                    modifier = Modifier.padding(vertical = 4.dp)
-                )
-                Spacer(modifier = Modifier.width(8.dp))
-                Text(
-                    text = "Изменить",
-                    color = Color(0xFFBDBDBD),
-                    fontSize = 14.sp,
-                    fontWeight = FontWeight.Normal,
-                    textDecoration = TextDecoration.Underline,
-                    modifier = Modifier
-                        .padding(start = 8.dp)
-                        .clickable { onEdit() }
-                )
-            }
-        }
-        Spacer(modifier = Modifier.width(8.dp))
+        Spacer(modifier = Modifier.width(16.dp))
+        CartItemInfoColumn(
+            cartItem = cartItem,
+            onIncrease = onIncrease,
+            onDecrease = onDecrease,
+            onEdit = onEdit
+        )
+        Spacer(modifier = Modifier.width(16.dp))
+        CartItemPrice(price = cartItem.totalPrice)
+    }
+}
+
+@Composable
+fun CartItemInfoColumn(
+    cartItem: CartItem,
+    onIncrease: () -> Unit,
+    onDecrease: () -> Unit,
+    onEdit: () -> Unit
+) {
+    Column(modifier = Modifier.fillMaxWidth(0.7f)) {
         Text(
-            text = "${cartItem.totalPrice} ₽",
+            text = cartItem.pizza.name,
             fontSize = 16.sp,
             fontWeight = FontWeight.Bold,
-            color = Color.Black
+            maxLines = 1,
+            overflow = TextOverflow.Ellipsis,
+            modifier = Modifier.padding(bottom = 4.dp)
+        )
+        Text(
+            text = translateDisplayName(cartItem.displayName),
+            fontSize = 13.sp,
+            color = Color.Gray,
+            maxLines = 2,
+            overflow = TextOverflow.Ellipsis
+        )
+        Spacer(modifier = Modifier.height(8.dp))
+        CartItemActionsRow(
+            count = cartItem.count,
+            onIncrease = onIncrease,
+            onDecrease = onDecrease,
+            onEdit = onEdit
         )
     }
+}
+
+@Composable
+fun CartItemActionsRow(
+    count: Int,
+    onIncrease: () -> Unit,
+    onDecrease: () -> Unit,
+    onEdit: () -> Unit
+) {
+    Row(verticalAlignment = Alignment.CenterVertically) {
+        MinusPlusSelectorCart(
+            count = count,
+            onIncrease = onIncrease,
+            onDecrease = onDecrease,
+            modifier = Modifier.padding(vertical = 4.dp)
+        )
+        Spacer(modifier = Modifier.width(12.dp))
+        Text(
+            text = "Изменить",
+            color = Color(0xFFBDBDBD),
+            fontSize = 14.sp,
+            fontWeight = FontWeight.Normal,
+            textDecoration = TextDecoration.Underline,
+            modifier = Modifier
+                .padding(start = 8.dp)
+                .clickable { onEdit() }
+        )
+    }
+}
+
+@Composable
+fun CartItemPrice(price: Int) {
+    Text(
+        text = "$price ₽",
+        fontSize = 16.sp,
+        fontWeight = FontWeight.Bold,
+        color = Color.Black
+    )
 }
 
 fun translateDisplayName(displayName: String): String {

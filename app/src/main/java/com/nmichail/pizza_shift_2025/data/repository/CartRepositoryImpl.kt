@@ -19,15 +19,11 @@ class CartRepositoryImpl @Inject constructor(
         private const val KEY_CART_ITEMS = "cart_items"
     }
     
-    private val _cartItems = MutableStateFlow<List<CartItem>>(emptyList())
-    
-    init {
-        loadCartItems()
-    }
+    private val _cartItems = MutableStateFlow<List<CartItem>>(loadCartItems())
     
     override fun getCartItems(): Flow<List<CartItem>> = _cartItems.asStateFlow()
     
-    override suspend fun addToCart(cartItem: CartItem, replace: Boolean) {
+    override fun addToCart(cartItem: CartItem, replace: Boolean) {
         val currentItems = _cartItems.value.toMutableList()
         if (replace) {
             currentItems.add(cartItem)
@@ -48,14 +44,14 @@ class CartRepositoryImpl @Inject constructor(
         saveCartItems(currentItems)
     }
     
-    override suspend fun removeFromCart(cartItemId: String) {
+    override fun removeFromCart(cartItemId: String) {
         val currentItems = _cartItems.value.toMutableList()
         currentItems.removeAll { it.id == cartItemId }
         _cartItems.value = currentItems
         saveCartItems(currentItems)
     }
     
-    override suspend fun updateCount(cartItemId: String, count: Int) {
+    override fun updateCount(cartItemId: String, count: Int) {
         val currentItems = _cartItems.value.toMutableList()
         val index = currentItems.indexOfFirst { it.id == cartItemId }
         if (index != -1) {
@@ -69,15 +65,19 @@ class CartRepositoryImpl @Inject constructor(
         }
     }
     
-    private fun loadCartItems() {
+    override fun clearCart() {
+        _cartItems.value = emptyList()
+        saveCartItems(emptyList())
+    }
+    
+    private fun loadCartItems(): List<CartItem> {
         val json = prefs.getString(KEY_CART_ITEMS, "[]")
         val type = object : TypeToken<List<CartItem>>() {}.type
-        val items = try {
+        return try {
             gson.fromJson<List<CartItem>>(json, type) ?: emptyList()
         } catch (e: Exception) {
             emptyList()
         }
-        _cartItems.value = items
     }
     
     private fun saveCartItems(items: List<CartItem>) {
