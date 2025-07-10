@@ -194,7 +194,14 @@ fun AppNavGraph(
             }
             
             composable(Screen.Profile.route) {
-                ProfileScreen()
+                ProfileScreen(
+                    onLogout = {
+                        navController.navigate(Screen.Auth.route) {
+                            popUpTo(0) { inclusive = true }
+                            launchSingleTop = true
+                        }
+                    }
+                )
             }
             composable(Screen.Payment.route) { backStackEntry ->
                 val authUiState by viewModel.uiState.collectAsState()
