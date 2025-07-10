@@ -1,5 +1,6 @@
 package com.nmichail.pizza_shift_2025.presentation.navigation
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -40,6 +41,7 @@ import com.nmichail.pizza_shift_2025.presentation.screens.payment.ui.CardPayment
 import com.nmichail.pizza_shift_2025.presentation.screens.profile.ui.ProfileScreen
 import com.nmichail.pizza_shift_2025.presentation.screens.payment.ui.PaymentScreen
 import com.nmichail.pizza_shift_2025.presentation.screens.payment.ui.SuccessfulScreen
+import com.nmichail.pizza_shift_2025.presentation.screens.order_details.ui.OrderDetailsScreen
 import kotlinx.coroutines.Dispatchers
 
 sealed class Screen(val route: String) {
@@ -59,8 +61,12 @@ sealed class Screen(val route: String) {
     object Payment : Screen("payment")
     object CardPayment : Screen("card_payment")
     object Successful : Screen("successful")
+    object OrderDetails : Screen("order_details/{orderId}") {
+        fun createRoute(orderId: String) = "order_details/$orderId"
+    }
 }
 
+@SuppressLint("UnrememberedGetBackStackEntry")
 @Composable
 fun AppNavGraph(
     navController: NavHostController = rememberNavController()
@@ -169,7 +175,11 @@ fun AppNavGraph(
             }
             
             composable(Screen.Orders.route) {
-                OrdersScreen()
+                OrdersScreen(
+                    onDetailsClick = { orderId ->
+                        navController.navigate(Screen.OrderDetails.createRoute(orderId))
+                    }
+                )
             }
             
             composable(Screen.Cart.route) {
@@ -242,6 +252,15 @@ fun AppNavGraph(
                             restoreState = true
                         }
                     }
+                )
+            }
+            composable(Screen.OrderDetails.route) { backStackEntry ->
+                val orderId = backStackEntry.arguments?.getString("orderId") ?: ""
+                OrderDetailsScreen(
+                    orderId = orderId,
+                    onBack = { navController.popBackStack() },
+                    navController = navController,
+                    onTabChange = { tab -> currentTab = tab }
                 )
             }
         }
