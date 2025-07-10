@@ -22,6 +22,7 @@ import com.nmichail.pizza_shift_2025.presentation.screens.auth.presentation.Auth
 import com.nmichail.pizza_shift_2025.presentation.screens.auth.presentation.AuthViewModel
 import com.nmichail.pizza_shift_2025.presentation.screens.auth.presentation.AuthUiState
 import com.nmichail.pizza_shift_2025.presentation.theme.OrangePizza
+import androidx.compose.material3.MaterialTheme
 
 @Composable
 fun AuthScreen(
@@ -46,7 +47,7 @@ fun AuthScreen(
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color.White)
+            .background(MaterialTheme.colorScheme.background)
     ) {
         when (val currentState = state) {
             is AuthUiState.Loading -> {

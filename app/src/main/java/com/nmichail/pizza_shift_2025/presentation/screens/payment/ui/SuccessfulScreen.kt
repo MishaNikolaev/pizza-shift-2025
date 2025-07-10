@@ -42,7 +42,7 @@ fun SuccessfulScreen(
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color.White)
+            .background(MaterialTheme.colorScheme.background)
     ) {
         IconButton(
             onClick = onClose,
@@ -66,7 +66,7 @@ fun SuccessfulScreen(
             Spacer(modifier = Modifier.height(12.dp))
             Surface(
                 shape = RoundedCornerShape(100),
-                color = Color(0xFFE6F7E6),
+                color = MaterialTheme.colorScheme.surface,
                 modifier = Modifier.size(80.dp)
             ) {
                 Box(contentAlignment = Alignment.Center, modifier = Modifier.fillMaxSize()) {
@@ -104,7 +104,7 @@ fun SuccessfulScreen(
                     listOf(name, size, toppingsText).filter { it.isNotBlank() }.joinToString(", ")
                 } ?: "-",
                 fontSize = 17.sp,
-                color = Color.Black,
+                color = MaterialTheme.colorScheme.onSurface,
                 modifier = Modifier.align(Alignment.Start).padding(bottom = 12.dp)
             )
             Spacer(modifier = Modifier.height(4.dp))
@@ -121,7 +121,7 @@ fun SuccessfulScreen(
                     listOfNotNull(it.street, it.house, it.apartment).joinToString(", ")
                 } ?: "-",
                 fontSize = 17.sp,
-                color = Color.Black,
+                color = MaterialTheme.colorScheme.onSurface,
                 modifier = Modifier.align(Alignment.Start).padding(bottom = 12.dp)
             )
             Text(
@@ -135,7 +135,7 @@ fun SuccessfulScreen(
             Text(
                 text = lastOrder?.totalPrice?.let { "$it р" } ?: "-",
                 fontSize = 17.sp,
-                color = Color.Black,
+                color = MaterialTheme.colorScheme.onSurface,
                 modifier = Modifier.align(Alignment.Start).padding(bottom = 12.dp)
             )
             Text(
@@ -152,7 +152,7 @@ fun SuccessfulScreen(
                     .padding(bottom = 12.dp),
                 shape = RoundedCornerShape(12.dp)
             ) {
-                Text("Детали заказа", fontSize = 18.sp, color = Color.Black)
+                Text("Детали заказа", fontSize = 18.sp, color = MaterialTheme.colorScheme.onSurface)
             }
             Button(
                 onClick = onMain,

@@ -50,7 +50,7 @@ fun CartScreen(
             }
         }
         is CartUiState.Content -> {
-            Box(modifier = Modifier.fillMaxSize().background(Color.White)) {
+            Box(modifier = Modifier.fillMaxSize().background(MaterialTheme.colorScheme.background)) {
                 Column(modifier = Modifier.fillMaxSize()) {
                     Row(
                         verticalAlignment = Alignment.CenterVertically,
@@ -62,7 +62,7 @@ fun CartScreen(
                         Icon(
                             painter = painterResource(R.drawable.arrow_left),
                             contentDescription = "Назад",
-                            tint = Color.DarkGray,
+                            tint = MaterialTheme.colorScheme.onBackground,
                             modifier = Modifier.size(20.dp)
                         )
                         Spacer(modifier = Modifier.width(8.dp))
@@ -71,7 +71,7 @@ fun CartScreen(
                             style = MaterialTheme.typography.titleLarge.copy(fontWeight = FontWeight.Bold, fontSize = 20.sp),
                         )
                     }
-                    Divider(color = Color(0xFFF3F3F6), thickness = 1.dp)
+                    Divider(color = MaterialTheme.colorScheme.tertiaryContainer, thickness = 1.dp)
                     if (cartState.items.isEmpty()) {
                         Box(
                             modifier = Modifier.fillMaxSize(),
@@ -111,7 +111,7 @@ fun CartScreen(
                 }
                 if (cartState.items.isNotEmpty()) {
                     Card(
-                        colors = CardDefaults.cardColors(containerColor = Color.White),
+                        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.background),
                         modifier = Modifier
                             .align(Alignment.BottomCenter)
                             .fillMaxWidth()
@@ -131,14 +131,14 @@ fun CartScreen(
                                 Text(
                                     text = "Стоимость заказа:",
                                     fontSize = 16.sp,
-                                    color = Color.Black,
+                                    color = MaterialTheme.colorScheme.onSurface,
                                     fontWeight = FontWeight.Bold
                                 )
                                 Text(
                                     text = "${cartState.totalPrice} р",
                                     fontSize = 18.sp,
                                     fontWeight = FontWeight.Bold,
-                                    color = Color.Black
+                                    color = MaterialTheme.colorScheme.onBackground
                                 )
                             }
                             Spacer(modifier = Modifier.height(16.dp))

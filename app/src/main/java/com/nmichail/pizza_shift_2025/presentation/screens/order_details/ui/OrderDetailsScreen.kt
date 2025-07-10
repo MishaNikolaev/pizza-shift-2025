@@ -39,7 +39,7 @@ fun OrderDetailsScreen(orderId: String, onBack: () -> Unit, navController: NavCo
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color.White)
+            .background(MaterialTheme.colorScheme.background)
     ) {
         Column(
             modifier = Modifier
@@ -55,7 +55,7 @@ fun OrderDetailsScreen(orderId: String, onBack: () -> Unit, navController: NavCo
                     Icon(
                         painter = painterResource(R.drawable.arrow_left),
                         contentDescription = "Назад",
-                        tint = Color.Black,
+                        tint = MaterialTheme.colorScheme.inversePrimary,
                         modifier = Modifier.size(20.dp)
                     )
                 }
@@ -65,7 +65,7 @@ fun OrderDetailsScreen(orderId: String, onBack: () -> Unit, navController: NavCo
                     fontWeight = FontWeight.Bold,
                     fontSize = 22.sp,
                     modifier = Modifier.weight(1f),
-                    color = Color.Black
+                    color = MaterialTheme.colorScheme.inversePrimary
                 )
                 Spacer(modifier = Modifier.width(48.dp))
             }
@@ -90,7 +90,7 @@ fun OrderDetailsScreen(orderId: String, onBack: () -> Unit, navController: NavCo
                 Card(
                     shape = RoundedCornerShape(16.dp),
                     elevation = CardDefaults.cardElevation(4.dp),
-                    colors = CardDefaults.cardColors(containerColor = Color.White),
+                    colors = CardDefaults.cardColors(MaterialTheme.colorScheme.background),
                     modifier = Modifier.fillMaxWidth()
                 ) {
                     Column(modifier = Modifier.padding(20.dp)) {
@@ -103,20 +103,20 @@ fun OrderDetailsScreen(orderId: String, onBack: () -> Unit, navController: NavCo
                                     .background(statusColor, shape = RoundedCornerShape(50))
                             )
                             Spacer(modifier = Modifier.width(8.dp))
-                            Text(statusText, color = Color.Black, fontSize = 16.sp)
+                            Text(statusText, color = MaterialTheme.colorScheme.inversePrimary, fontSize = 16.sp)
                         }
                         Spacer(modifier = Modifier.height(12.dp))
                         Text("Адрес доставки", color = Color.Gray, fontSize = 13.sp)
                         Spacer(modifier = Modifier.height(8.dp))
-                        Text(order!!.receiverAddress.let { "${it.street}, д. ${it.house}${if (it.apartment.isNotBlank()) ", кв. ${it.apartment}" else ""}${if (!it.comment.isNullOrBlank()) ", ${it.comment}" else ""}" }, color = Color.Black, fontSize = 16.sp)
+                        Text(order!!.receiverAddress.let { "${it.street}, д. ${it.house}${if (it.apartment.isNotBlank()) ", кв. ${it.apartment}" else ""}${if (!it.comment.isNullOrBlank()) ", ${it.comment}" else ""}" }, color = MaterialTheme.colorScheme.inversePrimary, fontSize = 16.sp)
                         Spacer(modifier = Modifier.height(12.dp))
                         Text("Состав заказа", color = Color.Gray, fontSize = 13.sp)
                         Spacer(modifier = Modifier.height(8.dp))
-                        Text(order!!.pizzas.joinToString("\n") { it.name }, color = Color.Black, fontSize = 16.sp)
+                        Text(order!!.pizzas.joinToString("\n") { it.name }, color = MaterialTheme.colorScheme.inversePrimary, fontSize = 16.sp)
                         Spacer(modifier = Modifier.height(12.dp))
                         Text("Сумма заказа", color = Color.Gray, fontSize = 13.sp)
                         Spacer(modifier = Modifier.height(8.dp))
-                        Text("${order!!.totalPrice} р", color = Color.Black, fontSize = 16.sp)
+                        Text("${order!!.totalPrice} р", color = MaterialTheme.colorScheme.inversePrimary, fontSize = 16.sp)
                         Spacer(modifier = Modifier.height(20.dp))
                         Button(
                             onClick = {

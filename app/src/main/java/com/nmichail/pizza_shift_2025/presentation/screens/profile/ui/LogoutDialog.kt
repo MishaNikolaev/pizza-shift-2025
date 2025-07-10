@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -36,7 +37,7 @@ fun LogoutDialog(onDismiss: () -> Unit, onConfirm: () -> Unit) {
         ) {
             Surface(
                 shape = RoundedCornerShape(24.dp),
-                color = Color.White,
+                color = MaterialTheme.colorScheme.background,
                 modifier = Modifier
                     .fillMaxWidth(0.99f)
                     .clip(RoundedCornerShape(24.dp))
@@ -51,7 +52,7 @@ fun LogoutDialog(onDismiss: () -> Unit, onConfirm: () -> Unit) {
                         "Выйти из приложения?",
                         fontWeight = FontWeight.Bold,
                         fontSize = 20.sp,
-                        color = Color(0xFF1A1A1A)
+                        color = MaterialTheme.colorScheme.inversePrimary
                     )
                     Spacer(modifier = Modifier.height(32.dp))
                     Column(
@@ -64,10 +65,10 @@ fun LogoutDialog(onDismiss: () -> Unit, onConfirm: () -> Unit) {
                                 .fillMaxWidth()
                                 .height(52.dp),
                             shape = RoundedCornerShape(50),
-                            border = BorderStroke(1.dp, Color(0xFFE0E0E0)),
-                            colors = ButtonDefaults.outlinedButtonColors(containerColor = Color.White)
+                            border = BorderStroke(1.dp,  MaterialTheme.colorScheme.inversePrimary),
+                            colors = ButtonDefaults.outlinedButtonColors(containerColor =  MaterialTheme.colorScheme.background)
                         ) {
-                            Text("Выйти", color = Color(0xFF1A1A1A), fontSize = 16.sp, fontWeight = FontWeight.Medium)
+                            Text("Выйти", color =  MaterialTheme.colorScheme.inversePrimary, fontSize = 16.sp, fontWeight = FontWeight.Medium)
                         }
                         Spacer(modifier = Modifier.height(12.dp))
                         Button(

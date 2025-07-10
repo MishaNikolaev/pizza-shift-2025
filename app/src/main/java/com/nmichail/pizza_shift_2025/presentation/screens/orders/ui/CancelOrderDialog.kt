@@ -15,6 +15,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -44,7 +45,7 @@ fun CancelOrderDialog(onDismiss: () -> Unit, onConfirm: () -> Unit) {
         ) {
             Surface(
                 shape = RoundedCornerShape(topStart = 24.dp, topEnd = 24.dp),
-                color = Color.White,
+                color = MaterialTheme.colorScheme.background,
                 modifier = Modifier
                     .width(screenWidth)
                     .clip(RoundedCornerShape(topStart = 24.dp, topEnd = 24.dp))
@@ -65,7 +66,7 @@ fun CancelOrderDialog(onDismiss: () -> Unit, onConfirm: () -> Unit) {
                         "Отменить заказ?",
                         fontWeight = FontWeight.Bold,
                         fontSize = 20.sp,
-                        color = Color(0xFF1A1A1A)
+                        color = MaterialTheme.colorScheme.inversePrimary
                     )
                     Spacer(modifier = Modifier.height(32.dp))
                     Column(
@@ -79,9 +80,9 @@ fun CancelOrderDialog(onDismiss: () -> Unit, onConfirm: () -> Unit) {
                                 .height(52.dp),
                             shape = RoundedCornerShape(50),
                             border = BorderStroke(1.dp, Color(0xFFE0E0E0)),
-                            colors = ButtonDefaults.outlinedButtonColors(containerColor = Color.White)
+                            colors = ButtonDefaults.outlinedButtonColors(containerColor = MaterialTheme.colorScheme.surface)
                         ) {
-                            Text("Отменить", color = Color(0xFF1A1A1A), fontSize = 16.sp, fontWeight = FontWeight.Medium)
+                            Text("Отменить", color = MaterialTheme.colorScheme.inversePrimary, fontSize = 16.sp, fontWeight = FontWeight.Medium)
                         }
                         Spacer(modifier = Modifier.height(12.dp))
                         Button(

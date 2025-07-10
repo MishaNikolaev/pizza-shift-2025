@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.LocalTextStyle
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -20,7 +21,8 @@ fun ProfileField(
     label: String,
     value: String,
     enabled: Boolean,
-    onValueChange: (String) -> Unit
+    onValueChange: (String) -> Unit,
+    color: Color
 ) {
     Column(
         modifier = Modifier
@@ -31,7 +33,7 @@ fun ProfileField(
             text = label,
             fontSize = 16.sp,
             fontWeight = FontWeight.Normal,
-            color = Color(0xFF1A1A1A),
+            color = MaterialTheme.colorScheme.inversePrimary,
             modifier = Modifier.padding(start = 4.dp, bottom = 2.dp)
         )
         OutlinedTextField(

@@ -47,7 +47,7 @@ fun CatalogScreen(
             LazyColumn(
                 modifier = Modifier
                     .fillMaxSize()
-                    .background(Color.White),
+                    .background(MaterialTheme.colorScheme.background),
                 contentPadding = PaddingValues(vertical = 32.dp)
             ) {
                 item {

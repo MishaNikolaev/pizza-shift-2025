@@ -21,7 +21,9 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            AppNavGraph()
+            Pizzashift2025Theme(dynamicColor = false) {
+                AppNavGraph()
+            }
         }
     }
 }

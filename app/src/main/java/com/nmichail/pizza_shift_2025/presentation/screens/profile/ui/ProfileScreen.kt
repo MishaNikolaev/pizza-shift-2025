@@ -34,7 +34,7 @@ fun ProfileScreen(
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color.White),
+            .background(MaterialTheme.colorScheme.background),
         contentAlignment = Alignment.TopCenter
     ) {
         when (uiState) {
@@ -73,6 +73,7 @@ fun ProfileScreen(
                         text = "Профиль",
                         fontWeight = FontWeight.Bold,
                         fontSize = 24.sp,
+                        color = MaterialTheme.colorScheme.inversePrimary,
                         modifier = Modifier.align(Alignment.Start)
                     )
                     Spacer(modifier = Modifier.height(24.dp))
@@ -81,38 +82,48 @@ fun ProfileScreen(
                         label = "Имя*",
                         value = firstname,
                         enabled = isEdit,
+                        color = MaterialTheme.colorScheme.inversePrimary,
                         onValueChange = { firstname = it }
                     )
                     ProfileField(
                         label = "Фамилия*",
                         value = lastname,
                         enabled = isEdit,
-                        onValueChange = { lastname = it }
-                    )
+                        onValueChange = { lastname = it },
+                        color = MaterialTheme.colorScheme.inversePrimary,
+                        )
                     ProfileField(
                         label = "Отчество*",
                         value = middlename,
                         enabled = isEdit,
-                        onValueChange = { middlename = it }
-                    )
+                        onValueChange = { middlename = it },
+                        color = MaterialTheme.colorScheme.inversePrimary,
+
+                        )
                     ProfileField(
                         label = "Номер телефона*",
                         value = phone,
                         enabled = false,
-                        onValueChange = { }
-                    )
+                        onValueChange = { },
+                        color = MaterialTheme.colorScheme.inversePrimary,
+
+                        )
                     ProfileField(
                         label = "Email",
                         value = email,
                         enabled = isEdit,
-                        onValueChange = { email = it }
-                    )
+                        onValueChange = { email = it },
+                        color = MaterialTheme.colorScheme.inversePrimary,
+
+                        )
                     ProfileField(
                         label = "Город",
                         value = city,
                         enabled = isEdit,
-                        onValueChange = { city = it }
-                    )
+                        onValueChange = { city = it },
+                        color = MaterialTheme.colorScheme.inversePrimary,
+
+                        )
 
                     Spacer(modifier = Modifier.height(32.dp))
 
@@ -147,7 +158,7 @@ fun ProfileScreen(
                                     .height(48.dp),
                                 shape = RoundedCornerShape(50)
                             ) {
-                                Text("Отмена", fontSize = 18.sp, color = Color.Black)
+                                Text("Отмена", fontSize = 18.sp, color = MaterialTheme.colorScheme.inversePrimary)
                             }
                         }
                     } else {
@@ -158,9 +169,9 @@ fun ProfileScreen(
                                 .height(48.dp),
                             shape = RoundedCornerShape(50),
                             border = BorderStroke(1.dp, Color(0xFFE0E0E0)),
-                            colors = ButtonDefaults.outlinedButtonColors(containerColor = Color.White)
+                            colors = ButtonDefaults.outlinedButtonColors(MaterialTheme.colorScheme.background)
                         ) {
-                            Text("Обновить данные", fontSize = 18.sp, color = Color.Black)
+                            Text("Обновить данные", fontSize = 18.sp, color = MaterialTheme.colorScheme.inversePrimary)
                         }
                     }
 

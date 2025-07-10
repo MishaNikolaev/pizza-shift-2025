@@ -13,6 +13,7 @@ import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.ui.graphics.Color
 import com.nmichail.pizza_shift_2025.presentation.theme.OrangePizza
+import com.nmichail.pizza_shift_2025.presentation.theme.OrangeAlmostPizza
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
@@ -21,26 +22,38 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.TextStyle
 
 private val DarkColorScheme = darkColorScheme(
-    primary = Purple80,
-    secondary = PurpleGrey80,
-    tertiary = Pink80
+    primary = OrangePizza,
+    secondary = OrangeAlmostPizza,
+    tertiary = Pink80,
+    background = Color(0xFF141C24),
+    surface = Color(0xFF141C24),
+    onPrimary = Color(0xFF344051),
+    inversePrimary = Color.White,
+    onSecondary =  Color(0xFF344051),
+    onTertiary = Color(0xFFCED2DA),
+    onBackground = Color.White,
+    onSurface = Color.White,
+    tertiaryContainer = Color(0xFF141C24),
+    onSurfaceVariant = Color(0xFF344051),
+    secondaryContainer =  Color(0xFF8C8C8C)
 )
 
 private val LightColorScheme = lightColorScheme(
-    primary = Purple40,
-    secondary = PurpleGrey40,
-    tertiary = Pink40
-
-    /* Other default colors to override
-    background = Color(0xFFFFFBFE),
-    surface = Color(0xFFFFFBFE),
+    primary = OrangePizza,
+    secondary = OrangeAlmostPizza,
+    tertiary = Pink40,
+    background = Color.White,
+    surface = Color(0xFFFFFFFF),
     onPrimary = Color.White,
+    inversePrimary = Color.Black,
     onSecondary = Color.White,
-    onTertiary = Color.White,
-    onBackground = Color(0xFF1C1B1F),
-    onSurface = Color(0xFF1C1B1F),
-    */
-)
+    onTertiary = Color(0xFF344051),
+    onBackground = Color.Black,
+    onSurface = Color.Black,
+    tertiaryContainer = Color(0xFFF3F4F6),
+    onSurfaceVariant = Color(0xFFF5F6F8),
+    secondaryContainer =  Color(0xFF8C8C8C)
+    )
 
 @Composable
 fun Pizzashift2025Theme(
@@ -118,30 +131,6 @@ val PizzaButtonColors
     contentColor = Color.White,
     disabledContainerColor = OrangePizza.copy(alpha = 0.5f),
     disabledContentColor = Color.White.copy(alpha = 0.5f)
-)
-
-val PizzaTextFieldGrayCursorColors
-    @Composable get() = OutlinedTextFieldDefaults.colors(
-    focusedBorderColor = OrangePizza,
-    unfocusedBorderColor = OrangePizza.copy(alpha = 0.7f),
-    disabledBorderColor = Color.Gray,
-    focusedLabelColor = OrangePizza,
-    unfocusedLabelColor = OrangePizza.copy(alpha = 0.7f),
-    cursorColor = Color.Gray
-)
-
-val PizzaTextFieldGrayBgColors
-    @Composable get() = OutlinedTextFieldDefaults.colors(
-    focusedBorderColor = OrangePizza,
-    unfocusedBorderColor = OrangePizza.copy(alpha = 0.7f),
-    disabledBorderColor = Color.Gray,
-    focusedLabelColor = OrangePizza,
-    unfocusedLabelColor = OrangePizza.copy(alpha = 0.7f),
-    cursorColor = Color.Gray,
-    disabledTextColor = Color.Gray,
-    disabledContainerColor = Color(0xFFF5F5F5), 
-    unfocusedContainerColor = Color(0xFFF5F5F5),
-    focusedContainerColor = Color(0xFFF5F5F5)
 )
 
 val PizzaTextFieldAllGrayColors

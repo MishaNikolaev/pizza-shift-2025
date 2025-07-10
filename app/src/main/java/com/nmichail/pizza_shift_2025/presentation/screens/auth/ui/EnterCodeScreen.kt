@@ -43,7 +43,7 @@ fun EnterCodeScreen(state: AuthUiState.EnterCode, viewModel: AuthViewModel) {
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color.White)
+            .background(MaterialTheme.colorScheme.background)
             .padding(24.dp),
         verticalArrangement = Arrangement.Top,
         horizontalAlignment = Alignment.CenterHorizontally
@@ -62,23 +62,35 @@ fun EnterCodeScreen(state: AuthUiState.EnterCode, viewModel: AuthViewModel) {
         OutlinedTextField(
             value = state.phone,
             onValueChange = {},
-            label = { Text("Телефон", fontSize = 18.sp, color = Color.Black) },
+            label = { Text("Телефон", fontSize = 18.sp, color = Color.Gray) },
             textStyle = TextStyle(fontSize = 18.sp),
             enabled = false,
             singleLine = true,
             modifier = Modifier.fillMaxWidth(),
-            colors = PizzaTextFieldColors
+            colors = OutlinedTextFieldDefaults.colors(
+                focusedBorderColor = Color.Gray,
+                unfocusedBorderColor = Color.Gray,
+                focusedLabelColor = Color.Gray,
+                unfocusedLabelColor = Color.Gray,
+                cursorColor = Color.Gray
+            )
         )
         Spacer(modifier = Modifier.height(16.dp))
         OutlinedTextField(
             value = state.code,
             onValueChange = viewModel::onCodeChanged,
-            label = { Text("Код", fontSize = 18.sp, color = Color.Black) },
+            label = { Text("Код", fontSize = 18.sp, color = Color.Gray) },
             textStyle = TextStyle(fontSize = 18.sp),
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
             singleLine = true,
             modifier = Modifier.fillMaxWidth(),
-            colors = PizzaTextFieldColors,
+            colors = OutlinedTextFieldDefaults.colors(
+                focusedBorderColor = Color.Gray,
+                unfocusedBorderColor = Color.Gray,
+                focusedLabelColor = Color.Gray,
+                unfocusedLabelColor = Color.Gray,
+                cursorColor = Color.Gray
+            ),
             enabled = state.signInState !is SignInState.Loading
         )
         Spacer(modifier = Modifier.height(24.dp))

@@ -32,6 +32,7 @@ import com.nmichail.pizza_shift_2025.domain.entities.CartItem
 import com.nmichail.pizza_shift_2025.presentation.theme.OrangePizza
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.material3.MaterialTheme
 import androidx.navigation.NavController
 import com.nmichail.pizza_shift_2025.presentation.util.toReadableTopping
 
@@ -55,7 +56,7 @@ fun CartItemRow(
             modifier = Modifier
                 .size(66.dp)
                 .clip(CircleShape)
-                .background(Color(0xFFF3F3F6))
+                .background(MaterialTheme.colorScheme.background)
         )
         Spacer(modifier = Modifier.width(16.dp))
         CartItemInfoColumn(
@@ -136,7 +137,7 @@ fun CartItemPrice(price: Int) {
         text = "$price ₽",
         fontSize = 16.sp,
         fontWeight = FontWeight.Bold,
-        color = Color.Black
+        color = MaterialTheme.colorScheme.onSurface
     )
 }
 

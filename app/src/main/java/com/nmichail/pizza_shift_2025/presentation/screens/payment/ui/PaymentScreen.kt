@@ -34,8 +34,7 @@ import com.nmichail.pizza_shift_2025.presentation.theme.OrangePizza
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.nmichail.pizza_shift_2025.R
 import com.nmichail.pizza_shift_2025.presentation.theme.PizzaTextFieldColors
-import com.nmichail.pizza_shift_2025.presentation.theme.PizzaTextFieldGrayCursorColors
-import com.nmichail.pizza_shift_2025.presentation.theme.PizzaTextFieldGrayBgColors
+
 import com.nmichail.pizza_shift_2025.presentation.theme.PizzaTextFieldAllGrayColors
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -59,7 +58,7 @@ fun PaymentScreen(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color.White)
+            .background(MaterialTheme.colorScheme.background)
             .padding(horizontal = 16.dp)
             .verticalScroll(scrollState),
         horizontalAlignment = Alignment.CenterHorizontally
@@ -90,7 +89,7 @@ fun PaymentScreen(
         Spacer(modifier = Modifier.height(8.dp))
         Text(
             text = "Шаг 1 из 2",
-            color = Color.Gray,
+            color = MaterialTheme.colorScheme.onSurface,
             fontSize = 14.sp,
             modifier = Modifier.align(Alignment.Start)
         )
@@ -143,7 +142,7 @@ fun PaymentScreen(
                 shape = androidx.compose.foundation.shape.RoundedCornerShape(12.dp)
             )
             Spacer(modifier = Modifier.height(24.dp))
-            Text(text = "Email", fontSize = 16.sp, color = Color.Black)
+            Text(text = "Email", fontSize = 16.sp, color = MaterialTheme.colorScheme.onSurface)
             Spacer(modifier = Modifier.height(8.dp))
             PizzaOutlinedTextField(
                 value = state.email,
@@ -152,7 +151,7 @@ fun PaymentScreen(
                 singleLine = true
             )
             Spacer(modifier = Modifier.height(24.dp))
-            Text(text = "Город", fontSize = 16.sp, color = Color.Black)
+            Text(text = "Город", fontSize = 16.sp, color = MaterialTheme.colorScheme.onSurface)
             Spacer(modifier = Modifier.height(8.dp))
             PizzaOutlinedTextField(
                 value = state.city,
@@ -188,7 +187,7 @@ fun PaymentScreen(
                 singleLine = true
             )
             Spacer(modifier = Modifier.height(24.dp))
-            Text(text = "Комментарий к заказу", fontSize = 16.sp, color = Color.Black)
+            Text(text = "Комментарий к заказу", fontSize = 16.sp, color =MaterialTheme.colorScheme.onSurface)
             Spacer(modifier = Modifier.height(8.dp))
             PizzaOutlinedTextField(
                 value = state.comment,

@@ -63,6 +63,7 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.compose.runtime.DisposableEffect
 import kotlinx.coroutines.delay
 import android.util.Log
+import androidx.compose.material3.MaterialTheme
 
 @Composable
 fun OrdersScreen(onDetailsClick: (String) -> Unit, navController: NavController? = null) {
@@ -100,7 +101,7 @@ fun OrdersScreen(onDetailsClick: (String) -> Unit, navController: NavController?
         }
     }
 
-    Column(modifier = Modifier.fillMaxSize().background(Color.White)) {
+    Column(modifier = Modifier.fillMaxSize().background(MaterialTheme.colorScheme.background)) {
 
         Text(
             text = "Заказы",

@@ -34,6 +34,7 @@ import com.nmichail.pizza_shift_2025.presentation.screens.catalog_detail.present
 import androidx.compose.runtime.collectAsState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.runtime.LaunchedEffect
 import com.nmichail.pizza_shift_2025.domain.entities.PizzaTopping
 import androidx.compose.ui.res.painterResource
@@ -66,7 +67,7 @@ fun CatalogDetailScreen(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color.White)
+            .background(MaterialTheme.colorScheme.background)
             .verticalScroll(rememberScrollState())
             .padding(bottom = 8.dp)
     ) {
@@ -94,12 +95,12 @@ fun CatalogDetailScreen(
                     modifier = Modifier
                         .size(20.dp)
                         .clip(CircleShape)
-                        .background(Color.White)
+                        //.background(MaterialTheme.colorScheme.surface)
                 ) {
                     Icon(
                         painter = painterResource(R.drawable.arrow_left),
                         contentDescription = "Назад",
-                        tint = Color.Black
+                        tint = MaterialTheme.colorScheme.onTertiary
                     )
                 }
                 Spacer(modifier = Modifier.width(12.dp))
@@ -139,7 +140,7 @@ fun CatalogDetailScreen(
             }
             Text(
                 text = sizeDescription,
-                color = Color(0xFF344051),
+                color = MaterialTheme.colorScheme.onTertiary,
                 fontSize = 15.sp,
                 modifier = Modifier.padding(horizontal = 20.dp)
             )
@@ -147,7 +148,7 @@ fun CatalogDetailScreen(
             Spacer(modifier = Modifier.height(16.dp))
             Text(
                 text = pizza.description ?: "",
-                color = Color.Gray,
+                color = MaterialTheme.colorScheme.onTertiary,
                 fontSize = 15.sp,
                 modifier = Modifier.padding(horizontal = 20.dp)
             )
@@ -157,7 +158,7 @@ fun CatalogDetailScreen(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(horizontal = 20.dp)
-                    .background(Color(0xFFF3F3F6), shape = RoundedCornerShape(24.dp)),
+                    .background(MaterialTheme.colorScheme.onSecondary, shape = RoundedCornerShape(24.dp)),
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 pizza.sizes.forEach { size ->
@@ -167,7 +168,7 @@ fun CatalogDetailScreen(
                             .weight(1f)
                             .padding(2.dp)
                             .clip(RoundedCornerShape(20.dp))
-                            .background(if (selected) Color.White else Color.Transparent)
+                            .background(if (selected) MaterialTheme.colorScheme.tertiaryContainer else MaterialTheme.colorScheme.onSecondary)
                             .clickable { 
                                 viewModel.selectSize(size)
                             }
@@ -176,7 +177,7 @@ fun CatalogDetailScreen(
                     ) {
                         Text(
                             text = size.toReadableSizeName(),
-                            color = if (selected) Color.Black else Color(0xFF6B7280),
+                            color = if (selected) MaterialTheme.colorScheme.onSurface else Color(0xFF6B7280),
                             fontWeight = if (selected) FontWeight.Bold else FontWeight.Normal,
                             fontSize = 14.sp
                         )
@@ -232,7 +233,7 @@ fun CatalogDetailScreen(
                     .fillMaxWidth()
                     .padding(horizontal = 20.dp)
                     .height(56.dp),
-                colors = androidx.compose.material3.ButtonDefaults.buttonColors(
+                colors = ButtonDefaults.buttonColors(
                     containerColor = if (state.isAddedToCart || isEdit) Color.Gray else OrangePizza,
                     disabledContainerColor = Color.Gray
                 ),

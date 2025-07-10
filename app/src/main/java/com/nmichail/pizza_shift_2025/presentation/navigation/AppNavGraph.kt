@@ -93,7 +93,7 @@ fun AppNavGraph(
         bottomBar = {
             val navBackStackEntry by navController.currentBackStackEntryAsState()
             val currentRoute = navBackStackEntry?.destination?.route
-            if (isAuthorized && currentRoute != Screen.Payment.route && currentRoute != Screen.CardPayment.route) {
+            if (isAuthorized && currentRoute != Screen.Payment.route && currentRoute != Screen.CardPayment.route && currentRoute != Screen.Auth.route) {
                 BottomBar(
                     currentTab = currentTab,
                     onTabSelected = { tab ->
@@ -142,6 +142,7 @@ fun AppNavGraph(
                 AuthScreen(
                     onAuthSuccess = {
                         viewModel.checkAuthorization()
+                        currentTab = BottomBarTab.PIZZA
                         navController.navigate(Screen.Catalog.route) {
                             popUpTo(Screen.Auth.route) { inclusive = true }
                         }

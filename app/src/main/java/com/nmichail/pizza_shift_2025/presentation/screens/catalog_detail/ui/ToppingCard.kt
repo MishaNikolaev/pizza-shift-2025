@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -45,7 +46,7 @@ fun ToppingCard(
                 spotColor = Color.Black.copy(alpha = 0.15f)
             )
             .clip(RoundedCornerShape(18.dp))
-            .background(Color.White)
+            .background(MaterialTheme.colorScheme.background)
             .then(
                 if (selected) {
                     Modifier.border(
@@ -82,8 +83,8 @@ fun ToppingCard(
             Spacer(modifier = Modifier.height(8.dp))
             Text(
                 text = "${topping.price} ₽",
-                color = Color.Black,
-                fontSize = 16.sp,
+                color = MaterialTheme.colorScheme.inversePrimary,
+                        fontSize = 16.sp,
                 fontWeight = FontWeight.Medium
             )
         }

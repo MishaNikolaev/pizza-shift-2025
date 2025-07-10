@@ -54,7 +54,7 @@ fun CardPaymentScreen(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color.White)
+            .background(MaterialTheme.colorScheme.background)
             .padding(horizontal = 16.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
@@ -84,7 +84,7 @@ fun CardPaymentScreen(
         Spacer(modifier = Modifier.height(8.dp))
         Text(
             text = "Шаг 2 из 2",
-            color = Color.Gray,
+            color = MaterialTheme.colorScheme.onSurface,
             fontSize = 14.sp,
             modifier = Modifier.align(Alignment.Start)
         )
@@ -106,11 +106,10 @@ fun CardPaymentScreen(
         Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .background(Color(0xFFF5F6FA), RoundedCornerShape(16.dp))
-                .padding(20.dp)
+                .background(MaterialTheme.colorScheme.background, RoundedCornerShape(16.dp))                .padding(20.dp)
         ) {
             Column(modifier = Modifier.fillMaxWidth()) {
-                Text(text = "Номер*", fontSize = 16.sp, color = Color.Black)
+                Text(text = "Номер*", fontSize = 16.sp, color = MaterialTheme.colorScheme.onBackground)
                 Spacer(modifier = Modifier.height(8.dp))
                 OutlinedTextField(
                     value = cardNumber,
@@ -141,7 +140,7 @@ fun CardPaymentScreen(
                 Spacer(modifier = Modifier.height(20.dp))
                 Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(12.dp)) {
                     Column(modifier = Modifier.weight(1f)) {
-                        Text(text = "Срок*", fontSize = 16.sp, color = Color.Black)
+                        Text(text = "Срок*", fontSize = 16.sp, color = MaterialTheme.colorScheme.onBackground)
                         Spacer(modifier = Modifier.height(8.dp))
                         OutlinedTextField(
                             value = cardDate,
@@ -172,7 +171,7 @@ fun CardPaymentScreen(
                         )
                     }
                     Column(modifier = Modifier.weight(1f)) {
-                        Text(text = "CVV*", fontSize = 16.sp, color = Color.Black)
+                        Text(text = "CVV*", fontSize = 16.sp, color = MaterialTheme.colorScheme.onBackground)
                         Spacer(modifier = Modifier.height(8.dp))
                         OutlinedTextField(
                             value = cardCvv,
