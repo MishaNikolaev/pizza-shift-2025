@@ -1,5 +1,7 @@
 package com.nmichail.pizza_shift_2025.data.dto
 
+import com.google.gson.annotations.SerializedName
+
 data class PaymentResponseDto(
     val success: Boolean,
     val reason: String?,
@@ -7,6 +9,8 @@ data class PaymentResponseDto(
 )
 
 data class PizzaOrderDto(
+    @SerializedName("_id")
+    val id: String?,
     val pizzas: List<PizzaOrderItemDto>,
     val totalPrice: Int,
     val person: CreatePaymentPersonDto,

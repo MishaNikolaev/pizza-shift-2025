@@ -5,6 +5,7 @@ import android.content.SharedPreferences
 import android.util.Log
 import com.google.gson.Gson
 import com.nmichail.pizza_shift_2025.data.remote.AuthApi
+import com.nmichail.pizza_shift_2025.data.remote.OrderApi
 import com.nmichail.pizza_shift_2025.data.remote.PizzaApi
 import com.nmichail.pizza_shift_2025.data.repository.AuthRepositoryImpl
 import com.nmichail.pizza_shift_2025.data.repository.CartRepositoryImpl
@@ -109,4 +110,10 @@ object AppModule {
 
     @Provides
     fun provideContext(@ApplicationContext context: Context): Context = context
+
+    @Provides
+    @Singleton
+    fun provideOrderApi(retrofit: Retrofit): OrderApi {
+        return retrofit.create(OrderApi::class.java)
+    }
 } 
