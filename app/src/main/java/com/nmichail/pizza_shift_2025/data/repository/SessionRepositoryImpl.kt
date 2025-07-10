@@ -4,7 +4,6 @@ import android.content.SharedPreferences
 import com.nmichail.pizza_shift_2025.data.remote.AuthApi
 import com.nmichail.pizza_shift_2025.domain.repository.SessionRepository
 import javax.inject.Inject
-import android.util.Log
 
 class SessionRepositoryImpl @Inject constructor(
     private val prefs: SharedPreferences,

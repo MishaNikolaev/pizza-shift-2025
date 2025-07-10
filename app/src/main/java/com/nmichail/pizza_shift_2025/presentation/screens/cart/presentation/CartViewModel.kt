@@ -1,12 +1,11 @@
 package com.nmichail.pizza_shift_2025.presentation.screens.cart.presentation
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.nmichail.pizza_shift_2025.data.dto.PizzaOrderDto
-import com.nmichail.pizza_shift_2025.data.dto.PizzaOrderItemDto
 import com.nmichail.pizza_shift_2025.domain.entities.Pizza
 import com.nmichail.pizza_shift_2025.domain.entities.PizzaTopping
-import com.nmichail.pizza_shift_2025.domain.entities.CartItem
 import com.nmichail.pizza_shift_2025.domain.repository.CartRepository
 import com.nmichail.pizza_shift_2025.domain.repository.PizzaRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -14,9 +13,8 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
-import javax.inject.Inject
-import android.util.Log
 import kotlinx.coroutines.runBlocking
+import javax.inject.Inject
 
 @HiltViewModel
 class CartViewModel @Inject constructor(

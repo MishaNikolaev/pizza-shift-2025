@@ -3,7 +3,7 @@ package com.nmichail.pizza_shift_2025.presentation.screens.orders
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.nmichail.pizza_shift_2025.data.dto.PizzaOrderDto
-import com.nmichail.pizza_shift_2025.data.repository.OrderRepository
+import com.nmichail.pizza_shift_2025.domain.repository.OrderRepository
 import com.nmichail.pizza_shift_2025.domain.repository.SessionRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow

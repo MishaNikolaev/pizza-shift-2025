@@ -3,7 +3,7 @@ package com.nmichail.pizza_shift_2025.domain.usecase
 import com.nmichail.pizza_shift_2025.domain.entities.CartItem
 import com.nmichail.pizza_shift_2025.domain.entities.Pizza
 import com.nmichail.pizza_shift_2025.domain.repository.CartRepository
-import java.util.UUID
+import java.util.*
 import javax.inject.Inject
 
 class AddToCartUseCase @Inject constructor(

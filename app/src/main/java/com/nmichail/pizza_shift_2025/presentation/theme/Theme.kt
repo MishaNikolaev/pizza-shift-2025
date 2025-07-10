@@ -2,24 +2,15 @@ package com.nmichail.pizza_shift_2025.presentation.theme
 
 import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.darkColorScheme
-import androidx.compose.material3.dynamicDarkColorScheme
-import androidx.compose.material3.dynamicLightColorScheme
-import androidx.compose.material3.lightColorScheme
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.material3.OutlinedTextFieldDefaults
-import androidx.compose.material3.ButtonDefaults
-import androidx.compose.ui.graphics.Color
-import com.nmichail.pizza_shift_2025.presentation.theme.OrangePizza
-import com.nmichail.pizza_shift_2025.presentation.theme.OrangeAlmostPizza
-import androidx.compose.material3.OutlinedTextField
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.ui.unit.dp
+import androidx.compose.material3.*
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.unit.dp
 
 private val DarkColorScheme = darkColorScheme(
     primary = OrangePizza,
@@ -114,16 +105,6 @@ fun PizzaOutlinedTextField(
         shape = RoundedCornerShape(12.dp)
     )
 }
-
-val PizzaTextFieldColors
-    @Composable get() = OutlinedTextFieldDefaults.colors(
-    focusedBorderColor = OrangePizza,
-    unfocusedBorderColor = OrangePizza.copy(alpha = 0.7f),
-    disabledBorderColor = Color.Gray,
-    focusedLabelColor = OrangePizza,
-    unfocusedLabelColor = OrangePizza.copy(alpha = 0.7f),
-    cursorColor = OrangePizza
-)
 
 val PizzaButtonColors
     @Composable get() = ButtonDefaults.buttonColors(

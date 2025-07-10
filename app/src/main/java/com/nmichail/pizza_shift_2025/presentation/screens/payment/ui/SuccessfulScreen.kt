@@ -4,14 +4,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.Icon
-import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
-import androidx.compose.material3.OutlinedButton
-import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -23,10 +16,10 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.nmichail.pizza_shift_2025.presentation.theme.OrangePizza
-import com.nmichail.pizza_shift_2025.R
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.nmichail.pizza_shift_2025.R
 import com.nmichail.pizza_shift_2025.presentation.screens.payment.presentation.PaymentViewModel
+import com.nmichail.pizza_shift_2025.presentation.theme.OrangePizza
 import com.nmichail.pizza_shift_2025.presentation.util.toReadableSizeName
 import com.nmichail.pizza_shift_2025.presentation.util.toReadableTopping
 

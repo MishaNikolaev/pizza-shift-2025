@@ -1,19 +1,17 @@
 package com.nmichail.pizza_shift_2025.presentation.screens.catalog_detail.presentation
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.nmichail.pizza_shift_2025.domain.entities.CartItem
-import com.nmichail.pizza_shift_2025.domain.entities.Pizza
 import com.nmichail.pizza_shift_2025.domain.repository.PizzaRepository
 import com.nmichail.pizza_shift_2025.domain.usecase.AddToCartUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.launch
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.launch
 import javax.inject.Inject
-import kotlinx.coroutines.delay
 
 @HiltViewModel
 class PizzaDetailViewModel @Inject constructor(

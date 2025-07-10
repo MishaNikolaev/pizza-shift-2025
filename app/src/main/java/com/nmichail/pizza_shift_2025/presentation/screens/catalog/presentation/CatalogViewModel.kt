@@ -2,7 +2,6 @@ package com.nmichail.pizza_shift_2025.presentation.screens.catalog.presentation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.nmichail.pizza_shift_2025.domain.entities.Pizza
 import com.nmichail.pizza_shift_2025.domain.usecase.GetPizzaCatalogUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow

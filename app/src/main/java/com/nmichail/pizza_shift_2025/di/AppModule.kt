@@ -2,24 +2,13 @@ package com.nmichail.pizza_shift_2025.di
 
 import android.content.Context
 import android.content.SharedPreferences
-import android.util.Log
 import com.google.gson.Gson
 import com.nmichail.pizza_shift_2025.data.remote.AuthApi
 import com.nmichail.pizza_shift_2025.data.remote.OrderApi
 import com.nmichail.pizza_shift_2025.data.remote.PizzaApi
 import com.nmichail.pizza_shift_2025.data.remote.ProfileApi
-import com.nmichail.pizza_shift_2025.data.repository.AuthRepositoryImpl
-import com.nmichail.pizza_shift_2025.data.repository.CartRepositoryImpl
-import com.nmichail.pizza_shift_2025.data.repository.PizzaRepositoryImpl
-import com.nmichail.pizza_shift_2025.data.repository.PaymentRepositoryImpl
-import com.nmichail.pizza_shift_2025.data.repository.ProfileRepositoryImpl
-import com.nmichail.pizza_shift_2025.data.repository.SessionRepositoryImpl
-import com.nmichail.pizza_shift_2025.domain.repository.AuthRepository
-import com.nmichail.pizza_shift_2025.domain.repository.CartRepository
-import com.nmichail.pizza_shift_2025.domain.repository.PizzaRepository
-import com.nmichail.pizza_shift_2025.domain.repository.PaymentRepository
-import com.nmichail.pizza_shift_2025.domain.repository.ProfileRepository
-import com.nmichail.pizza_shift_2025.domain.repository.SessionRepository
+import com.nmichail.pizza_shift_2025.data.repository.*
+import com.nmichail.pizza_shift_2025.domain.repository.*
 import com.nmichail.pizza_shift_2025.domain.usecase.AddToCartUseCase
 import com.nmichail.pizza_shift_2025.domain.usecase.GetPizzaCatalogUseCase
 import com.nmichail.pizza_shift_2025.domain.usecase.GetProfileUseCase

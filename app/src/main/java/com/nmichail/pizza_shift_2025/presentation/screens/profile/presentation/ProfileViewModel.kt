@@ -3,9 +3,9 @@ package com.nmichail.pizza_shift_2025.presentation.screens.profile.presentation
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.nmichail.pizza_shift_2025.data.dto.UserDto
+import com.nmichail.pizza_shift_2025.domain.repository.SessionRepository
 import com.nmichail.pizza_shift_2025.domain.usecase.GetProfileUseCase
 import com.nmichail.pizza_shift_2025.domain.usecase.UpdateProfileUseCase
-import com.nmichail.pizza_shift_2025.domain.repository.SessionRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

@@ -1,20 +1,19 @@
 package com.nmichail.pizza_shift_2025.data.repository
 
+import android.content.Context
+import androidx.datastore.preferences.core.edit
+import androidx.datastore.preferences.core.stringPreferencesKey
 import com.nmichail.pizza_shift_2025.data.dto.OtpRequestDto
 import com.nmichail.pizza_shift_2025.data.dto.SignInRequestDto
 import com.nmichail.pizza_shift_2025.data.remote.AuthApi
-import com.nmichail.pizza_shift_2025.presentation.util.Result
+import com.nmichail.pizza_shift_2025.dataStore
 import com.nmichail.pizza_shift_2025.domain.repository.AuthRepository
 import com.nmichail.pizza_shift_2025.domain.repository.SessionRepository
-import javax.inject.Inject
-import android.content.Context
-import kotlinx.coroutines.flow.first
-import androidx.datastore.preferences.core.edit
-import androidx.datastore.preferences.core.stringPreferencesKey
-import androidx.datastore.preferences.core.MutablePreferences
-import com.nmichail.pizza_shift_2025.dataStore
+import com.nmichail.pizza_shift_2025.presentation.util.Result
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
+import javax.inject.Inject
 
 class AuthRepositoryImpl @Inject constructor(
     private val api: AuthApi,

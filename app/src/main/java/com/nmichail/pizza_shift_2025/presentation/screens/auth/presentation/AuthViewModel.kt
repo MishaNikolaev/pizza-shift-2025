@@ -1,23 +1,19 @@
 package com.nmichail.pizza_shift_2025.presentation.screens.auth.presentation
 
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.nmichail.pizza_shift_2025.data.repository.AuthRepositoryImpl
 import com.nmichail.pizza_shift_2025.domain.usecase.GetAuthorizedUseCase
 import com.nmichail.pizza_shift_2025.domain.usecase.RequestOtpUseCase
-import com.nmichail.pizza_shift_2025.presentation.util.Result
 import com.nmichail.pizza_shift_2025.domain.usecase.SignInUseCase
+import com.nmichail.pizza_shift_2025.presentation.util.Result
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
-import androidx.lifecycle.SavedStateHandle
-import com.nmichail.pizza_shift_2025.data.repository.AuthRepositoryImpl
-import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.stateIn
 
 @HiltViewModel
 class AuthViewModel @Inject constructor(

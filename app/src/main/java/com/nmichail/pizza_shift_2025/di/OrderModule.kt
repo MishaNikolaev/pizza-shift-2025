@@ -1,7 +1,7 @@
 package com.nmichail.pizza_shift_2025.di
 
-import com.nmichail.pizza_shift_2025.data.repository.OrderRepository
 import com.nmichail.pizza_shift_2025.data.repository.OrderRepositoryImpl
+import com.nmichail.pizza_shift_2025.domain.repository.OrderRepository
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
