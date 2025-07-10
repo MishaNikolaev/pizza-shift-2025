@@ -81,16 +81,18 @@ fun EnterPhoneScreen(state: AuthUiState.EnterPhone, viewModel: AuthViewModel) {
                 Text("Продолжить", fontSize = 20.sp)
             }
         }
-        
+
         when (state.otpState) {
             is OtpState.Error -> {
                 Spacer(modifier = Modifier.height(12.dp))
                 Text(text = state.otpState.message, color = Color.Red)
             }
+
             is OtpState.Loading -> {
                 Spacer(modifier = Modifier.height(12.dp))
                 Text(text = "Отправляем код...", color = OrangePizza)
             }
+
             is OtpState.None -> {
             }
         }

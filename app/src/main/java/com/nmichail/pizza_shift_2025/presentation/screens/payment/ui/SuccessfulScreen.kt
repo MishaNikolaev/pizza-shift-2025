@@ -39,7 +39,9 @@ fun SuccessfulScreen(
     ) {
         IconButton(
             onClick = onClose,
-            modifier = Modifier.align(Alignment.TopEnd).padding(12.dp)
+            modifier = Modifier
+                .align(Alignment.TopEnd)
+                .padding(12.dp)
         ) {
             Icon(
                 painter = painterResource(R.drawable.cancel),
@@ -98,7 +100,9 @@ fun SuccessfulScreen(
                 } ?: "-",
                 fontSize = 17.sp,
                 color = MaterialTheme.colorScheme.onSurface,
-                modifier = Modifier.align(Alignment.Start).padding(bottom = 12.dp)
+                modifier = Modifier
+                    .align(Alignment.Start)
+                    .padding(bottom = 12.dp)
             )
             Spacer(modifier = Modifier.height(4.dp))
             Text(
@@ -115,7 +119,9 @@ fun SuccessfulScreen(
                 } ?: "-",
                 fontSize = 17.sp,
                 color = MaterialTheme.colorScheme.onSurface,
-                modifier = Modifier.align(Alignment.Start).padding(bottom = 12.dp)
+                modifier = Modifier
+                    .align(Alignment.Start)
+                    .padding(bottom = 12.dp)
             )
             Text(
                 text = "Сумма заказа",
@@ -129,13 +135,17 @@ fun SuccessfulScreen(
                 text = lastOrder?.totalPrice?.let { "$it р" } ?: "-",
                 fontSize = 17.sp,
                 color = MaterialTheme.colorScheme.onSurface,
-                modifier = Modifier.align(Alignment.Start).padding(bottom = 12.dp)
+                modifier = Modifier
+                    .align(Alignment.Start)
+                    .padding(bottom = 12.dp)
             )
             Text(
                 text = "Вся информация была продублирована в SMS",
                 fontSize = 14.sp,
                 color = Color.Gray,
-                modifier = Modifier.align(Alignment.Start).padding(bottom = 34.dp)
+                modifier = Modifier
+                    .align(Alignment.Start)
+                    .padding(bottom = 34.dp)
             )
             OutlinedButton(
                 onClick = onOrderDetails,

@@ -40,8 +40,11 @@ fun CartScreen(
                 CircularProgressIndicator()
             }
         }
+
         is CartUiState.Content -> {
-            Box(modifier = Modifier.fillMaxSize().background(MaterialTheme.colorScheme.background)) {
+            Box(modifier = Modifier
+                .fillMaxSize()
+                .background(MaterialTheme.colorScheme.background)) {
                 Column(modifier = Modifier.fillMaxSize()) {
                     Row(
                         verticalAlignment = Alignment.CenterVertically,
@@ -59,7 +62,10 @@ fun CartScreen(
                         Spacer(modifier = Modifier.width(8.dp))
                         Text(
                             text = "Корзина",
-                            style = MaterialTheme.typography.titleLarge.copy(fontWeight = FontWeight.Bold, fontSize = 20.sp),
+                            style = MaterialTheme.typography.titleLarge.copy(
+                                fontWeight = FontWeight.Bold,
+                                fontSize = 20.sp
+                            ),
                         )
                     }
                     Divider(color = MaterialTheme.colorScheme.tertiaryContainer, thickness = 1.dp)
@@ -95,7 +101,11 @@ fun CartScreen(
                                         navController.navigate(route)
                                     }
                                 )
-                                Divider(color = Color(0xFFF3F3F6), thickness = 1.dp, modifier = Modifier.padding(vertical = 4.dp, horizontal = 20.dp))
+                                Divider(
+                                    color = Color(0xFFF3F3F6),
+                                    thickness = 1.dp,
+                                    modifier = Modifier.padding(vertical = 4.dp, horizontal = 20.dp)
+                                )
                             }
                         }
                     }

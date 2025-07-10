@@ -74,7 +74,7 @@ fun CatalogDetailScreen(
                     modifier = Modifier
                         .size(20.dp)
                         .clip(CircleShape)
-                        //.background(MaterialTheme.colorScheme.surface)
+                    //.background(MaterialTheme.colorScheme.surface)
                 ) {
                     Icon(
                         painter = painterResource(R.drawable.arrow_left),
@@ -89,7 +89,7 @@ fun CatalogDetailScreen(
                     modifier = Modifier.padding(top = 2.dp)
                 )
             }
-            
+
             Box(modifier = Modifier.fillMaxWidth()) {
                 AsyncImage(
                     model = pizza.imageUrl,
@@ -100,14 +100,14 @@ fun CatalogDetailScreen(
                         .padding(top = 8.dp)
                 )
             }
-            
+
             Spacer(modifier = Modifier.height(8.dp))
             Text(
                 text = pizza.name,
                 style = MaterialTheme.typography.headlineSmall.copy(fontWeight = FontWeight.Bold),
                 modifier = Modifier.padding(horizontal = 20.dp)
             )
-            
+
             Spacer(modifier = Modifier.height(16.dp))
             val sizeDescription = buildString {
                 val currentSize = state.selectedSize ?: pizza.sizes.firstOrNull()
@@ -123,7 +123,7 @@ fun CatalogDetailScreen(
                 fontSize = 15.sp,
                 modifier = Modifier.padding(horizontal = 20.dp)
             )
-            
+
             Spacer(modifier = Modifier.height(16.dp))
             Text(
                 text = pizza.description ?: "",
@@ -131,7 +131,7 @@ fun CatalogDetailScreen(
                 fontSize = 15.sp,
                 modifier = Modifier.padding(horizontal = 20.dp)
             )
-            
+
             Spacer(modifier = Modifier.height(16.dp))
             Row(
                 modifier = Modifier
@@ -148,7 +148,7 @@ fun CatalogDetailScreen(
                             .padding(2.dp)
                             .clip(RoundedCornerShape(20.dp))
                             .background(if (selected) MaterialTheme.colorScheme.tertiaryContainer else MaterialTheme.colorScheme.onSecondary)
-                            .clickable { 
+                            .clickable {
                                 viewModel.selectSize(size)
                             }
                             .padding(vertical = 12.dp),
@@ -163,7 +163,7 @@ fun CatalogDetailScreen(
                     }
                 }
             }
-            
+
             Spacer(modifier = Modifier.height(16.dp))
             Text(
                 text = "Добавить по вкусу",
@@ -171,7 +171,7 @@ fun CatalogDetailScreen(
                 fontSize = 20.sp,
                 modifier = Modifier.padding(horizontal = 20.dp)
             )
-            
+
             Spacer(modifier = Modifier.height(8.dp))
             Column(
                 modifier = Modifier
@@ -199,11 +199,11 @@ fun CatalogDetailScreen(
                     }
                 }
             }
-            
+
             Spacer(modifier = Modifier.height(32.dp))
-            
+
             Button(
-                onClick = { 
+                onClick = {
                     if (!state.isAddedToCart) {
                         viewModel.addToCart(cartItemId = state.cartItemId)
                     }
@@ -230,7 +230,7 @@ fun CatalogDetailScreen(
                     fontWeight = FontWeight.Bold
                 )
             }
-            
+
             Spacer(modifier = Modifier.height(32.dp))
         }
     }

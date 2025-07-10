@@ -98,7 +98,8 @@ fun CardPaymentScreen(
         Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .background(MaterialTheme.colorScheme.background, RoundedCornerShape(16.dp))                .padding(20.dp)
+                .background(MaterialTheme.colorScheme.background, RoundedCornerShape(16.dp))
+                .padding(20.dp)
         ) {
             Column(modifier = Modifier.fillMaxWidth()) {
                 Text(text = "Номер*", fontSize = 16.sp, color = MaterialTheme.colorScheme.onBackground)

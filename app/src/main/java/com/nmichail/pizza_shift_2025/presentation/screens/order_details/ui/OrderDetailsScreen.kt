@@ -18,13 +18,19 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.nmichail.pizza_shift_2025.R
+import com.nmichail.pizza_shift_2025.presentation.navigation.BottomBarTab
 import com.nmichail.pizza_shift_2025.presentation.navigation.Screen
 import com.nmichail.pizza_shift_2025.presentation.screens.cart.presentation.CartViewModel
 import com.nmichail.pizza_shift_2025.presentation.screens.order_details.presentation.OrderDetailViewModel
 import com.nmichail.pizza_shift_2025.presentation.theme.OrangePizza
 
 @Composable
-fun OrderDetailsScreen(orderId: String, onBack: () -> Unit, navController: NavController? = null, onTabChange: ((tab: com.nmichail.pizza_shift_2025.presentation.components.BottomBarTab) -> Unit)? = null) {
+fun OrderDetailsScreen(
+    orderId: String,
+    onBack: () -> Unit,
+    navController: NavController? = null,
+    onTabChange: ((tab: BottomBarTab) -> Unit)? = null
+) {
     val viewModel: OrderDetailViewModel = hiltViewModel()
     val order by viewModel.order.collectAsState()
     val cartViewModel: CartViewModel = hiltViewModel()
@@ -105,25 +111,39 @@ fun OrderDetailsScreen(orderId: String, onBack: () -> Unit, navController: NavCo
                         Spacer(modifier = Modifier.height(12.dp))
                         Text("Адрес доставки", color = Color.Gray, fontSize = 13.sp)
                         Spacer(modifier = Modifier.height(8.dp))
-                        Text(order!!.receiverAddress.let { "${it.street}, д. ${it.house}${if (it.apartment.isNotBlank()) ", кв. ${it.apartment}" else ""}${if (!it.comment.isNullOrBlank()) ", ${it.comment}" else ""}" }, color = MaterialTheme.colorScheme.inversePrimary, fontSize = 16.sp)
+                        Text(
+                            order!!.receiverAddress.let { "${it.street}, д. ${it.house}${if (it.apartment.isNotBlank()) ", кв. ${it.apartment}" else ""}${if (!it.comment.isNullOrBlank()) ", ${it.comment}" else ""}" },
+                            color = MaterialTheme.colorScheme.inversePrimary,
+                            fontSize = 16.sp
+                        )
                         Spacer(modifier = Modifier.height(12.dp))
                         Text("Состав заказа", color = Color.Gray, fontSize = 13.sp)
                         Spacer(modifier = Modifier.height(8.dp))
-                        Text(order!!.pizzas.joinToString("\n") { it.name }, color = MaterialTheme.colorScheme.inversePrimary, fontSize = 16.sp)
+                        Text(
+                            order!!.pizzas.joinToString("\n") { it.name },
+                            color = MaterialTheme.colorScheme.inversePrimary,
+                            fontSize = 16.sp
+                        )
                         Spacer(modifier = Modifier.height(12.dp))
                         Text("Сумма заказа", color = Color.Gray, fontSize = 13.sp)
                         Spacer(modifier = Modifier.height(8.dp))
-                        Text("${order!!.totalPrice} р", color = MaterialTheme.colorScheme.inversePrimary, fontSize = 16.sp)
+                        Text(
+                            "${order!!.totalPrice} р",
+                            color = MaterialTheme.colorScheme.inversePrimary,
+                            fontSize = 16.sp
+                        )
                         Spacer(modifier = Modifier.height(20.dp))
                         Button(
                             onClick = {
                                 if (order != null) {
                                     cartViewModel.repeatOrder(order!!)
-                                    onTabChange?.invoke(com.nmichail.pizza_shift_2025.presentation.components.BottomBarTab.CART)
+                                    onTabChange?.invoke(BottomBarTab.CART)
                                     navController?.navigate(Screen.Cart.route)
                                 }
                             },
-                            modifier = Modifier.fillMaxWidth().height(48.dp),
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .height(48.dp),
                             shape = RoundedCornerShape(12.dp),
                             colors = ButtonDefaults.buttonColors(containerColor = OrangePizza)
                         ) {

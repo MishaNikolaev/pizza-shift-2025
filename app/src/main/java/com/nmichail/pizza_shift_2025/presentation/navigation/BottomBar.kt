@@ -16,17 +16,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.zIndex
 import com.nmichail.pizza_shift_2025.R
+import com.nmichail.pizza_shift_2025.presentation.navigation.BottomBarItem
+import com.nmichail.pizza_shift_2025.presentation.navigation.BottomBarItemData
+import com.nmichail.pizza_shift_2025.presentation.navigation.BottomBarTab
 import com.nmichail.pizza_shift_2025.presentation.theme.OrangeAlmostPizza
-
-enum class BottomBarTab {
-    PIZZA, ORDERS, CART, PROFILE
-}
-
-data class BottomBarItemData(
-    val tab: BottomBarTab,
-    val iconRes: Int,
-    val label: String
-)
 
 val bottomBarItems = listOf(
     BottomBarItemData(BottomBarTab.PIZZA, R.drawable.catalog, "Пицца"),
@@ -65,33 +58,3 @@ fun BottomBar(
         }
     }
 }
-
-@Composable
-fun BottomBarItem(
-    tab: BottomBarTab,
-    iconRes: Int,
-    label: String,
-    isSelected: Boolean,
-    onClick: () -> Unit
-) {
-    Column(
-        modifier = Modifier
-            .clickable { onClick() }
-            .padding(horizontal = 12.dp, vertical = 4.dp),
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        Icon(
-            painter = painterResource(iconRes),
-            contentDescription = label,
-            tint = if (isSelected) OrangeAlmostPizza else Color.Gray,
-            modifier = Modifier.size(24.dp)
-        )
-        Spacer(modifier = Modifier.height(4.dp))
-        Text(
-            text = label,
-            fontSize = 12.sp,
-            fontWeight = if (isSelected) FontWeight.Bold else FontWeight.Normal,
-            color = if (isSelected) OrangeAlmostPizza else Color.Gray
-        )
-    }
-} 

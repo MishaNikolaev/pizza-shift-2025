@@ -11,7 +11,6 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
-import android.util.Log
 
 @HiltViewModel
 class OrdersViewModel @Inject constructor(
@@ -33,10 +32,8 @@ class OrdersViewModel @Inject constructor(
             _error.value = null
             try {
                 val token = sessionRepository.getToken()
-                Log.d("TOKEN", "Token: $token")
                 if (token != null) {
                     _orders.value = repository.getOrders("Bearer $token")
-                    Log.d("OrdersViewModel", "orders loaded: " + _orders.value.joinToString { it.toString() })
                 } else {
                     _error.value = "Не авторизован"
                 }
@@ -61,11 +58,9 @@ class OrdersViewModel @Inject constructor(
                     _error.value = "Не авторизован или неверный orderId"
                 }
             } catch (e: retrofit2.HttpException) {
-                Log.e("OrdersViewModel", "cancelOrder: HttpException ${e.code()} ${e.message()}")
                 _error.value = "Ошибка отмены заказа: ${e.code()} ${e.message()}"
                 onResult(false)
             } catch (e: Exception) {
-                Log.e("OrdersViewModel", "cancelOrder: Exception ${e.message}")
                 _error.value = "Неизвестная ошибка: ${e.message}"
                 onResult(false)
             }

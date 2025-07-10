@@ -50,7 +50,7 @@ class AuthViewModel @Inject constructor(
     fun onPhoneChanged(phone: String) {
         val current = currentEnterPhone ?: return
         _uiState.value = current.copy(
-            phone = phone, 
+            phone = phone,
             otpState = OtpState.None
         )
     }
@@ -58,7 +58,7 @@ class AuthViewModel @Inject constructor(
     fun onCodeChanged(code: String) {
         val current = currentEnterCode ?: return
         _uiState.value = current.copy(
-            code = code, 
+            code = code,
             signInState = SignInState.None
         )
     }
@@ -77,6 +77,7 @@ class AuthViewModel @Inject constructor(
                     _uiState.value = AuthUiState.EnterCode(phone = phone, code = "", secondsLeft = 60)
                     startTimer(60)
                 }
+
                 is Result.Error -> {
                     _uiState.value = current.copy(otpState = OtpState.Error(result.reason))
                 }
@@ -89,7 +90,8 @@ class AuthViewModel @Inject constructor(
         val phone = current.phone.trim()
         val code = current.code.trim()
         if (code.isBlank()) {
-            _uiState.value = current.copy(signInState = SignInState.Error("Введите проверочный код", "Введите проверочный код"))
+            _uiState.value =
+                current.copy(signInState = SignInState.Error("Введите проверочный код", "Введите проверочный код"))
             return
         }
         viewModelScope.launch {
@@ -101,6 +103,7 @@ class AuthViewModel @Inject constructor(
                     _uiState.value = AuthUiState.EnterPhone(phone = phone)
                     _isAuthorized.value = true
                 }
+
                 is Result.Error -> {
                     _uiState.value = current.copy(signInState = SignInState.Error(result.reason, result.reason))
                 }
@@ -118,6 +121,7 @@ class AuthViewModel @Inject constructor(
                     _uiState.value = current.copy(code = "", secondsLeft = 60, signInState = SignInState.None)
                     startTimer(60)
                 }
+
                 is Result.Error -> {
                     _uiState.value = current.copy(signInState = SignInState.Error(result.reason, result.reason))
                 }

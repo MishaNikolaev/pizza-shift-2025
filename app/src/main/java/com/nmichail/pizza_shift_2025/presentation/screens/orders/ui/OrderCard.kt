@@ -64,19 +64,36 @@ fun OrderCard(
                 Spacer(modifier = Modifier.height(8.dp))
                 Text("Адрес доставки", color = MaterialTheme.colorScheme.secondaryContainer, fontSize = 14.sp)
                 Spacer(modifier = Modifier.height(8.dp))
-                Text(order.receiverAddress.let { "${it.street}, д. ${it.house}" }, color = MaterialTheme.colorScheme.inversePrimary, fontSize = 16.sp, modifier = Modifier.padding(bottom = 8.dp))
+                Text(
+                    order.receiverAddress.let { "${it.street}, д. ${it.house}" },
+                    color = MaterialTheme.colorScheme.inversePrimary,
+                    fontSize = 16.sp,
+                    modifier = Modifier.padding(bottom = 8.dp)
+                )
                 Spacer(modifier = Modifier.height(8.dp))
                 Text("Состав заказа", color = MaterialTheme.colorScheme.secondaryContainer, fontSize = 14.sp)
                 Spacer(modifier = Modifier.height(8.dp))
-                Text(order.pizzas.joinToString("\n") { it.name }, color = MaterialTheme.colorScheme.inversePrimary, fontSize = 16.sp, modifier = Modifier.padding(bottom = 8.dp))
+                Text(
+                    order.pizzas.joinToString("\n") { it.name },
+                    color = MaterialTheme.colorScheme.inversePrimary,
+                    fontSize = 16.sp,
+                    modifier = Modifier.padding(bottom = 8.dp)
+                )
                 Spacer(modifier = Modifier.height(8.dp))
                 Text("Сумма заказа", color = Color.Gray, fontSize = 13.sp)
                 Spacer(modifier = Modifier.height(8.dp))
-                Text("${order.totalPrice} р", color = MaterialTheme.colorScheme.inversePrimary, fontSize = 16.sp, modifier = Modifier.padding(bottom = 16.dp))
+                Text(
+                    "${order.totalPrice} р",
+                    color = MaterialTheme.colorScheme.inversePrimary,
+                    fontSize = 16.sp,
+                    modifier = Modifier.padding(bottom = 16.dp)
+                )
                 if (showCancelButton) {
                     Button(
                         onClick = { onCancelClick?.invoke() },
-                        modifier = Modifier.fillMaxWidth().height(48.dp),
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(48.dp),
                         shape = RoundedCornerShape(12.dp),
                         colors = ButtonDefaults.buttonColors(containerColor = OrangePizza)
                     ) {

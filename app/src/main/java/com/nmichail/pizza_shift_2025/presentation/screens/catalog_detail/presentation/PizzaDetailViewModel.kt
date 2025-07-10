@@ -22,7 +22,12 @@ class PizzaDetailViewModel @Inject constructor(
     private val _uiState = MutableStateFlow(PizzaDetailUiState())
     val uiState: StateFlow<PizzaDetailUiState> = _uiState
 
-    fun loadPizza(pizzaId: String, initialSize: String? = null, initialToppings: Set<String> = emptySet(), cartItemId: String? = null) {
+    fun loadPizza(
+        pizzaId: String,
+        initialSize: String? = null,
+        initialToppings: Set<String> = emptySet(),
+        cartItemId: String? = null
+    ) {
         viewModelScope.launch {
             val catalog = pizzaRepository.getCatalog()
             val pizza = catalog.find { it.id == pizzaId }
@@ -41,7 +46,7 @@ class PizzaDetailViewModel @Inject constructor(
         val current = _uiState.value
         _uiState.value = current.copy(
             selectedSize = size,
-            isAddedToCart = false 
+            isAddedToCart = false
         )
     }
 
@@ -54,7 +59,7 @@ class PizzaDetailViewModel @Inject constructor(
         }
         _uiState.value = current.copy(
             selectedToppings = newSet,
-            isAddedToCart = false 
+            isAddedToCart = false
         )
     }
 
@@ -81,12 +86,11 @@ class PizzaDetailViewModel @Inject constructor(
                     do {
                         delay(50)
                         updatedCartItems = cartRepository.getCartItems().first()
-                    }
-                    while (updatedCartItems.any { it.id == cartItemId })
+                    } while (updatedCartItems.any { it.id == cartItemId })
                     val existing = updatedCartItems.find {
                         it.pizza.id == pizza.id &&
-                        it.selectedSize == selectedSize &&
-                        it.selectedToppings == currentState.selectedToppings
+                                it.selectedSize == selectedSize &&
+                                it.selectedToppings == currentState.selectedToppings
                     }
                     if (existing != null) {
                         cartRepository.updateCount(existing.id, existing.count + count)

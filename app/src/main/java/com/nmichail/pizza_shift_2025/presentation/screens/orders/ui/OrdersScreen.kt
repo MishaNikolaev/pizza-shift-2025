@@ -1,6 +1,5 @@
 package com.nmichail.pizza_shift_2025.presentation.screens.orders.ui
 
-import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.CircularProgressIndicator
@@ -37,8 +36,6 @@ fun OrdersScreen(onDetailsClick: (String) -> Unit, navController: NavController?
             viewModel.loadOrders()
         }
     }
-
-    Log.d("OrdersScreen", "orders: ${orders.map { it.id to it.status }}")
 
     if (navController != null) {
         val navBackStackEntry by navController.currentBackStackEntryAsState()

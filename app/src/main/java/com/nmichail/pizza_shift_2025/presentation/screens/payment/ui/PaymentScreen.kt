@@ -170,7 +170,7 @@ fun PaymentScreen(
                 singleLine = true
             )
             Spacer(modifier = Modifier.height(24.dp))
-            Text(text = "Комментарий к заказу", fontSize = 16.sp, color =MaterialTheme.colorScheme.onSurface)
+            Text(text = "Комментарий к заказу", fontSize = 16.sp, color = MaterialTheme.colorScheme.onSurface)
             Spacer(modifier = Modifier.height(8.dp))
             PizzaOutlinedTextField(
                 value = state.comment,

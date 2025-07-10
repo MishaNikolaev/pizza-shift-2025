@@ -53,10 +53,15 @@ fun LogoutDialog(onDismiss: () -> Unit, onConfirm: () -> Unit) {
                                 .fillMaxWidth()
                                 .height(52.dp),
                             shape = RoundedCornerShape(50),
-                            border = BorderStroke(1.dp,  MaterialTheme.colorScheme.inversePrimary),
-                            colors = ButtonDefaults.outlinedButtonColors(containerColor =  MaterialTheme.colorScheme.background)
+                            border = BorderStroke(1.dp, MaterialTheme.colorScheme.inversePrimary),
+                            colors = ButtonDefaults.outlinedButtonColors(containerColor = MaterialTheme.colorScheme.background)
                         ) {
-                            Text("Выйти", color =  MaterialTheme.colorScheme.inversePrimary, fontSize = 16.sp, fontWeight = FontWeight.Medium)
+                            Text(
+                                "Выйти",
+                                color = MaterialTheme.colorScheme.inversePrimary,
+                                fontSize = 16.sp,
+                                fontWeight = FontWeight.Medium
+                            )
                         }
                         Spacer(modifier = Modifier.height(12.dp))
                         Button(

@@ -20,13 +20,13 @@ private val DarkColorScheme = darkColorScheme(
     surface = Color(0xFF141C24),
     onPrimary = Color(0xFF344051),
     inversePrimary = Color.White,
-    onSecondary =  Color(0xFF344051),
+    onSecondary = Color(0xFF344051),
     onTertiary = Color(0xFFCED2DA),
     onBackground = Color.White,
     onSurface = Color.White,
     tertiaryContainer = Color(0xFF141C24),
     onSurfaceVariant = Color(0xFF344051),
-    secondaryContainer =  Color(0xFF8C8C8C)
+    secondaryContainer = Color(0xFF8C8C8C)
 )
 
 private val LightColorScheme = lightColorScheme(
@@ -43,8 +43,8 @@ private val LightColorScheme = lightColorScheme(
     onSurface = Color.Black,
     tertiaryContainer = Color(0xFFF3F4F6),
     onSurfaceVariant = Color(0xFFF5F6F8),
-    secondaryContainer =  Color(0xFF8C8C8C)
-    )
+    secondaryContainer = Color(0xFF8C8C8C)
+)
 
 @Composable
 fun Pizzashift2025Theme(
@@ -108,11 +108,11 @@ fun PizzaOutlinedTextField(
 
 val PizzaButtonColors
     @Composable get() = ButtonDefaults.buttonColors(
-    containerColor = OrangePizza,
-    contentColor = Color.White,
-    disabledContainerColor = OrangePizza.copy(alpha = 0.5f),
-    disabledContentColor = Color.White.copy(alpha = 0.5f)
-)
+        containerColor = OrangePizza,
+        contentColor = Color.White,
+        disabledContainerColor = OrangePizza.copy(alpha = 0.5f),
+        disabledContentColor = Color.White.copy(alpha = 0.5f)
+    )
 
 val PizzaTextFieldAllGrayColors
     @Composable get() = OutlinedTextFieldDefaults.colors(

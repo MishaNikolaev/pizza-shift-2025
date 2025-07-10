@@ -1,6 +1,5 @@
 package com.nmichail.pizza_shift_2025.presentation.screens.payment.presentation
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.nmichail.pizza_shift_2025.data.dto.*
@@ -32,19 +31,41 @@ class PaymentViewModel @Inject constructor(
     private val _paySuccess = MutableStateFlow(false)
     val paySuccess = _paySuccess.asStateFlow()
 
-    fun onLastnameChanged(value: String) { _state.value = _state.value.copy(lastname = value) }
+    fun onLastnameChanged(value: String) {
+        _state.value = _state.value.copy(lastname = value)
+    }
 
-    fun onFirstnameChanged(value: String) { _state.value = _state.value.copy(firstname = value) }
+    fun onFirstnameChanged(value: String) {
+        _state.value = _state.value.copy(firstname = value)
+    }
 
-    fun onEmailChanged(value: String) { _state.value = _state.value.copy(email = value) }
+    fun onEmailChanged(value: String) {
+        _state.value = _state.value.copy(email = value)
+    }
 
-    fun onCityChanged(value: String) { _state.value = _state.value.copy(city = value) }
-    fun onStreetChanged(value: String) { _state.value = _state.value.copy(street = value) }
-    fun onHouseChanged(value: String) { _state.value = _state.value.copy(house = value) }
-    fun onApartmentChanged(value: String) { _state.value = _state.value.copy(apartment = value) }
-    fun onCommentChanged(value: String) { _state.value = _state.value.copy(comment = value) }
+    fun onCityChanged(value: String) {
+        _state.value = _state.value.copy(city = value)
+    }
 
-    fun onPhoneChanged(value: String) { _state.value = _state.value.copy(phone = value) }
+    fun onStreetChanged(value: String) {
+        _state.value = _state.value.copy(street = value)
+    }
+
+    fun onHouseChanged(value: String) {
+        _state.value = _state.value.copy(house = value)
+    }
+
+    fun onApartmentChanged(value: String) {
+        _state.value = _state.value.copy(apartment = value)
+    }
+
+    fun onCommentChanged(value: String) {
+        _state.value = _state.value.copy(comment = value)
+    }
+
+    fun onPhoneChanged(value: String) {
+        _state.value = _state.value.copy(phone = value)
+    }
 
     fun pay(cardNumber: String, cardDate: String, cardCvv: String) {
         viewModelScope.launch {
@@ -61,21 +82,16 @@ class PaymentViewModel @Inject constructor(
             val cardNumberDigits = cardNumber.filter { it.isDigit() }
             val cardDateDigits = cardDate.filter { it.isDigit() }
             val cardCvvDigits = cardCvv.filter { it.isDigit() }
-            Log.d("PAYMENT", "pay() called with: lastname=$lastname, firstname=$firstname, city=$city, email=$email, phone=$phone, street=$street, house=$house, apartment=$apartment, comment=$comment, cardNumber=$cardNumberDigits, cardDate=$cardDateDigits, cardCvv=$cardCvvDigits")
             if (lastname.isEmpty() || firstname.isEmpty() || city.isEmpty() || email.isEmpty() || phone.isEmpty() || street.isEmpty() || house.isEmpty()) {
-                Log.d("PAYMENT", "Validation failed: required fields")
                 _payError.value = "Заполните все поля"
                 return@launch
             }
             if (cardNumberDigits.length != 16 || cardDateDigits.length != 4 || cardCvvDigits.length != 3) {
-                Log.d("PAYMENT", "Validation failed: card fields invalid")
                 _payError.value = "Заполните корректно данные карты"
                 return@launch
             }
             val cartItems = cartRepository.getCartItems().first()
-            Log.d("PAYMENT", "cartItems: $cartItems")
             if (cartItems.isEmpty()) {
-                Log.d("PAYMENT", "Validation failed: cart is empty")
                 _payError.value = "Корзина пуста"
                 return@launch
             }
@@ -106,7 +122,6 @@ class PaymentViewModel @Inject constructor(
             )
             try {
                 val response = payForOrderUseCase(request)
-                Log.d("PAYMENT", "Payment response: $response")
                 if (response.success) {
                     cartRepository.clearCart()
                     _paySuccess.value = true

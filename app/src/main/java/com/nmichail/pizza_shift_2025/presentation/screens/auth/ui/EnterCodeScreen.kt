@@ -122,7 +122,7 @@ fun EnterCodeScreen(state: AuthUiState.EnterCode, viewModel: AuthViewModel) {
                 )
             }
         }
-        
+
         when (state.signInState) {
             is SignInState.Error -> {
                 Spacer(modifier = Modifier.height(12.dp))
@@ -132,13 +132,15 @@ fun EnterCodeScreen(state: AuthUiState.EnterCode, viewModel: AuthViewModel) {
                     fontSize = 18.sp
                 )
             }
+
             is SignInState.Loading -> {
                 Spacer(modifier = Modifier.height(12.dp))
                 Text(text = "Входим в систему...", color = OrangePizza, fontSize = 18.sp)
             }
+
             is SignInState.None -> {
-                
-                        }
+
+            }
         }
     }
 }

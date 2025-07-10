@@ -38,6 +38,7 @@ fun ProfileScreen(
             is ProfileUiState.Loading -> {
                 CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
             }
+
             is ProfileUiState.Error -> {
                 Text(
                     text = (uiState as ProfileUiState.Error).message,
@@ -45,6 +46,7 @@ fun ProfileScreen(
                     modifier = Modifier.align(Alignment.Center)
                 )
             }
+
             is ProfileUiState.View, is ProfileUiState.Edit -> {
                 val isEdit = uiState is ProfileUiState.Edit
                 val user = when (uiState) {
@@ -88,7 +90,7 @@ fun ProfileScreen(
                         enabled = isEdit,
                         onValueChange = { lastname = it },
                         color = MaterialTheme.colorScheme.inversePrimary,
-                        )
+                    )
                     ProfileField(
                         label = "Отчество*",
                         value = middlename,

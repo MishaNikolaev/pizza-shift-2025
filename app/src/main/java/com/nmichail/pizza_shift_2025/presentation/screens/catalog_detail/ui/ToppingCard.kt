@@ -77,7 +77,7 @@ fun ToppingCard(
             Text(
                 text = "${topping.price} ₽",
                 color = MaterialTheme.colorScheme.inversePrimary,
-                        fontSize = 16.sp,
+                fontSize = 16.sp,
                 fontWeight = FontWeight.Medium
             )
         }

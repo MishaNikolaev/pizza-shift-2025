@@ -29,9 +29,11 @@ fun CatalogScreen(
         is CatalogUiState.Loading -> Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
             CircularProgressIndicator()
         }
+
         is CatalogUiState.Error -> Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
             Text(text = (state as CatalogUiState.Error).message, color = MaterialTheme.colorScheme.error)
         }
+
         is CatalogUiState.Success -> {
             val pizzas = (state as CatalogUiState.Success).pizzas
             LazyColumn(
@@ -43,15 +45,18 @@ fun CatalogScreen(
                 item {
                     Text(
                         text = "Пицца",
-                        style = MaterialTheme.typography.headlineMedium.copy(fontSize = 24.sp, fontWeight = FontWeight.Bold),
+                        style = MaterialTheme.typography.headlineMedium.copy(
+                            fontSize = 24.sp,
+                            fontWeight = FontWeight.Bold
+                        ),
                         modifier = Modifier.padding(start = 25.dp, top = 12.dp, bottom = 16.dp)
                     )
                 }
-                
+
                 items(pizzas) { pizza ->
                     PizzaCard(pizza = pizza, onClick = { onPizzaClick(pizza.id) })
                 }
-                
+
                 item {
                     Spacer(modifier = Modifier.height(48.dp))
                 }

@@ -63,6 +63,7 @@ fun AuthScreen(
                     }
                 }
             }
+
             is AuthUiState.EnterPhone -> EnterPhoneScreen(currentState, viewModel)
             is AuthUiState.EnterCode -> EnterCodeScreen(currentState, viewModel)
         }

@@ -68,7 +68,12 @@ fun CancelOrderDialog(onDismiss: () -> Unit, onConfirm: () -> Unit) {
                             border = BorderStroke(1.dp, Color(0xFFE0E0E0)),
                             colors = ButtonDefaults.outlinedButtonColors(containerColor = MaterialTheme.colorScheme.surface)
                         ) {
-                            Text("Отменить", color = MaterialTheme.colorScheme.inversePrimary, fontSize = 16.sp, fontWeight = FontWeight.Medium)
+                            Text(
+                                "Отменить",
+                                color = MaterialTheme.colorScheme.inversePrimary,
+                                fontSize = 16.sp,
+                                fontWeight = FontWeight.Medium
+                            )
                         }
                         Spacer(modifier = Modifier.height(12.dp))
                         Button(
