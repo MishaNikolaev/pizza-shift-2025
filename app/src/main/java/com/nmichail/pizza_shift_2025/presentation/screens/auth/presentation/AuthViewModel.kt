@@ -1,23 +1,20 @@
 package com.nmichail.pizza_shift_2025.presentation.screens.auth.presentation
 
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.nmichail.pizza_shift_2025.data.repository.AuthRepositoryImpl
 import com.nmichail.pizza_shift_2025.domain.usecase.GetAuthorizedUseCase
 import com.nmichail.pizza_shift_2025.domain.usecase.RequestOtpUseCase
-import com.nmichail.pizza_shift_2025.presentation.util.Result
 import com.nmichail.pizza_shift_2025.domain.usecase.SignInUseCase
+import com.nmichail.pizza_shift_2025.presentation.util.ErrorHandler
+import com.nmichail.pizza_shift_2025.presentation.util.Result
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
-import androidx.lifecycle.SavedStateHandle
-import com.nmichail.pizza_shift_2025.data.repository.AuthRepositoryImpl
-import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.stateIn
 
 @HiltViewModel
 class AuthViewModel @Inject constructor(
@@ -54,7 +51,7 @@ class AuthViewModel @Inject constructor(
     fun onPhoneChanged(phone: String) {
         val current = currentEnterPhone ?: return
         _uiState.value = current.copy(
-            phone = phone, 
+            phone = phone,
             otpState = OtpState.None
         )
     }
@@ -62,7 +59,7 @@ class AuthViewModel @Inject constructor(
     fun onCodeChanged(code: String) {
         val current = currentEnterCode ?: return
         _uiState.value = current.copy(
-            code = code, 
+            code = code,
             signInState = SignInState.None
         )
     }
@@ -81,6 +78,7 @@ class AuthViewModel @Inject constructor(
                     _uiState.value = AuthUiState.EnterCode(phone = phone, code = "", secondsLeft = 60)
                     startTimer(60)
                 }
+
                 is Result.Error -> {
                     _uiState.value = current.copy(otpState = OtpState.Error(result.reason))
                 }
@@ -93,7 +91,8 @@ class AuthViewModel @Inject constructor(
         val phone = current.phone.trim()
         val code = current.code.trim()
         if (code.isBlank()) {
-            _uiState.value = current.copy(signInState = SignInState.Error("Введите проверочный код", "Введите проверочный код"))
+            _uiState.value =
+                current.copy(signInState = SignInState.Error("Введите проверочный код", "Введите проверочный код"))
             return
         }
         viewModelScope.launch {
@@ -105,8 +104,10 @@ class AuthViewModel @Inject constructor(
                     _uiState.value = AuthUiState.EnterPhone(phone = phone)
                     _isAuthorized.value = true
                 }
+
                 is Result.Error -> {
-                    _uiState.value = current.copy(signInState = SignInState.Error(result.reason, result.reason))
+                    val appError = ErrorHandler.parseErrorFromString(result.reason)
+                    _uiState.value = current.copy(signInState = SignInState.Error(appError.type.name, appError.message ?: result.reason))
                 }
             }
         }
@@ -122,6 +123,7 @@ class AuthViewModel @Inject constructor(
                     _uiState.value = current.copy(code = "", secondsLeft = 60, signInState = SignInState.None)
                     startTimer(60)
                 }
+
                 is Result.Error -> {
                     _uiState.value = current.copy(signInState = SignInState.Error(result.reason, result.reason))
                 }

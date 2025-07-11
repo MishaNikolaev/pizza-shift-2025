@@ -13,7 +13,9 @@ import com.nmichail.pizza_shift_2025.data.dto.PizzaOrderDto
 @Composable
 fun HistoryOrdersList(orders: List<PizzaOrderDto>, onDetailsClick: (String) -> Unit) {
     LazyColumn(
-        modifier = Modifier.fillMaxSize().padding(horizontal = 16.dp),
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(horizontal = 16.dp),
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
         items(orders, key = { it.id ?: it.hashCode() }) { order ->

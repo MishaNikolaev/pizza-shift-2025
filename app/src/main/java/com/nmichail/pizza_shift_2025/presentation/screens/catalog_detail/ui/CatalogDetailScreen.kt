@@ -1,46 +1,26 @@
 package com.nmichail.pizza_shift_2025.presentation.screens.catalog_detail.ui
 
-import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
+import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.verticalScroll
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.material3.Button
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
-import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.setValue
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.compose.ui.draw.shadow
+import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
 import com.nmichail.pizza_shift_2025.R
-import androidx.hilt.navigation.compose.hiltViewModel
 import com.nmichail.pizza_shift_2025.presentation.screens.catalog_detail.presentation.PizzaDetailViewModel
-import androidx.compose.runtime.collectAsState
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.runtime.LaunchedEffect
-import com.nmichail.pizza_shift_2025.domain.entities.PizzaTopping
-import androidx.compose.ui.res.painterResource
 import com.nmichail.pizza_shift_2025.presentation.theme.OrangePizza
-import com.nmichail.pizza_shift_2025.presentation.util.toReadableSize
 import com.nmichail.pizza_shift_2025.presentation.util.toReadableDough
-import com.nmichail.pizza_shift_2025.presentation.util.toReadableTopping
+import com.nmichail.pizza_shift_2025.presentation.util.toReadableSize
 import com.nmichail.pizza_shift_2025.presentation.util.toReadableSizeName
 
 @OptIn(ExperimentalFoundationApi::class)
@@ -66,7 +46,7 @@ fun CatalogDetailScreen(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color.White)
+            .background(MaterialTheme.colorScheme.background)
             .verticalScroll(rememberScrollState())
             .padding(bottom = 8.dp)
     ) {
@@ -94,12 +74,12 @@ fun CatalogDetailScreen(
                     modifier = Modifier
                         .size(20.dp)
                         .clip(CircleShape)
-                        .background(Color.White)
+                    //.background(MaterialTheme.colorScheme.surface)
                 ) {
                     Icon(
                         painter = painterResource(R.drawable.arrow_left),
                         contentDescription = "Назад",
-                        tint = Color.Black
+                        tint = MaterialTheme.colorScheme.onTertiary
                     )
                 }
                 Spacer(modifier = Modifier.width(12.dp))
@@ -109,7 +89,7 @@ fun CatalogDetailScreen(
                     modifier = Modifier.padding(top = 2.dp)
                 )
             }
-            
+
             Box(modifier = Modifier.fillMaxWidth()) {
                 AsyncImage(
                     model = pizza.imageUrl,
@@ -120,14 +100,14 @@ fun CatalogDetailScreen(
                         .padding(top = 8.dp)
                 )
             }
-            
+
             Spacer(modifier = Modifier.height(8.dp))
             Text(
                 text = pizza.name,
                 style = MaterialTheme.typography.headlineSmall.copy(fontWeight = FontWeight.Bold),
                 modifier = Modifier.padding(horizontal = 20.dp)
             )
-            
+
             Spacer(modifier = Modifier.height(16.dp))
             val sizeDescription = buildString {
                 val currentSize = state.selectedSize ?: pizza.sizes.firstOrNull()
@@ -139,25 +119,25 @@ fun CatalogDetailScreen(
             }
             Text(
                 text = sizeDescription,
-                color = Color(0xFF344051),
+                color = MaterialTheme.colorScheme.onTertiary,
                 fontSize = 15.sp,
                 modifier = Modifier.padding(horizontal = 20.dp)
             )
-            
+
             Spacer(modifier = Modifier.height(16.dp))
             Text(
                 text = pizza.description ?: "",
-                color = Color.Gray,
+                color = MaterialTheme.colorScheme.onTertiary,
                 fontSize = 15.sp,
                 modifier = Modifier.padding(horizontal = 20.dp)
             )
-            
+
             Spacer(modifier = Modifier.height(16.dp))
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(horizontal = 20.dp)
-                    .background(Color(0xFFF3F3F6), shape = RoundedCornerShape(24.dp)),
+                    .background(MaterialTheme.colorScheme.onSecondary, shape = RoundedCornerShape(24.dp)),
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 pizza.sizes.forEach { size ->
@@ -167,8 +147,8 @@ fun CatalogDetailScreen(
                             .weight(1f)
                             .padding(2.dp)
                             .clip(RoundedCornerShape(20.dp))
-                            .background(if (selected) Color.White else Color.Transparent)
-                            .clickable { 
+                            .background(if (selected) MaterialTheme.colorScheme.tertiaryContainer else MaterialTheme.colorScheme.onSecondary)
+                            .clickable {
                                 viewModel.selectSize(size)
                             }
                             .padding(vertical = 12.dp),
@@ -176,14 +156,14 @@ fun CatalogDetailScreen(
                     ) {
                         Text(
                             text = size.toReadableSizeName(),
-                            color = if (selected) Color.Black else Color(0xFF6B7280),
+                            color = if (selected) MaterialTheme.colorScheme.onSurface else Color(0xFF6B7280),
                             fontWeight = if (selected) FontWeight.Bold else FontWeight.Normal,
                             fontSize = 14.sp
                         )
                     }
                 }
             }
-            
+
             Spacer(modifier = Modifier.height(16.dp))
             Text(
                 text = "Добавить по вкусу",
@@ -191,7 +171,7 @@ fun CatalogDetailScreen(
                 fontSize = 20.sp,
                 modifier = Modifier.padding(horizontal = 20.dp)
             )
-            
+
             Spacer(modifier = Modifier.height(8.dp))
             Column(
                 modifier = Modifier
@@ -219,11 +199,11 @@ fun CatalogDetailScreen(
                     }
                 }
             }
-            
+
             Spacer(modifier = Modifier.height(32.dp))
-            
+
             Button(
-                onClick = { 
+                onClick = {
                     if (!state.isAddedToCart) {
                         viewModel.addToCart(cartItemId = state.cartItemId)
                     }
@@ -232,7 +212,7 @@ fun CatalogDetailScreen(
                     .fillMaxWidth()
                     .padding(horizontal = 20.dp)
                     .height(56.dp),
-                colors = androidx.compose.material3.ButtonDefaults.buttonColors(
+                colors = ButtonDefaults.buttonColors(
                     containerColor = if (state.isAddedToCart || isEdit) Color.Gray else OrangePizza,
                     disabledContainerColor = Color.Gray
                 ),
@@ -250,7 +230,7 @@ fun CatalogDetailScreen(
                     fontWeight = FontWeight.Bold
                 )
             }
-            
+
             Spacer(modifier = Modifier.height(32.dp))
         }
     }

@@ -2,21 +2,11 @@ package com.nmichail.pizza_shift_2025.presentation.screens.payment.ui
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
-import androidx.compose.material3.TextButton
-import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.OutlinedTextFieldDefaults
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -25,22 +15,14 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.nmichail.pizza_shift_2025.presentation.screens.payment.presentation.PaymentViewModel
-import com.nmichail.pizza_shift_2025.presentation.screens.payment.presentation.PaymentUiState
-import com.nmichail.pizza_shift_2025.presentation.theme.OrangePizza
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.nmichail.pizza_shift_2025.R
-import com.nmichail.pizza_shift_2025.presentation.theme.PizzaTextFieldColors
-import com.nmichail.pizza_shift_2025.presentation.theme.PizzaTextFieldGrayCursorColors
-import com.nmichail.pizza_shift_2025.presentation.theme.PizzaTextFieldGrayBgColors
-import com.nmichail.pizza_shift_2025.presentation.theme.PizzaTextFieldAllGrayColors
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
-import androidx.compose.runtime.LaunchedEffect
+import com.nmichail.pizza_shift_2025.presentation.screens.payment.presentation.PaymentViewModel
+import com.nmichail.pizza_shift_2025.presentation.theme.OrangePizza
 import com.nmichail.pizza_shift_2025.presentation.theme.PizzaOutlinedTextField
+import com.nmichail.pizza_shift_2025.presentation.theme.PizzaTextFieldAllGrayColors
 
 @Composable
 fun PaymentScreen(
@@ -53,13 +35,13 @@ fun PaymentScreen(
     val scrollState = rememberScrollState()
     LaunchedEffect(phoneFromAuth, state.phone) {
         if (phoneFromAuth.isNotBlank() && state.phone.isBlank()) {
-            viewModel.onPhoneChanged(phoneFromAuth)
+            viewModel.handlePhoneChanged(phoneFromAuth)
         }
     }
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color.White)
+            .background(MaterialTheme.colorScheme.background)
             .padding(horizontal = 16.dp)
             .verticalScroll(scrollState),
         horizontalAlignment = Alignment.CenterHorizontally
@@ -90,7 +72,7 @@ fun PaymentScreen(
         Spacer(modifier = Modifier.height(8.dp))
         Text(
             text = "Шаг 1 из 2",
-            color = Color.Gray,
+            color = MaterialTheme.colorScheme.onSurface,
             fontSize = 14.sp,
             modifier = Modifier.align(Alignment.Start)
         )
@@ -114,7 +96,7 @@ fun PaymentScreen(
             Spacer(modifier = Modifier.height(8.dp))
             PizzaOutlinedTextField(
                 value = state.lastname,
-                onValueChange = viewModel::onLastnameChanged,
+                onValueChange = viewModel::handleLastnameChanged,
                 modifier = Modifier.fillMaxWidth(),
                 singleLine = true
             )
@@ -123,7 +105,7 @@ fun PaymentScreen(
             Spacer(modifier = Modifier.height(8.dp))
             PizzaOutlinedTextField(
                 value = state.firstname,
-                onValueChange = viewModel::onFirstnameChanged,
+                onValueChange = viewModel::handleFirstnameChanged,
                 modifier = Modifier.fillMaxWidth(),
                 singleLine = true
             )
@@ -143,20 +125,20 @@ fun PaymentScreen(
                 shape = androidx.compose.foundation.shape.RoundedCornerShape(12.dp)
             )
             Spacer(modifier = Modifier.height(24.dp))
-            Text(text = "Email", fontSize = 16.sp, color = Color.Black)
+            Text(text = "Email", fontSize = 16.sp, color = MaterialTheme.colorScheme.onSurface)
             Spacer(modifier = Modifier.height(8.dp))
             PizzaOutlinedTextField(
                 value = state.email,
-                onValueChange = viewModel::onEmailChanged,
+                onValueChange = viewModel::handleEmailChanged,
                 modifier = Modifier.fillMaxWidth(),
                 singleLine = true
             )
             Spacer(modifier = Modifier.height(24.dp))
-            Text(text = "Город", fontSize = 16.sp, color = Color.Black)
+            Text(text = "Город", fontSize = 16.sp, color = MaterialTheme.colorScheme.onSurface)
             Spacer(modifier = Modifier.height(8.dp))
             PizzaOutlinedTextField(
                 value = state.city,
-                onValueChange = viewModel::onCityChanged,
+                onValueChange = viewModel::handleCityChanged,
                 modifier = Modifier.fillMaxWidth(),
                 singleLine = true
             )
@@ -165,7 +147,7 @@ fun PaymentScreen(
             Spacer(modifier = Modifier.height(8.dp))
             PizzaOutlinedTextField(
                 value = state.street,
-                onValueChange = viewModel::onStreetChanged,
+                onValueChange = viewModel::handleStreetChanged,
                 modifier = Modifier.fillMaxWidth(),
                 singleLine = true
             )
@@ -174,7 +156,7 @@ fun PaymentScreen(
             Spacer(modifier = Modifier.height(8.dp))
             PizzaOutlinedTextField(
                 value = state.house,
-                onValueChange = viewModel::onHouseChanged,
+                onValueChange = viewModel::handleHouseChanged,
                 modifier = Modifier.fillMaxWidth(),
                 singleLine = true
             )
@@ -183,16 +165,16 @@ fun PaymentScreen(
             Spacer(modifier = Modifier.height(8.dp))
             PizzaOutlinedTextField(
                 value = state.apartment,
-                onValueChange = viewModel::onApartmentChanged,
+                onValueChange = viewModel::handleApartmentChanged,
                 modifier = Modifier.fillMaxWidth(),
                 singleLine = true
             )
             Spacer(modifier = Modifier.height(24.dp))
-            Text(text = "Комментарий к заказу", fontSize = 16.sp, color = Color.Black)
+            Text(text = "Комментарий к заказу", fontSize = 16.sp, color = MaterialTheme.colorScheme.onSurface)
             Spacer(modifier = Modifier.height(8.dp))
             PizzaOutlinedTextField(
                 value = state.comment,
-                onValueChange = viewModel::onCommentChanged,
+                onValueChange = viewModel::handleCommentChanged,
                 modifier = Modifier.fillMaxWidth(),
                 singleLine = true
             )

@@ -3,6 +3,7 @@ package com.nmichail.pizza_shift_2025.data.repository
 import com.nmichail.pizza_shift_2025.data.dto.CancelOrderRequest
 import com.nmichail.pizza_shift_2025.data.dto.PizzaOrderDto
 import com.nmichail.pizza_shift_2025.data.remote.OrderApi
+import com.nmichail.pizza_shift_2025.domain.repository.OrderRepository
 import javax.inject.Inject
 
 class OrderRepositoryImpl @Inject constructor(

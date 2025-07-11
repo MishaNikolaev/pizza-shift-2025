@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -24,13 +25,13 @@ fun TabPill(text: String, selected: Boolean, onClick: () -> Unit, modifier: Modi
             .fillMaxHeight()
             .padding(3.dp)
             .clip(RoundedCornerShape(16.dp))
-            .background(if (selected) Color.White else Color.Transparent)
+            .background(if (selected) MaterialTheme.colorScheme.tertiaryContainer else Color.Transparent)
             .clickable { onClick() },
         contentAlignment = Alignment.Center
     ) {
         Text(
             text = text,
-            color = if (selected) Color.Black else Color(0xFF8A8A8A),
+            color = if (selected) MaterialTheme.colorScheme.onTertiary else MaterialTheme.colorScheme.secondaryContainer,
             fontWeight = if (selected) FontWeight.Bold else FontWeight.Normal,
             fontSize = 16.sp
         )

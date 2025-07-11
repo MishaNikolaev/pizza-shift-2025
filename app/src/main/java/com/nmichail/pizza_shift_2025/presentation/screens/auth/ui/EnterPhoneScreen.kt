@@ -1,37 +1,23 @@
 package com.nmichail.pizza_shift_2025.presentation.screens.auth.ui
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.OutlinedTextFieldDefaults
-import androidx.compose.material3.Text
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalFocusManager
-import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.nmichail.pizza_shift_2025.presentation.screens.auth.presentation.AuthViewModel
 import com.nmichail.pizza_shift_2025.presentation.screens.auth.presentation.AuthUiState
+import com.nmichail.pizza_shift_2025.presentation.screens.auth.presentation.AuthViewModel
 import com.nmichail.pizza_shift_2025.presentation.screens.auth.presentation.OtpState
 import com.nmichail.pizza_shift_2025.presentation.theme.OrangePizza
-import com.nmichail.pizza_shift_2025.presentation.theme.PizzaTextFieldColors
 import com.nmichail.pizza_shift_2025.presentation.theme.PizzaButtonColors
 
 
@@ -41,7 +27,7 @@ fun EnterPhoneScreen(state: AuthUiState.EnterPhone, viewModel: AuthViewModel) {
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color.White)
+            .background(MaterialTheme.colorScheme.background)
             .padding(24.dp),
         verticalArrangement = Arrangement.Top,
         horizontalAlignment = Alignment.CenterHorizontally
@@ -60,12 +46,18 @@ fun EnterPhoneScreen(state: AuthUiState.EnterPhone, viewModel: AuthViewModel) {
         OutlinedTextField(
             value = state.phone,
             onValueChange = viewModel::onPhoneChanged,
-            label = { Text("Телефон", fontSize = 18.sp, color = Color.Black) },
+            label = { Text("Телефон", fontSize = 18.sp, color = Color.Gray) },
             textStyle = TextStyle(fontSize = 18.sp),
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Phone),
             singleLine = true,
             modifier = Modifier.fillMaxWidth(),
-            colors = PizzaTextFieldColors,
+            colors = OutlinedTextFieldDefaults.colors(
+                focusedBorderColor = Color.Gray,
+                unfocusedBorderColor = Color.Gray,
+                focusedLabelColor = Color.Gray,
+                unfocusedLabelColor = Color.Gray,
+                cursorColor = Color.Gray
+            ),
             enabled = state.otpState !is OtpState.Loading
         )
         Spacer(modifier = Modifier.height(24.dp))
@@ -89,16 +81,18 @@ fun EnterPhoneScreen(state: AuthUiState.EnterPhone, viewModel: AuthViewModel) {
                 Text("Продолжить", fontSize = 20.sp)
             }
         }
-        
+
         when (state.otpState) {
             is OtpState.Error -> {
                 Spacer(modifier = Modifier.height(12.dp))
                 Text(text = state.otpState.message, color = Color.Red)
             }
+
             is OtpState.Loading -> {
                 Spacer(modifier = Modifier.height(12.dp))
                 Text(text = "Отправляем код...", color = OrangePizza)
             }
+
             is OtpState.None -> {
             }
         }

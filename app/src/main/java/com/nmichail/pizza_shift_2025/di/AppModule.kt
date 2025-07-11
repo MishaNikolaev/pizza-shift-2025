@@ -2,23 +2,17 @@ package com.nmichail.pizza_shift_2025.di
 
 import android.content.Context
 import android.content.SharedPreferences
-import android.util.Log
 import com.google.gson.Gson
 import com.nmichail.pizza_shift_2025.data.remote.AuthApi
 import com.nmichail.pizza_shift_2025.data.remote.OrderApi
 import com.nmichail.pizza_shift_2025.data.remote.PizzaApi
-import com.nmichail.pizza_shift_2025.data.repository.AuthRepositoryImpl
-import com.nmichail.pizza_shift_2025.data.repository.CartRepositoryImpl
-import com.nmichail.pizza_shift_2025.data.repository.PizzaRepositoryImpl
-import com.nmichail.pizza_shift_2025.data.repository.PaymentRepositoryImpl
-import com.nmichail.pizza_shift_2025.data.repository.SessionRepositoryImpl
-import com.nmichail.pizza_shift_2025.domain.repository.AuthRepository
-import com.nmichail.pizza_shift_2025.domain.repository.CartRepository
-import com.nmichail.pizza_shift_2025.domain.repository.PizzaRepository
-import com.nmichail.pizza_shift_2025.domain.repository.PaymentRepository
-import com.nmichail.pizza_shift_2025.domain.repository.SessionRepository
+import com.nmichail.pizza_shift_2025.data.remote.ProfileApi
+import com.nmichail.pizza_shift_2025.data.repository.*
+import com.nmichail.pizza_shift_2025.domain.repository.*
 import com.nmichail.pizza_shift_2025.domain.usecase.AddToCartUseCase
 import com.nmichail.pizza_shift_2025.domain.usecase.GetPizzaCatalogUseCase
+import com.nmichail.pizza_shift_2025.domain.usecase.GetProfileUseCase
+import com.nmichail.pizza_shift_2025.domain.usecase.UpdateProfileUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -116,4 +110,24 @@ object AppModule {
     fun provideOrderApi(retrofit: Retrofit): OrderApi {
         return retrofit.create(OrderApi::class.java)
     }
+
+    @Provides
+    @Singleton
+    fun provideProfileApi(retrofit: Retrofit): ProfileApi =
+        retrofit.create(ProfileApi::class.java)
+
+    @Provides
+    @Singleton
+    fun provideProfileRepository(profileApi: ProfileApi, authApi: AuthApi): ProfileRepository =
+        ProfileRepositoryImpl(profileApi, authApi)
+
+    @Provides
+    @Singleton
+    fun provideGetProfileUseCase(repository: ProfileRepository): GetProfileUseCase =
+        GetProfileUseCase(repository)
+
+    @Provides
+    @Singleton
+    fun provideUpdateProfileUseCase(repository: ProfileRepository): UpdateProfileUseCase =
+        UpdateProfileUseCase(repository)
 } 

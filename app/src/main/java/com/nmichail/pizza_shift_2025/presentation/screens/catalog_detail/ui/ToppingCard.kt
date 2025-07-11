@@ -1,17 +1,11 @@
 package com.nmichail.pizza_shift_2025.presentation.screens.catalog_detail.ui
 
-import androidx.compose.foundation.border
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -45,7 +39,7 @@ fun ToppingCard(
                 spotColor = Color.Black.copy(alpha = 0.15f)
             )
             .clip(RoundedCornerShape(18.dp))
-            .background(Color.White)
+            .background(MaterialTheme.colorScheme.background)
             .then(
                 if (selected) {
                     Modifier.border(
@@ -82,7 +76,7 @@ fun ToppingCard(
             Spacer(modifier = Modifier.height(8.dp))
             Text(
                 text = "${topping.price} ₽",
-                color = Color.Black,
+                color = MaterialTheme.colorScheme.inversePrimary,
                 fontSize = 16.sp,
                 fontWeight = FontWeight.Medium
             )
