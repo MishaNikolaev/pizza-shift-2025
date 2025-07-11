@@ -9,7 +9,6 @@ import com.nmichail.pizza_shift_2025.domain.usecase.PayForOrderUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -23,49 +22,15 @@ class PaymentViewModel @Inject constructor(
     private val _state = MutableStateFlow(PaymentUiState())
     val state: StateFlow<PaymentUiState> = _state
 
-    private val _lastOrder = MutableStateFlow<PizzaOrderDto?>(null)
-    val lastOrder = _lastOrder.asStateFlow()
-
-    private val _payError = MutableStateFlow<String?>(null)
-    val payError = _payError.asStateFlow()
-    private val _paySuccess = MutableStateFlow(false)
-    val paySuccess = _paySuccess.asStateFlow()
-
-    fun onLastnameChanged(value: String) {
-        _state.value = _state.value.copy(lastname = value)
-    }
-
-    fun onFirstnameChanged(value: String) {
-        _state.value = _state.value.copy(firstname = value)
-    }
-
-    fun onEmailChanged(value: String) {
-        _state.value = _state.value.copy(email = value)
-    }
-
-    fun onCityChanged(value: String) {
-        _state.value = _state.value.copy(city = value)
-    }
-
-    fun onStreetChanged(value: String) {
-        _state.value = _state.value.copy(street = value)
-    }
-
-    fun onHouseChanged(value: String) {
-        _state.value = _state.value.copy(house = value)
-    }
-
-    fun onApartmentChanged(value: String) {
-        _state.value = _state.value.copy(apartment = value)
-    }
-
-    fun onCommentChanged(value: String) {
-        _state.value = _state.value.copy(comment = value)
-    }
-
-    fun onPhoneChanged(value: String) {
-        _state.value = _state.value.copy(phone = value)
-    }
+    fun handleLastnameChanged(value: String) { _state.value = _state.value.copy(lastname = value) }
+    fun handleFirstnameChanged(value: String) { _state.value = _state.value.copy(firstname = value) }
+    fun handleEmailChanged(value: String) { _state.value = _state.value.copy(email = value) }
+    fun handleCityChanged(value: String) { _state.value = _state.value.copy(city = value) }
+    fun handleStreetChanged(value: String) { _state.value = _state.value.copy(street = value) }
+    fun handleHouseChanged(value: String) { _state.value = _state.value.copy(house = value) }
+    fun handleApartmentChanged(value: String) { _state.value = _state.value.copy(apartment = value) }
+    fun handleCommentChanged(value: String) { _state.value = _state.value.copy(comment = value) }
+    fun handlePhoneChanged(value: String) { _state.value = _state.value.copy(phone = value) }
 
     fun pay(cardNumber: String, cardDate: String, cardCvv: String) {
         viewModelScope.launch {
@@ -83,16 +48,16 @@ class PaymentViewModel @Inject constructor(
             val cardDateDigits = cardDate.filter { it.isDigit() }
             val cardCvvDigits = cardCvv.filter { it.isDigit() }
             if (lastname.isEmpty() || firstname.isEmpty() || city.isEmpty() || email.isEmpty() || phone.isEmpty() || street.isEmpty() || house.isEmpty()) {
-                _payError.value = "Заполните все поля"
+                _state.value = _state.value.copy(payError = "Заполните все поля")
                 return@launch
             }
             if (cardNumberDigits.length != 16 || cardDateDigits.length != 4 || cardCvvDigits.length != 3) {
-                _payError.value = "Заполните корректно данные карты"
+                _state.value = _state.value.copy(payError = "Заполните корректно данные карты")
                 return@launch
             }
             val cartItems = cartRepository.getCartItems().first()
             if (cartItems.isEmpty()) {
-                _payError.value = "Корзина пуста"
+                _state.value = _state.value.copy(payError = "Корзина пуста")
                 return@launch
             }
             val pizzas = cartItems.map {
@@ -124,22 +89,21 @@ class PaymentViewModel @Inject constructor(
                 val response = payForOrderUseCase(request)
                 if (response.success) {
                     cartRepository.clearCart()
-                    _paySuccess.value = true
-                    _payError.value = null
+                    _state.value = _state.value.copy(paySuccess = true, payError = null)
                 } else {
-                    _payError.value = response.reason ?: "Ошибка оплаты"
+                    _state.value = _state.value.copy(payError = response.reason ?: "Ошибка оплаты")
                 }
             } catch (e: Exception) {
-                _payError.value = e.message ?: "Ошибка оплаты"
+                _state.value = _state.value.copy(payError = e.message ?: "Ошибка оплаты")
             }
         }
     }
 
     fun loadLastOrder() {
-        _lastOrder.value = paymentRepository.getLastOrder()
+        _state.value = _state.value.copy(lastOrder = paymentRepository.getLastOrder())
     }
 
     fun resetPaySuccess() {
-        _paySuccess.value = false
+        _state.value = _state.value.copy(paySuccess = false)
     }
 }

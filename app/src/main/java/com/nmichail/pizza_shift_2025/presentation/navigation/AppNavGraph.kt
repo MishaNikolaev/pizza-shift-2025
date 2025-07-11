@@ -25,9 +25,9 @@ import com.nmichail.pizza_shift_2025.presentation.screens.catalog_detail.ui.Cata
 import com.nmichail.pizza_shift_2025.presentation.screens.order_details.ui.OrderDetailsScreen
 import com.nmichail.pizza_shift_2025.presentation.screens.orders.ui.OrdersScreen
 import com.nmichail.pizza_shift_2025.presentation.screens.payment.presentation.PaymentViewModel
-import com.nmichail.pizza_shift_2025.presentation.screens.payment.ui.CardPaymentScreen
+import com.nmichail.pizza_shift_2025.presentation.screens.payment.ui.card.CardPaymentScreen
 import com.nmichail.pizza_shift_2025.presentation.screens.payment.ui.PaymentScreen
-import com.nmichail.pizza_shift_2025.presentation.screens.payment.ui.SuccessfulScreen
+import com.nmichail.pizza_shift_2025.presentation.screens.payment.ui.paid.SuccessfulScreen
 import com.nmichail.pizza_shift_2025.presentation.screens.profile.ui.ProfileScreen
 
 @SuppressLint("UnrememberedGetBackStackEntry")

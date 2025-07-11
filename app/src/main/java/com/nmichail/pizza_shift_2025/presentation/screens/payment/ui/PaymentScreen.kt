@@ -35,7 +35,7 @@ fun PaymentScreen(
     val scrollState = rememberScrollState()
     LaunchedEffect(phoneFromAuth, state.phone) {
         if (phoneFromAuth.isNotBlank() && state.phone.isBlank()) {
-            viewModel.onPhoneChanged(phoneFromAuth)
+            viewModel.handlePhoneChanged(phoneFromAuth)
         }
     }
     Column(
@@ -96,7 +96,7 @@ fun PaymentScreen(
             Spacer(modifier = Modifier.height(8.dp))
             PizzaOutlinedTextField(
                 value = state.lastname,
-                onValueChange = viewModel::onLastnameChanged,
+                onValueChange = viewModel::handleLastnameChanged,
                 modifier = Modifier.fillMaxWidth(),
                 singleLine = true
             )
@@ -105,7 +105,7 @@ fun PaymentScreen(
             Spacer(modifier = Modifier.height(8.dp))
             PizzaOutlinedTextField(
                 value = state.firstname,
-                onValueChange = viewModel::onFirstnameChanged,
+                onValueChange = viewModel::handleFirstnameChanged,
                 modifier = Modifier.fillMaxWidth(),
                 singleLine = true
             )
@@ -129,7 +129,7 @@ fun PaymentScreen(
             Spacer(modifier = Modifier.height(8.dp))
             PizzaOutlinedTextField(
                 value = state.email,
-                onValueChange = viewModel::onEmailChanged,
+                onValueChange = viewModel::handleEmailChanged,
                 modifier = Modifier.fillMaxWidth(),
                 singleLine = true
             )
@@ -138,7 +138,7 @@ fun PaymentScreen(
             Spacer(modifier = Modifier.height(8.dp))
             PizzaOutlinedTextField(
                 value = state.city,
-                onValueChange = viewModel::onCityChanged,
+                onValueChange = viewModel::handleCityChanged,
                 modifier = Modifier.fillMaxWidth(),
                 singleLine = true
             )
@@ -147,7 +147,7 @@ fun PaymentScreen(
             Spacer(modifier = Modifier.height(8.dp))
             PizzaOutlinedTextField(
                 value = state.street,
-                onValueChange = viewModel::onStreetChanged,
+                onValueChange = viewModel::handleStreetChanged,
                 modifier = Modifier.fillMaxWidth(),
                 singleLine = true
             )
@@ -156,7 +156,7 @@ fun PaymentScreen(
             Spacer(modifier = Modifier.height(8.dp))
             PizzaOutlinedTextField(
                 value = state.house,
-                onValueChange = viewModel::onHouseChanged,
+                onValueChange = viewModel::handleHouseChanged,
                 modifier = Modifier.fillMaxWidth(),
                 singleLine = true
             )
@@ -165,7 +165,7 @@ fun PaymentScreen(
             Spacer(modifier = Modifier.height(8.dp))
             PizzaOutlinedTextField(
                 value = state.apartment,
-                onValueChange = viewModel::onApartmentChanged,
+                onValueChange = viewModel::handleApartmentChanged,
                 modifier = Modifier.fillMaxWidth(),
                 singleLine = true
             )
@@ -174,7 +174,7 @@ fun PaymentScreen(
             Spacer(modifier = Modifier.height(8.dp))
             PizzaOutlinedTextField(
                 value = state.comment,
-                onValueChange = viewModel::onCommentChanged,
+                onValueChange = viewModel::handleCommentChanged,
                 modifier = Modifier.fillMaxWidth(),
                 singleLine = true
             )

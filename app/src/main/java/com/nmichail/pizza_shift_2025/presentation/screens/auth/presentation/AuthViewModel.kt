@@ -7,6 +7,7 @@ import com.nmichail.pizza_shift_2025.data.repository.AuthRepositoryImpl
 import com.nmichail.pizza_shift_2025.domain.usecase.GetAuthorizedUseCase
 import com.nmichail.pizza_shift_2025.domain.usecase.RequestOtpUseCase
 import com.nmichail.pizza_shift_2025.domain.usecase.SignInUseCase
+import com.nmichail.pizza_shift_2025.presentation.util.ErrorHandler
 import com.nmichail.pizza_shift_2025.presentation.util.Result
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
@@ -105,7 +106,8 @@ class AuthViewModel @Inject constructor(
                 }
 
                 is Result.Error -> {
-                    _uiState.value = current.copy(signInState = SignInState.Error(result.reason, result.reason))
+                    val appError = ErrorHandler.parseErrorFromString(result.reason)
+                    _uiState.value = current.copy(signInState = SignInState.Error(appError.type.name, appError.message ?: result.reason))
                 }
             }
         }
