@@ -4,18 +4,16 @@
 
 ## 📱 Скриншоты
 
-
-<div align="center">
-  <img src="images/auth_white.png" width="200" alt="Авторизация">
-  <img src="images/cataog_white.png" width="200" alt="Каталог">
-  <img src="images/catalog_detail_white.png" width="200" alt="Детали пиццы">
-  <img src="images/cart_white.png" width="200" alt="Корзина">
-  <img src="images/payment_white.png" width="200" alt="Оплата">
-  <img src="images/orders_white.png" width="200" alt="Заказы">
-  <img src="images/profile_white.png" width="200" alt="Профиль">
+<div align="center" style="display: flex; flex-wrap: wrap; gap: 16px; justify-content: center;">
+  <img src="images/auth_white.png" width="180" alt="Авторизация" style="margin: 8px;">
+  <img src="images/cataog_white.png" width="180" alt="Каталог" style="margin: 8px;">
+  <img src="images/catalog_detail_white.png" width="180" alt="Детали пиццы" style="margin: 8px;">
+  <img src="images/cart_white.png" width="180" alt="Корзина" style="margin: 8px;">
+  <img src="images/payment_white.png" width="180" alt="Оплата" style="margin: 8px;">
+  <img src="images/orders_white.png" width="180" alt="Заказы" style="margin: 8px;">
+  <img src="images/profile_white.png" width="180" alt="Профиль" style="margin: 8px;">
 </div>
 
 ## 📱 Описание
 
-Pizza Shift 2025 - это проект летнего интенсива от компании ШИФТ. Самое ценное наверно тут больше не реализованный проект, а само участие и пулл реквесты (с code review своих проектов вообще впервые столкнулся). Было интересно, вообщем. 
-
+Pizza Shift 2025 - это проект летнего интенсива от компании ШИФТ. Самое ценное наверно тут больше не реализованный проект, а само участие и пулл реквесты (с code review своих проектов вообще впервые столкнулся). Было интересно, вообщем.
