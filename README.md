@@ -4,14 +4,30 @@
 
 ## 📱 Скриншоты
 
+Белая тема:
+
 <div align="center" style="display: flex; flex-wrap: wrap; gap: 16px; justify-content: center;">
-  <img src="images/auth_white.png" width="180" alt="Авторизация" style="margin: 8px;">
-  <img src="images/cataog_white.png" width="180" alt="Каталог" style="margin: 8px;">
-  <img src="images/catalog_detail_white.png" width="180" alt="Детали пиццы" style="margin: 8px;">
-  <img src="images/cart_white.png" width="180" alt="Корзина" style="margin: 8px;">
-  <img src="images/payment_white.png" width="180" alt="Оплата" style="margin: 8px;">
-  <img src="images/orders_white.png" width="180" alt="Заказы" style="margin: 8px;">
-  <img src="images/profile_white.png" width="180" alt="Профиль" style="margin: 8px;">
+  <img src="images/auth_white.png" width="180" alt="Авторизация" style="margin: 15px;">
+    <img src="images/auth_white1.png" width="180" alt="Авторизация1" style="margin: 15px;">
+  <img src="images/cataog_white.png" width="180" alt="Каталог" style="margin: 15px;">
+  <img src="images/catalog_detail_white.png" width="180" alt="Детали пиццы" style="margin: 15px;">
+  <img src="images/cart_white.png" width="180" alt="Корзина" style="margin: 15px;">
+  <img src="images/payment_white.png" width="180" alt="Оплата" style="margin: 15px;">
+  <img src="images/orders_white.png" width="180" alt="Заказы" style="margin: 15px;">
+  <img src="images/profile_white.png" width="180" alt="Профиль" style="margin: 15px;">
+</div>
+
+ Тёмная тема:
+
+<div align="center" style="display: flex; flex-wrap: wrap; gap: 16px; justify-content: center;">
+  <img src="images/auth1_dark.png" width="180" alt="Авторизация" style="margin: 15px;">
+  <img src="images/auth2_dark.png" width="180" alt="Авторизация1" style="margin: 15px;">
+  <img src="images/catalog_dark.png" width="180" alt="Каталог" style="margin: 15px;">
+  <img src="images/catalog_detail_dark.png" width="180" alt="Детали пиццы" style="margin: 15px;">
+  <img src="images/cart_screen.png" width="180" alt="Корзина" style="margin: 15px;">
+  <img src="images/payment_dark.png" width="180" alt="Оплата" style="margin: 15px;">
+  <img src="images/orders_dark.png" width="180" alt="Заказы" style="margin: 15px;">
+  <img src="images/profile_dark.png" width="180" alt="Профиль" style="margin: 15px;">
 </div>
 
 ## 📱 Описание
